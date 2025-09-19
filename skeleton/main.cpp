@@ -46,6 +46,10 @@ void initPhysics(bool interactive)
 
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
+	// pinta una esfera en el 0,0,0 ; de normal el transform deberia ser atributo de la clase particula por ej
+	const PxTransform* t = new PxTransform( { 0, 0, 0 } );
+	RenderItem* bola = new RenderItem(CreateShape(PxSphereGeometry(5)), t, { 1,1,1,1 });
+
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
@@ -84,6 +88,8 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
+
+	//DeregisterRenderItem();
 }
 
 // Function called when a key is pressed
