@@ -6,7 +6,9 @@ class Vector3D
 	double X, Y, Z;
 	double m;
 
+public:
 	Vector3D() = default;
+
 	Vector3D(double x, double y, double z) 
 		: X(x), Y(y), Z(z) 
 	{
@@ -22,45 +24,64 @@ class Vector3D
 	// normalizar
 	void normalize() 
 	{
-		X = X / m;
-		Y = Y / m;
-		Z = Z / m;
-		m = module();
+		this->X = X / m;
+		this->Y = Y / m;
+		this->Z = Z / m;
+		this->m = module();
 	}
 
 	// obtener modulo
 	double module() 
 	{
 		// vec / norm = mod
-		normalize();
+		//normalize();
+		return sqrt(pow(2.0, this->X) + pow(2.0, this->Y) + pow(2.0, this->Z));
 	}
 
 	// --- operadores
-	void operator*(Vector3D& vec) 
+	Vector3D& operator*(Vector3D& vec)
 	{
-		X * vec.getX() + Y * vec.getY() + Z * vec.getZ();
+		this->X * vec.getX() + this->Y * vec.getY() + this->Z * vec.getZ();
+		return *this;
 	}
 
-	void operator*(double e) 
+	Vector3D& operator*(double e)
 	{
-		X *= e;
-		Y *= e;
-		Z *= e;
+		this->X *= e;
+		this->Y *= e;
+		this->Z *= e;
 	}
 
-	void operator+() 
+	// suma de vectores
+	Vector3D& operator+(Vector3D& vec)
 	{
+		this->X += vec.getX();
+		this->Y += vec.getY();
+		this->Z += vec.getZ();
+		this->m = module();
 
+		return *this;
 	}
 
-	void operator-() 
+	// resta de vectores
+	Vector3D& operator-(Vector3D& vec)
 	{
+		this->X -= vec.getX();
+		this->Y -= vec.getY();
+		this->Z -= vec.getZ();
+		this->m = module();
 
+		return *this;
 	}
 
-	void operator=() 
+	// asigancion
+	Vector3D& operator=(Vector3D const& vec)
 	{
+		this->X = vec.getX();
+		this->Y = vec.getY();
+		this->Z = vec.getZ();
+		this->m = vec.getModule();
 
+		return *this;
 	}
 };
-

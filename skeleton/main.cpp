@@ -8,6 +8,8 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 
+#include "Vector3D.h"
+
 #include <iostream>
 
 std::string display_text = "This is a test";
@@ -49,6 +51,14 @@ void initPhysics(bool interactive)
 	// pinta una esfera en el 0,0,0 ; de normal el transform deberia ser atributo de la clase particula por ej
 	const PxTransform* t = new PxTransform( { 0, 0, 0 } );
 	RenderItem* bola = new RenderItem(CreateShape(PxSphereGeometry(5)), t, { 1,1,1,1 });
+
+	struct axis
+	{
+		const Vector3D X = { 1.0,0.0,0.0 };
+		const Vector3D Y = { 0.0,1.0,0.0 };
+		const Vector3D Z = { 0.0,0.0,1.0 };
+		const Vector3D O = { 0.0,0.0,0.0 };
+	};
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
