@@ -3,23 +3,23 @@
 
 class Vector3D
 {
-	double X, Y, Z;
-	double m;
+	float X, Y, Z;
+	float m;
 
 public:
 	Vector3D() = default;
 
-	Vector3D(double x, double y, double z) 
+	Vector3D(float x, float y, float z) 
 		: X(x), Y(y), Z(z) 
 	{
 		m = module();
 	}
 
 	// getters
-	double getX() const { return X; }
-	double getY() const { return Y; }
-	double getZ() const { return Z; }
-	double getModule() const { return m; }
+	float getX() const { return X; }
+	float getY() const { return Y; }
+	float getZ() const { return Z; }
+	float getModule() const { return m; }
 
 	// normalizar
 	void normalize() 
@@ -31,7 +31,7 @@ public:
 	}
 
 	// obtener modulo
-	double module() 
+	float module() 
 	{
 		// vec / norm = mod
 		//normalize();
@@ -45,7 +45,7 @@ public:
 		return *this;
 	}
 
-	Vector3D& operator*(double e)
+	Vector3D& operator*(float e)
 	{
 		this->X *= e;
 		this->Y *= e;

@@ -9,6 +9,7 @@
 #include "callbacks.hpp"
 
 #include "Vector3D.h"
+#include "axis.h"
 
 #include <iostream>
 
@@ -52,13 +53,11 @@ void initPhysics(bool interactive)
 	const PxTransform* t = new PxTransform( { 0, 0, 0 } );
 	RenderItem* bola = new RenderItem(CreateShape(PxSphereGeometry(5)), t, { 1,1,1,1 });
 
-	struct axis
-	{
-		const Vector3D X = { 1.0,0.0,0.0 };
-		const Vector3D Y = { 0.0,1.0,0.0 };
-		const Vector3D Z = { 0.0,0.0,1.0 };
-		const Vector3D O = { 0.0,0.0,0.0 };
-	};
+	// para eliminarlo de la escena:
+	DeregisterRenderItem(bola);
+	delete bola;
+
+	axis* ax = new axis();
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
