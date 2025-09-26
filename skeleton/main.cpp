@@ -10,6 +10,7 @@
 
 #include "Vector3D.h"
 #include "axis.h"
+#include "Particle.h"
 
 #include <iostream>
 
@@ -33,6 +34,7 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
+Particle* p = nullptr;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -59,6 +61,10 @@ void initPhysics(bool interactive)
 
 	axis* ax = new axis();
 
+
+	Vector3 vel = { 0,0,0 };
+	p = new Particle({ 0,0,0 }, vel, 5);
+
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
@@ -69,16 +75,16 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 }
 
-
 // Function to configure what happens in each step of physics
 // interactive: true if the game is rendering, false if it offline
 // t: time passed since last call in milliseconds
 void stepPhysics(bool interactive, double t)
 {
 	PX_UNUSED(interactive);
-
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+
+	p->integrate(t);
 }
 
 // Function to clean data
