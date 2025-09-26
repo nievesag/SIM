@@ -33,6 +33,6 @@ private:
 
 	// damping -> v=v*d^t
 	// coeficiente de damping, si es 1 no hay rozamiento \ si es 0 no se mueve \ menos de 1->rozamiento ; mas de 1->deslizamiento
-	double damping = 0.5; 
+	double damping = 0.99; 
 };
 
