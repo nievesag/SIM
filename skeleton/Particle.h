@@ -27,7 +27,7 @@ public:
 
 private:
 	Vector3 vel; // solo cambia con la aceleracion y la aceleracion cambia mediante una fuerza
-	PxTransform* pose; // A render item le pasaremos la direccion de este pose, para que se actualice automaticamente
+	PxTransform* pose = nullptr; // A render item le pasaremos la direccion de este pose, para que se actualice automaticamente
 	RenderItem* renderItem = nullptr; // para poder renderizarla
 	Vector3 acc = {1,0,0}; // aceleracion
 
