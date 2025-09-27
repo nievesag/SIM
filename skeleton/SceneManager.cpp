@@ -16,7 +16,7 @@ void SceneManager::addScene(Scene* scn)
 	if (scn != nullptr) 
 	{
 		vScenes.push_back(scn);
-		//scn->setup();
+		scn->init();
 	}
 }
 

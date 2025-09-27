@@ -14,8 +14,9 @@
 
 #include <iostream>
 
-std::string display_text = "This is a test";
+#include "SceneManager.h"
 
+std::string display_text = "This is a test";
 
 using namespace physx;
 
@@ -25,7 +26,6 @@ PxDefaultErrorCallback	gErrorCallback;
 PxFoundation*			gFoundation = NULL;
 PxPhysics*				gPhysics	= NULL;
 
-
 PxMaterial*				gMaterial	= NULL;
 
 PxPvd*                  gPvd        = NULL;
@@ -33,6 +33,9 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
+
+// ---- scene manager
+SceneManager* sceneManager = nullptr;
 
 Particle* p = nullptr;
 
@@ -61,7 +64,6 @@ void initPhysics(bool interactive)
 
 	axis* ax = new axis();
 
-
 	Vector3 vel = { 0,0,0 };
 	p = new Particle({ 0,0,0 }, vel, 5);
 
@@ -73,6 +75,9 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
+
+	// --- scene manager
+	sceneManager = new SceneManager();
 }
 
 // Function to configure what happens in each step of physics
@@ -84,7 +89,12 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	p->integrate(t);
+	p->integrate(t); // esto lo llamara el step de la escena luego
+
+	if (sceneManager != nullptr)
+	{
+		//sceneManager->step(t);
+	}
 }
 
 // Function to clean data
@@ -103,8 +113,6 @@ void cleanupPhysics(bool interactive)
 	transport->release();
 	
 	gFoundation->release();
-
-	//DeregisterRenderItem();
 }
 
 // Function called when a key is pressed
@@ -112,6 +120,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
 
+	//sceneManager->keyPressed(key, camera);
+
+	/*
 	switch(toupper(key))
 	{
 	//case 'B': break;
@@ -123,6 +134,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	default:
 		break;
 	}
+	*/
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
@@ -130,7 +142,6 @@ void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 	PX_UNUSED(actor1);
 	PX_UNUSED(actor2);
 }
-
 
 int main(int, const char*const*)
 {
