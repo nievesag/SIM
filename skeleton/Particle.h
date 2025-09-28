@@ -10,16 +10,18 @@
 
 #include <iostream>
 
+#include "Entity.h"
+
 using namespace physx;
 
-class Particle
+class Particle : public Entity
 {
 public:
 	Particle(Vector3 Pos, Vector3 Vel, double size);
-	~Particle();
+	~Particle() override;
 
 	// integradores: euler explicito y semi implicito
-	void integrate(double t);
+	void step(double t) override;
 
 	//void step(double t); // actualizar particula
 	//void cleanUp(); // borrar
@@ -33,6 +35,8 @@ private:
 
 	// damping -> v=v*d^t
 	// coeficiente de damping, si es 1 no hay rozamiento \ si es 0 no se mueve \ menos de 1->rozamiento ; mas de 1->deslizamiento
-	double damping = 0.99; 
+	double damping = 0.99;
+
+	void integrate(double t);
 };
 

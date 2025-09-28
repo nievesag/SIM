@@ -5,10 +5,12 @@
 
 SceneManager::SceneManager()
 {
+	addScene(new Scene0());
 }
 
 SceneManager::~SceneManager()
 {
+	for (auto* s : vScenes) delete s;
 }
 
 void SceneManager::addScene(Scene* scn)

@@ -65,7 +65,7 @@ void initPhysics(bool interactive)
 	axis* ax = new axis();
 
 	Vector3 vel = { 0,0,0 };
-	p = new Particle({ 0,0,0 }, vel, 5);
+	//p = new Particle({ 0,0,0 }, vel, 5);
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -89,11 +89,11 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	p->integrate(t); // esto lo llamara el step de la escena luego
+	//p->step(t); // esto lo llamara el step de la escena luego
 
 	if (sceneManager != nullptr)
 	{
-		//sceneManager->step(t);
+		sceneManager->step(t);
 	}
 }
 

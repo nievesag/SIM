@@ -14,16 +14,22 @@ Particle::~Particle()
 }
 
 // actualiza su posicion
+void Particle::step(double t)
+{
+	// ---- Integrate ----
+	integrate(t);
+}
+
 void Particle::integrate(double t)
 {
-	// Euler explicito
+	// -- Euler explicito
 	//pose->p += vel * t;
 	//vel += acc * t;
 
-	// Euler semi implicito
+	// -- Euler semi implicito
 	vel += acc * t;
 	pose->p += vel * t;
 
-	// damping despues de la integracion (v=v*d^t)
+	// Damping despues de la integracion (v=v*d^t)
 	vel *= pow(damping, t);
 }
