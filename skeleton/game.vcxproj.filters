@@ -19,6 +19,7 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="ProjectileGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -40,6 +41,7 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="ProjectileGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

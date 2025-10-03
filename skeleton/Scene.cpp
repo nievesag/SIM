@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "ProjectileGenerator.h"
 
 Scene::~Scene()
 {
@@ -46,9 +47,12 @@ void Scene::keyPressed(unsigned char key, const physx::PxTransform& camera)
 void Scene0::init()
 {
 	Scene::init();
-	Vector3 vel = { 0,0,0 };
-	Particle* p = new Particle({ 0,0,0 }, vel, 5);
-	addEntity(p);
+	//Vector3 vel = { 0,0,0 };
+	//Particle* p = new Particle({ 0,0,0 }, vel, 5);
+	//addEntity(p);
+
+	Vector3 vel = { -100,0,0 };
+	pGenerator = new ProjectileGenerator({ 0,0,0 }, vel, 5, 'h', this);
 }
 
 void Scene0::step(double t)
@@ -59,9 +63,12 @@ void Scene0::step(double t)
 void Scene0::load()
 {
 	Scene::load();
-	Vector3 vel = { 0,0,0 };
-	Particle* p = new Particle({ 0,0,0 }, vel, 5);
-	addEntity(p);
+	//Vector3 vel = { -100,0,0 };
+	//Particle* p = new Particle({ 0,0,0 }, vel, 5);
+	//addEntity(p);
+
+	Vector3 vel = { -100,0,0 };
+	pGenerator = new ProjectileGenerator({0,0,0}, vel , 5, 'h', this);
 }
 
 void Scene0::unload()
@@ -71,4 +78,21 @@ void Scene0::unload()
 
 void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 {
+
+	switch(toupper(key))
+	{
+	//case 'B': break;
+	//case ' ':	break;
+	case 'H':
+	{
+		if (pGenerator != nullptr)
+		{
+			pGenerator->shoot('h');
+		}
+		break;
+	}
+	default:
+		break;
+	}
+
 }

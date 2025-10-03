@@ -120,7 +120,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 {
 	PX_UNUSED(camera);
 
-	//sceneManager->keyPressed(key, camera);
+	sceneManager->keyPressed(key, camera);
 
 	/*
 	switch(toupper(key))

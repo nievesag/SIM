@@ -27,11 +27,23 @@ public:
 	//void cleanUp(); // borrar
 	//void init(); // inicializar particula
 
+	void setAcc(Vector3 a) { acc = a; }
+	void setMass(double m) { mass = m; }
+	void setDamping(double d) { damping = d; }
+	void setVel(Vector3 v) { vel = v; }
+	void setGravity(float g) { gravity = g; }
+	void setShotAcc(float s) { shotAcc = s; }
+
+	float getGravity() { return gravity; }
+
 private:
 	Vector3 vel; // solo cambia con la aceleracion y la aceleracion cambia mediante una fuerza
 	PxTransform* pose = nullptr; // A render item le pasaremos la direccion de este pose, para que se actualice automaticamente
 	RenderItem* renderItem = nullptr; // para poder renderizarla
-	Vector3 acc = {1,0,0}; // aceleracion
+	float gravity = -9.8f;
+	float shotAcc = 0;
+	Vector3 acc = {shotAcc,gravity,0}; // aceleracion
+	double mass = 0;
 
 	// damping -> v=v*d^t
 	// coeficiente de damping, si es 1 no hay rozamiento \ si es 0 no se mueve \ menos de 1->rozamiento ; mas de 1->deslizamiento

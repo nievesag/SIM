@@ -4,6 +4,7 @@
 
 #include "Entity.h"
 #include "Particle.h"
+class ProjectileGenerator;
 
 class Scene
 {
@@ -20,7 +21,7 @@ public:
 	virtual void unload();
 
 	// gestion entidades
-	virtual void addEntity(Entity* ent);
+	void addEntity(Entity* ent);
 
 	virtual void keyPressed(unsigned char key, const physx::PxTransform& camera);
 
@@ -40,4 +41,7 @@ public:
 	void load() override;
 	void unload() override;
 	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
+
+private:
+	ProjectileGenerator* pGenerator = nullptr;
 };
