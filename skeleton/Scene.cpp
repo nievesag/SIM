@@ -1,5 +1,7 @@
 #include "Scene.h"
 #include "ProjectileGenerator.h"
+#include "RenderUtils.hpp"
+
 
 Scene::~Scene()
 {
@@ -47,12 +49,13 @@ void Scene::keyPressed(unsigned char key, const physx::PxTransform& camera)
 void Scene0::init()
 {
 	Scene::init();
-	//Vector3 vel = { 0,0,0 };
 	//Particle* p = new Particle({ 0,0,0 }, vel, 5);
 	//addEntity(p);
 
-	Vector3 vel = { -100,0,0 };
-	pGenerator = new ProjectileGenerator({ 0,0,0 }, vel, 5, 'h', this);
+	// GetCamera()->getDir(); // direccion camera (para adaptar la velocidad de las particulas) => normalizar y multiplicar por el vector velocidad
+	// GetCamera()->getEye(); // centro de la camara (posicion para inicializar las particulas)
+	float vel = 100;
+	pGenerator = new ProjectileGenerator(GetCamera()->getEye(), GetCamera()->getDir().getNormalized()*vel, 5, 'h', this);
 }
 
 void Scene0::step(double t)
