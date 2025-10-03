@@ -13,8 +13,15 @@ ProjectileGenerator::ProjectileGenerator(Vector3 Pos, Vector3 Vel, double size, 
 		b->setMass(simAtributes.first);
 		b->setGravity(simAtributes.second);
 		b->setAcc({ 0,-b->getGravity(),0 });
-
 		balas.push_back(b);
+
+		Particle* b1 = new Particle(Pos, Vel, size);
+		std::pair<float, float> const simAtributes1 = getSimulationAtributes(4, 9.8, Vel.magnitude(), 50);
+		b->setMass(simAtributes1.first);
+		b->setGravity(simAtributes1.second);
+		b->setAcc({ 0,-b->getGravity(),0 });
+
+		balas.push_back(b1);
 
 		break;
 	}

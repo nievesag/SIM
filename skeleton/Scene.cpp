@@ -68,6 +68,7 @@ void Scene0::load()
 	//addEntity(p);
 
 	Vector3 vel = { -100,0,0 };
+	// FALTA PASARLE LOS VALORES PARA QUE SALGA DE LA CAMARA !!!!!!!
 	pGenerator = new ProjectileGenerator({0,0,0}, vel , 5, 'h', this);
 }
 
@@ -78,7 +79,6 @@ void Scene0::unload()
 
 void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 {
-
 	switch(toupper(key))
 	{
 	//case 'B': break;
@@ -94,5 +94,4 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	default:
 		break;
 	}
-
 }
