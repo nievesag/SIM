@@ -1,5 +1,6 @@
 #include "ProjectileGenerator.h"
 #include "Scene.h"
+#include "RenderUtils.hpp"
 
 ProjectileGenerator::ProjectileGenerator(Vector3 Pos, Vector3 Vel, double size, char type, Scene* s)
 	: scn(s)
@@ -49,6 +50,11 @@ void ProjectileGenerator::shoot(char type)
 	{
 		if (!balas.empty()) 
 		{
+			// GetCamera()->getDir().getNormalized()* vel
+
+			// balas[0]->setPos(GetCamera()->getEye());
+			// balas[0]->setPos(GetCamera()->getEye());
+
 			scn->addEntity(*balas.begin());
 			balas.erase(balas.begin());
 		}
@@ -63,7 +69,7 @@ void ProjectileGenerator::shoot(char type)
 std::pair<float, float> ProjectileGenerator::getSimulationAtributes(float massR, float gravityR, float vR, float vS)
 {
 	// para definir la masa simulada Ms = Mr * (Vr^2 / Vs^2)
-// para definir la gravedad simulada Gs = Gr * (Vs^2 / Vr^2)
+	// para definir la gravedad simulada Gs = Gr * (Vs^2 / Vr^2)
 
 	float massS, gravityS;
 

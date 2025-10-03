@@ -27,12 +27,13 @@ public:
 	//void cleanUp(); // borrar
 	//void init(); // inicializar particula
 
-	void setAcc(Vector3 a) { acc = a; }
-	void setMass(double m) { mass = m; }
-	void setDamping(double d) { damping = d; }
-	void setVel(Vector3 v) { vel = v; }
-	void setGravity(float g) { gravity = g; }
-	void setShotAcc(float s) { shotAcc = s; }
+	void setPos(PxTransform* p) { pose = p; }	// pose
+	void setAcc(Vector3 a) { acc = a; }			// aceleracion
+	void setMass(double m) { mass = m; }		// masa
+	void setDamping(double d) { damping = d; }	// damping
+	void setVel(Vector3 v) { vel = v; }			// velocidad
+	void setGravity(float g) { gravity = g; }	// gravedad
+	void setShotAcc(float s) { shotAcc = s; }	// aceleracion de tiro
 
 	float getGravity() { return gravity; }
 
