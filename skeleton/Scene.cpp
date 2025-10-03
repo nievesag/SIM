@@ -49,8 +49,6 @@ void Scene::keyPressed(unsigned char key, const physx::PxTransform& camera)
 void Scene0::init()
 {
 	Scene::init();
-	//Particle* p = new Particle({ 0,0,0 }, vel, 5);
-	//addEntity(p);
 
 	// GetCamera()->getDir(); // direccion camera (para adaptar la velocidad de las particulas) => normalizar y multiplicar por el vector velocidad
 	// GetCamera()->getEye(); // centro de la camara (posicion para inicializar las particulas)
@@ -66,13 +64,6 @@ void Scene0::step(double t)
 void Scene0::load()
 {
 	Scene::load();
-	//Vector3 vel = { -100,0,0 };
-	//Particle* p = new Particle({ 0,0,0 }, vel, 5);
-	//addEntity(p);
-
-	Vector3 vel = { -100,0,0 };
-	// FALTA PASARLE LOS VALORES PARA QUE SALGA DE LA CAMARA !!!!!!!
-	pGenerator = new ProjectileGenerator({0,0,0}, vel , 5, 'h', this);
 }
 
 void Scene0::unload()
