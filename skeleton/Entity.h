@@ -13,11 +13,12 @@ public:
 	virtual void step(double t); // update
 
 	// --- getters
-	virtual Vector3 getPosition() const { return pose->p; }			// transform
-	virtual physx::PxQuat getRotation() const { return pose->q; }		// transform
-	double getSize() const { return size; }								// tamano
-	double getMass() const { return mass; }								// masa
+	virtual Vector3 getPosition() const { return pose->p; }			// transform p
+	virtual physx::PxQuat getRotation() const { return pose->q; }	// transform q
+	double getSize() const { return size; }							// tamano
+	double getMass() const { return mass; }							// masa
 	Vector3 getVelocity() const { return vel; }						// velocidad
+	Vector4 getColor() const { return color; }						// velocidad
 
 	// --- setters
 	virtual void setPosition(Vector3 pos) { pose->p = pos; }
@@ -44,6 +45,6 @@ private:
 	physx::PxShape* shape = nullptr;			// forma
 	double size = 5;							// tamano
 	double mass = 1;							// masa
-	Vector3 vel = { 0,0,0 };			// velocidad
-	Vector4 color = { 1,1,1,1 };	// color
+	Vector3 vel = { 0,0,0 };					// velocidad
+	Vector4 color = { 1,1,1,1 };				// color
 };

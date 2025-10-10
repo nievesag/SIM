@@ -17,13 +17,13 @@ using namespace physx;
 class Particle : public Entity
 {
 public:
+	Particle(Vector3 Pos, Vector3 Vel, double size, Vector4 color, float m, double damp);
 	Particle(Vector3 Pos, Vector3 Vel, double size);
 	~Particle() override;
 
 	// integradores: euler explicito y semi implicito
 	void step(double t) override;
 
-	//void step(double t); // actualizar particula
 	//void cleanUp(); // borrar
 	//void init(); // inicializar particula
 
@@ -36,6 +36,7 @@ public:
 	void setShotAcc(float s) { shotAcc = s; }	// aceleracion de tiro
 
 	float getGravity() { return gravity; }
+	float getDamping() { return damping; }
 
 private:
 	Vector3 vel; // solo cambia con la aceleracion y la aceleracion cambia mediante una fuerza

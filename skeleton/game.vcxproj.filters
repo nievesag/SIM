@@ -20,6 +20,8 @@
     </ClCompile>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ProjectileGenerator.cpp" />
+    <ClCompile Include="ParticleGenerator.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -42,6 +44,8 @@
     </ClInclude>
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ProjectileGenerator.h" />
+    <ClInclude Include="ParticleGenerator.h" />
+    <ClInclude Include="ParticleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

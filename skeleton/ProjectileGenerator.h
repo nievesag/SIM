@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include <PxPhysicsAPI.h>
 
 #include <vector>
