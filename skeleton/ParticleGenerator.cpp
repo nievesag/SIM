@@ -1,7 +1,7 @@
 #include "ParticleGenerator.h"
 #include "Scene.h"
 
-ParticleGenerator::ParticleGenerator(Scene* s)
+ParticleGenerator::ParticleGenerator(Scene* s, std::string model)
 	: scn(s)
 {
 	// --- crear modelos de particulas
@@ -17,12 +17,13 @@ ParticleGenerator::~ParticleGenerator()
 
 void ParticleGenerator::step(double t)
 {
-	
+	generateParticle("Base");
+	std::cout << "pim particle" << std::endl;
 }
 
-void ParticleGenerator::generateParticle(std::string model)
+void ParticleGenerator::generateParticle(std::string m)
 {
-	auto it = particles.find(model);
+	auto it = particles.find(m);
 
 	if (it != particles.end()) 
 	{

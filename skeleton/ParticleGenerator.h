@@ -19,7 +19,7 @@ using namespace physx;
 class ParticleGenerator
 {
 public:
-	ParticleGenerator(Scene* s);
+	ParticleGenerator(Scene* s, std::string model);
 	~ParticleGenerator();
 
 	// update
@@ -33,11 +33,12 @@ public:
 	//std::normal_distribution<double> g(0, 1); => llamar a g(m,t)
 
 	// genera la particula
-	void generateParticle(std::string model);
+	void generateParticle(std::string m);
 
 private:
 	// modelo de particula (atributos) (tipo de particulas que genera el generador)
 	// mapa de modelos <nombre del modelo, particula modelo>
 	std::unordered_map<std::string, Particle*> particles;
+	std::string model;
 	Scene* scn = nullptr;
 };

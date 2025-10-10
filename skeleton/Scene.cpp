@@ -1,7 +1,8 @@
 #include "Scene.h"
 #include "ProjectileGenerator.h"
 #include "RenderUtils.hpp"
-
+#include "ParticleSystem.h"
+#include "ParticleGenerator.h"
 
 Scene::~Scene()
 {
@@ -19,6 +20,8 @@ void Scene::step(double t) // update
 	{
 		e->step(t);
 	}
+
+	// llamar al step de los generadores???
 }
 
 void Scene::load()
@@ -50,10 +53,17 @@ void Scene0::init()
 {
 	Scene::init();
 
-	// GetCamera()->getDir(); // direccion camera (para adaptar la velocidad de las particulas) => normalizar y multiplicar por el vector velocidad
-	// GetCamera()->getEye(); // centro de la camara (posicion para inicializar las particulas)
+	// proyectiles
+	/*
 	float vel = 100;
 	pGenerator = new ProjectileGenerator(GetCamera()->getEye(), GetCamera()->getDir().getNormalized()*vel, 5, 'h', this);
+	*/
+
+	// generadores
+	ParticleSystem* sys = new ParticleSystem();
+	ParticleGenerator* pg = new ParticleGenerator(this, "Base");
+	sys->generateGenerator(pg);
+
 }
 
 void Scene0::step(double t)
