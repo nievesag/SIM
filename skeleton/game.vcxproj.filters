@@ -19,9 +19,16 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="ProjectileGenerator.cpp" />
-    <ClCompile Include="ParticleGenerator.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="ParticleGenerator.cpp">
+      <Filter>ParticleManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>ParticleManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileGenerator.cpp">
+      <Filter>ParticleManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -43,9 +50,18 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="ProjectileGenerator.h" />
-    <ClInclude Include="ParticleGenerator.h" />
-    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="ParticleGenerator.h">
+      <Filter>ParticleManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>ParticleManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileGenerator.h">
+      <Filter>ParticleManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceGenerator.h">
+      <Filter>ParticleManagement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -53,6 +69,9 @@
     </Filter>
     <Filter Include="Scenes">
       <UniqueIdentifier>{0281ff86-9df8-44e7-9cac-63cdddbe9995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ParticleManagement">
+      <UniqueIdentifier>{d3fad05a-8223-4edf-81c4-82ddd33b9e9c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

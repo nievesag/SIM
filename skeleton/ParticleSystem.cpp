@@ -15,9 +15,14 @@ void ParticleSystem::step(double t)
 	{
 		if (g != nullptr) g->step(t);
 	}
-}
 
-void ParticleSystem::generateGenerator(ParticleGenerator* g)
-{
-	particleGenerators.push_back(g);
+	// afectar a las particulas
+	for (auto e : vector particulas...) // recorrer particulas 
+	{
+		for (auto fg : vector fuerzas...) // recorrer fuerzas que afectan a esa particula 
+		{
+			// aplicar fuerza a esa particula
+			fg->generateForce(*e);
+		}
+	}
 }

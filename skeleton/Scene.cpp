@@ -62,8 +62,7 @@ void Scene0::init()
 	// generadores
 	ParticleSystem* sys = new ParticleSystem();
 	ParticleGenerator* pg = new ParticleGenerator(this, "Base");
-	sys->generateGenerator(pg);
-
+	sys->registerGenerator(pg);
 }
 
 void Scene0::step(double t)

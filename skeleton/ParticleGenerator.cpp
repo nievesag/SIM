@@ -41,8 +41,6 @@ void ParticleGenerator::generateParticle(std::string m)
 									it->second->getMass(),		// masa
 									it->second->getDamping());	// damping
 
-
-
 		scn->addEntity(p);
 	}
 }
