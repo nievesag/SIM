@@ -1,4 +1,5 @@
 #include "ParticleGenerator.h"
+
 #include "Scene.h"
 
 ParticleGenerator::ParticleGenerator(Scene* s, std::string model)
@@ -17,7 +18,7 @@ ParticleGenerator::~ParticleGenerator()
 
 void ParticleGenerator::step(double t)
 {
-	generateParticle();
+	generateParticle(); // creacion de las particulas
 	std::cout << "pim particle" << std::endl;
 }
 
@@ -25,26 +26,46 @@ void ParticleGenerator::step(double t)
 // ------- GENERADOR CASACADA -------
 void WaterfallGenerator::generateParticle()
 {
-	// 
+	// buscamos si existe el modelo en el mapa
 	auto it = particles.find(model);
 
-	if (it != particles.end())
+	if (it != particles.end()) // si existe ese modelo...
 	{
-		//x = x + g(m,t)
-		//y = y + g(m,t)
-		//z = z + g(m,t)
-		//vx = vx + g(m,t)
-		//vy = vy + g(m,t)
-		//vz = vz + g(m,t)
+		// distribuciones
+		std::uniform_int_distribution<> particlesToGenerateDistr(0, 10); 
+		std::normal_distribution<> velYDistr(5, 2.0);	// media|dispersion
+		std::normal_distribution<> velZDistr(10, 2.0);	// media|dispersion
+		std::normal_distribution<> posXDistr(0, 10.0);	// media|dispersion
+		std::normal_distribution<> posZDistr(0, 10.0);	// media|dispersion
 
-		Particle* p = new Particle(scn,		// escena
-			it->second->getPosition(),	// posicion
-			it->second->getVelocity(),	// velocidad
-			it->second->getSize(),			// tamano
-			it->second->getColor(),		// color
-			it->second->getMass(),			// masa
-			it->second->getDamping());	// damping
+		
+		int particlesToGenerate = particlesToGenerateDistr(generator); // particulas que se generaran en este tick
 
-		scn->addEntity(p);
+		for (int i = 0; i < particlesToGenerate; i++) // genero las particulas que sean
+		{
+			Vector3 newOrg;	// posicion en la que se genera
+			Vector3 newVel;	// velocidad con la que se genera
+
+			// org
+			newOrg.x = posXDistr(generator);
+			newOrg.y = 0;
+			newOrg.z = posZDistr(generator);
+			// vel
+			newVel.x = 0;
+			newVel.y = velZDistr(generator);
+			newVel.z = velYDistr(generator);
+
+			// creamos la nueva particula
+			Particle* p = new Particle(scn,			// escena
+					newOrg,						// posicion
+					newVel,						// velocidad
+					it->second->getSize(),			// tamano
+					it->second->getColor(),		// color
+					it->second->getMass(),			// masa
+				it->second->getDamping());		// damping
+
+			generatedParticles.push_back(p);
+			scn->addEntity(p);
+		}
 	}
 }

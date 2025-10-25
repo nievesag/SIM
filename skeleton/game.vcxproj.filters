@@ -27,8 +27,10 @@
     <ClCompile Include="ProjectileGenerator.cpp">
       <Filter>ParticleManagement</Filter>
     </ClCompile>
-    <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="Particle.cpp">
+      <Filter>ParticleManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceGenerator.cpp">
       <Filter>ParticleManagement</Filter>
     </ClCompile>
   </ItemGroup>

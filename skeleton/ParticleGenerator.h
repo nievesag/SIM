@@ -10,6 +10,7 @@
 #include "callbacks.hpp"
 
 #include <iostream>
+#include <random>
 
 #include "Particle.h"
 
@@ -22,8 +23,9 @@ public:
 	ParticleGenerator(Scene* s, std::string model);
 	virtual ~ParticleGenerator();
 
-	// update
+	// updates
 	void step(double t);
+	std::vector<Particle*> getParticles() { return generatedParticles; }
 
 	// --- distribuciones estadisticas (uniforme/normal) -> posicion y velocidad siguen la distribucion
 	// uniforme -> genero un rango (min,max) de distintos valores y la distribucion puedo tomar con la misma probabilidad cualquiera de los valores
@@ -42,7 +44,9 @@ protected:
 	std::string model;
 	Scene* scn = nullptr;
 
-	std::vector<Entity*> generatedParticles; // guardo lo que voy generando
+	std::default_random_engine generator; // generador para usar las distribuciones
+
+	std::vector<Particle*> generatedParticles; // guardo lo que voy generando
 };
 
 // ------- GENERADOR CASACADA -------

@@ -22,7 +22,7 @@ using namespace physx;
 class ParticleSystem
 {
 public:
-	ParticleSystem();
+	ParticleSystem(Scene* scn);
 	~ParticleSystem();
 
 	// update
@@ -40,11 +40,13 @@ public:
 		forceGenerators.push_back(fg);
 	}
 
-private:
+protected:
 	// vector de generadores
 	std::vector<ParticleGenerator*> particleGenerators;
 	std::vector<ForceGenerator*> forceGenerators; // generadores de fuerzas que afectan a cada particula
 	// llamas a todos los generadores con la informacion de esa particula, el resultado sera la suma de todas las fuerzas que la afecten
 	// el update de la particula sera fuerzaParticula = fuerza que recibe en ese instante del update
-};
 
+	Scene* scene = nullptr;
+	void applyForces(std::vector<Particle*>& generatedParticles);
+};

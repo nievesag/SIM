@@ -22,6 +22,8 @@ public:
 	ForceGenerator(Vector3 pos, Scene* s);
 	virtual ~ForceGenerator();
 
+	virtual Vector3 generateForce(Entity& e) = 0;
+
 protected:
 	bool showArea() 
 	{
@@ -33,7 +35,6 @@ protected:
 	float areaRadius; // radio de area de actuacion
 	RenderItem* area = nullptr;
 	// en el update de cada particula llamas a generateForce
-	virtual Vector3 generateForce(Entity& e) = 0;
 	Vector3 areaPos = { 0,0,0 };
 };
 

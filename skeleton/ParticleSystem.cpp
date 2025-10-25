@@ -1,6 +1,7 @@
 #include "ParticleSystem.h"
 
-ParticleSystem::ParticleSystem()
+ParticleSystem::ParticleSystem(Scene* scn)
+	: scene(scn)
 {
 }
 
@@ -13,18 +14,18 @@ void ParticleSystem::step(double t)
 {
 	for (auto g : particleGenerators)
 	{
-		if (g != nullptr) g->step(t);
+		if (g != nullptr) g->step(t); // genera particula
+		applyForces(g->getParticles()); // aplica las fuerzas a todas las particulas en este instante
 	}
+}
 
-	/*
-	// afectar a las particulas
-	for (auto e : vector particulas...) // recorrer particulas 
+void ParticleSystem::applyForces(std::vector<Particle*>& generatedParticles)
+{
+	for (auto p : generatedParticles)
 	{
-		for (auto fg : vector fuerzas...) // recorrer fuerzas que afectan a esa particula 
+		for (auto fg : forceGenerators)
 		{
-			// aplicar fuerza a esa particula
-			fg->generateForce(*e);
+			p->addForce(fg->generateForce(*p)); // añade la fuerza generada
 		}
 	}
-	*/
 }

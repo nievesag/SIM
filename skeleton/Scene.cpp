@@ -16,13 +16,15 @@ void Scene::init()
 
 void Scene::step(double t) // update
 {
+	for (auto s : pSystems)
+	{
+		s->step(t);
+	}
+
 	for (auto e : gObjects)
 	{
 		e->step(t);
 	}
-
-	// llamar al step de los generadores
-
 }
 
 void Scene::load()
@@ -59,17 +61,14 @@ void Scene0::init()
 {
 	Scene::init();
 
-	// proyectiles
-	/*
-	float vel = 100;
-	pGenerator = new ProjectileGenerator(GetCamera()->getEye(), GetCamera()->getDir().getNormalized()*vel, 5, 'h', this);
-	*/
-
 	// generadores
-	ParticleSystem* sys = new ParticleSystem();
-
+	ParticleSystem* sys = new ParticleSystem(this);
 	ParticleGenerator* pg = new WaterfallGenerator(this, "Base");
+	ForceGenerator* fg = new GravityGenerator({ 0,0,0 }, this, {0, -9.8, 0});
 	sys->registerGenerator(pg);
+	sys->registerForceGenerator(fg);
+
+	pSystems.push_back(sys);
 }
 
 void Scene0::step(double t)
@@ -95,10 +94,7 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	//case ' ':	break;
 	case 'H':
 	{
-		if (pGenerator != nullptr)
-		{
-			pGenerator->shoot('h');
-		}
+		// disparo
 		break;
 	}
 	default:
