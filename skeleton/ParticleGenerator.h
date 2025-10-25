@@ -20,7 +20,7 @@ class ParticleGenerator
 {
 public:
 	ParticleGenerator(Scene* s, std::string model);
-	~ParticleGenerator();
+	virtual ~ParticleGenerator();
 
 	// update
 	void step(double t);
@@ -33,12 +33,27 @@ public:
 	//std::normal_distribution<double> g(0, 1); => llamar a g(m,t)
 
 	// genera la particula
-	void generateParticle(std::string m);
+	virtual void generateParticle() = 0;
 
-private:
+protected:
 	// modelo de particula (atributos) (tipo de particulas que genera el generador)
 	// mapa de modelos <nombre del modelo, particula modelo>
 	std::unordered_map<std::string, Particle*> particles;
 	std::string model;
 	Scene* scn = nullptr;
+
+	std::vector<Entity*> generatedParticles; // guardo lo que voy generando
+};
+
+// ------- GENERADOR CASACADA -------
+class WaterfallGenerator : public ParticleGenerator
+{
+public:
+	WaterfallGenerator(Scene* s, std::string model)
+		: ParticleGenerator(s, model) {}
+
+	~WaterfallGenerator() override = default;
+
+private:
+	void generateParticle() override;
 };

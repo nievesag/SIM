@@ -9,25 +9,24 @@ ProjectileGenerator::ProjectileGenerator(Vector3 Pos, Vector3 Vel, double size, 
 	{
 	case 'H':
 	{
-		Particle* b = new Particle(Pos, Vel, size);
+		Particle* b = new Particle(scn, Pos, Vel, size);
 		std::pair<float, float> const simAtributes = getSimulationAtributes(4,9.8,Vel.magnitude(),50);
 		b->setMass(simAtributes.first);
-		b->setGravity(simAtributes.second);
-		b->setAcc({ 0,-b->getGravity(),0 });
+		//b->setAcc({ 0,-b->getGravity(),0 });
 		balas.push_back(b);
 
-		Particle* b1 = new Particle(Pos, Vel, size);
+		Particle* b1 = new Particle(scn, Pos, Vel, size);
 		std::pair<float, float> const simAtributes1 = getSimulationAtributes(4, 9.8, Vel.magnitude(), 50);
 		b1->setMass(simAtributes1.first);
-		b1->setGravity(simAtributes1.second);
-		b1->setAcc({ 0,-b1->getGravity(),0 });
+		//b1->setGravity(simAtributes1.second);
+		//b1->setAcc({ 0,-b1->getGravity(),0 });
 		balas.push_back(b1);
 
-		Particle* b2 = new Particle(Pos, Vel, size);
+		Particle* b2 = new Particle(scn, Pos, Vel, size);
 		std::pair<float, float> const simAtributes2 = getSimulationAtributes(4, 9.8, Vel.magnitude(), 50);
 		b2->setMass(simAtributes1.first);
-		b2->setGravity(simAtributes1.second);
-		b2->setAcc({ 0,-b2->getGravity(),0 });
+		//b2->setGravity(simAtributes1.second);
+		//b2->setAcc({ 0,-b2->getGravity(),0 });
 		balas.push_back(b2);
 
 		break;

@@ -21,7 +21,8 @@ void Scene::step(double t) // update
 		e->step(t);
 	}
 
-	// llamar al step de los generadores???
+	// llamar al step de los generadores
+
 }
 
 void Scene::load()
@@ -40,6 +41,11 @@ void Scene::unload()
 void Scene::addEntity(Entity* ent)
 {
 	gObjects.push_back(ent);
+}
+
+void Scene::addSystem(ParticleSystem* sys)
+{
+	pSystems.push_back(sys);
 }
 
 void Scene::keyPressed(unsigned char key, const physx::PxTransform& camera)
@@ -61,7 +67,8 @@ void Scene0::init()
 
 	// generadores
 	ParticleSystem* sys = new ParticleSystem();
-	ParticleGenerator* pg = new ParticleGenerator(this, "Base");
+
+	ParticleGenerator* pg = new WaterfallGenerator(this, "Base");
 	sys->registerGenerator(pg);
 }
 

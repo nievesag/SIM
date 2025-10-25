@@ -17,35 +17,35 @@ using namespace physx;
 class Particle : public Entity
 {
 public:
-	Particle(Vector3 Pos, Vector3 Vel, double size, Vector4 color, float m, double damp);
-	Particle(Vector3 Pos, Vector3 Vel, double size);
+	Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double size, Vector4 color, float m, double damp);
+	Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double size);
 	~Particle() override;
 
 	// integradores: euler explicito y semi implicito
 	void step(double t) override;
 
-	//void cleanUp(); // borrar
-	//void init(); // inicializar particula
-
-	void setPos(PxTransform* p) { pose = p; }	// pose
+	// getters
 	void setAcc(Vector3 a) { acc = a; }			// aceleracion
-	void setMass(double m) { mass = m; }		// masa
 	void setDamping(double d) { damping = d; }	// damping
-	void setVel(Vector3 v) { vel = v; }			// velocidad
-	void setGravity(float g) { gravity = g; }	// gravedad
+	void setGravity(Vector3 g) { gravity = g; }	// gravedad
 	void setShotAcc(float s) { shotAcc = s; }	// aceleracion de tiro
 
-	float getGravity() { return gravity; }
+	// setters
+	Vector3 getGravity() { return gravity; }
 	float getDamping() { return damping; }
 
+	// fuerzas
+	void addForce(float x, float y, float z) { resultingForce.push_back({ x,y,z }); }
+	void addForce(Vector3 force) { resultingForce.push_back(force); }
+	void applyForce();
+
 private:
-	Vector3 vel; // solo cambia con la aceleracion y la aceleracion cambia mediante una fuerza
-	PxTransform* pose = nullptr; // A render item le pasaremos la direccion de este pose, para que se actualice automaticamente
-	RenderItem* renderItem = nullptr; // para poder renderizarla
-	float gravity = -9.8f;
+	std::vector<Vector3> resultingForce; // fuerza resultante
+
+	// --- atributos
+	Vector3 gravity = {0, -9.8f, 0}; // gravedad
 	float shotAcc = 0;
-	Vector3 acc = {shotAcc,gravity,0}; // aceleracion
-	double mass = 0;
+	Vector3 acc = {0,0,0}; // aceleracion
 
 	// damping -> v=v*d^t
 	// coeficiente de damping, si es 1 no hay rozamiento \ si es 0 no se mueve \ menos de 1->rozamiento ; mas de 1->deslizamiento

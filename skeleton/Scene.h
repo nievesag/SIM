@@ -4,7 +4,8 @@
 
 #include "Entity.h"
 #include "Particle.h"
-class ProjectileGenerator;
+
+class ParticleSystem;
 
 class Scene
 {
@@ -22,11 +23,13 @@ public:
 
 	// gestion entidades
 	void addEntity(Entity* ent);
+	void addSystem(ParticleSystem* sys);
 
 	virtual void keyPressed(unsigned char key, const physx::PxTransform& camera);
 
 protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
+	std::vector<ParticleSystem*> pSystems; // sistemas de particulas
 };
 
 // --- ESCENAS HIJAS ---
@@ -41,7 +44,4 @@ public:
 	void load() override;
 	void unload() override;
 	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
-
-private:
-	ProjectileGenerator* pGenerator = nullptr;
 };

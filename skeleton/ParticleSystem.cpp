@@ -11,11 +11,12 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::step(double t)
 {
-	for (auto g : particleGenerators) 
+	for (auto g : particleGenerators)
 	{
 		if (g != nullptr) g->step(t);
 	}
 
+	/*
 	// afectar a las particulas
 	for (auto e : vector particulas...) // recorrer particulas 
 	{
@@ -25,4 +26,5 @@ void ParticleSystem::step(double t)
 			fg->generateForce(*e);
 		}
 	}
+	*/
 }

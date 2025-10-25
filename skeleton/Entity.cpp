@@ -1,16 +1,11 @@
 #include "Entity.h"
 
-Entity::Entity()
+Entity::Entity(Scene* scn)
+	: scene(scn)
 {
-
-}
-
-Entity::~Entity()
-{
-	DeregisterRenderItem(renderItem);
 }
 
 void Entity::step(double t)
 {
-
+	//if (!alive) scene->deleteGameObject(this);
 }

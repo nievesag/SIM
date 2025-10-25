@@ -1,19 +1,22 @@
 #include "Particle.h"
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, double siz, Vector4 color, float m, double damp) :
-	vel(Vel), mass(m), damping(damp)
+Particle::Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double siz, Vector4 color, float m, double damp) :
+	Entity(scn), damping(damp)
 {
 	// construye la particula
 	pose = new PxTransform(Pos);
 	renderItem = new RenderItem(CreateShape(PxSphereGeometry(siz)), pose, color);
+	setVelocity(Vel);
+	setMass(m);
 }
 
-Particle::Particle(Vector3 Pos, Vector3 Vel, double size) :
-	vel(Vel)
+Particle::Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double size) :
+	Entity(scn)
 {
 	// construye la particula
 	pose = new PxTransform(Pos);
 	renderItem = new RenderItem(CreateShape(PxSphereGeometry(2)), pose, {1,1,1,1});
+	setVelocity(Vel);
 }
 
 Particle::~Particle()
@@ -24,8 +27,30 @@ Particle::~Particle()
 // actualiza su posicion
 void Particle::step(double t)
 {
+	// ---- Fuerzas ----
+	applyForce();
+
 	// ---- Integrate ----
 	integrate(t);
+}
+
+void Particle::applyForce()
+{
+	// calculamos la fuerza acumulada
+	Vector3 totalForc = { 0,0,0 }; // ponemos a 0, porque las fuerzas son instantaneas
+
+	for (auto f : resultingForce)
+	{
+		totalForc += f;
+	}
+
+	resultingForce.clear();
+
+	// F=m*a
+	acc = totalForc / mass;
+
+	// Aplica la gravedad si es un objeto con gravedad
+	acc += gravity;
 }
 
 void Particle::integrate(double t)
