@@ -19,7 +19,7 @@ public:
 	virtual physx::PxQuat getRotation() const { return pose->q; }		// transform q
 	double getSize() const { return size; }								// tamano
 	double getMass() const { return mass; }								// masa
-	Vector3 getVelocity() const { return vel; }						// velocidad
+	Vector3 getVelocity() const { return velocity; }						// velocidad
 	Vector4 getColor() const { return color; }						// color
 	bool getAlive() const { return alive; }								// vivo
 
@@ -34,7 +34,7 @@ public:
 	}
 	void setSize(float siz) noexcept { size = siz; }
 	void setMass(float mas) noexcept { mass = mas; }
-	void setVelocity(Vector3 v) noexcept { vel = v; }
+	void setVelocity(Vector3 v) noexcept { velocity = v; }
 	void setColor(Vector4 col)
 	{
 		renderItem->color = col;
@@ -44,13 +44,13 @@ public:
 
 protected:
 	// --- atributos
-	RenderItem* renderItem = nullptr;			// renderItem
-	physx::PxShape* shape = nullptr;			// forma
-	Vector4 color = { 1,1,1,1 };	// color
 	physx::PxTransform* pose = nullptr;			// transform
 	double size = 5;							// tamano
+	physx::PxShape* shape = nullptr;			// forma
+	Vector4 color = { 1,1,1,1 };	// color
+	RenderItem* renderItem = nullptr;			// renderItem
 	double mass = 1;							// masa
-	Vector3 vel = { 0,0,0 };			// velocidad, solo cambia con la aceleracion y la aceleracion cambia mediante una fuerza
+	Vector3 velocity = { 0,0,0 };			// velocidad, solo cambia con la aceleracion y la aceleracion cambia mediante una fuerza
 
 	bool alive = true;
 

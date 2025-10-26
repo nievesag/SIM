@@ -55,6 +55,7 @@ void initPhysics(bool interactive)
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	// pinta una esfera en el 0,0,0 ; de normal el transform deberia ser atributo de la clase particula por ej
+	/*
 	const PxTransform* t = new PxTransform( { 0, 0, 0 } );
 	RenderItem* bola = new RenderItem(CreateShape(PxSphereGeometry(5)), t, { 1,1,1,1 });
 
@@ -66,6 +67,7 @@ void initPhysics(bool interactive)
 
 	Vector3 vel = { 0,0,0 };
 	//p = new Particle({ 0,0,0 }, vel, 5);
+	*/
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -88,8 +90,6 @@ void stepPhysics(bool interactive, double t)
 	PX_UNUSED(interactive);
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-
-	//p->step(t); // esto lo llamara el step de la escena luego
 
 	if (sceneManager != nullptr)
 	{

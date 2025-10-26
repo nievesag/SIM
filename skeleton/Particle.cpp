@@ -1,13 +1,16 @@
 #include "Particle.h"
 
-Particle::Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double siz, Vector4 color, float m, double damp) :
+Particle::Particle(Scene* scn, Vector3 pos, Vector3 vel, double siz, Vector4 col, float m, double damp) :
 	Entity(scn), damping(damp)
 {
 	// construye la particula
-	pose = new PxTransform(Pos);
-	renderItem = new RenderItem(CreateShape(PxSphereGeometry(siz)), pose, color);
-	setVelocity(Vel);
-	setMass(m);
+	pose = new PxTransform(pos);
+	size = siz;
+	shape = CreateShape(PxSphereGeometry(size));
+	color = col;
+	renderItem = new RenderItem(shape, pose, color);
+	mass = m;
+	velocity = vel;
 }
 
 Particle::Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double size) :
@@ -17,6 +20,20 @@ Particle::Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double size) :
 	pose = new PxTransform(Pos);
 	renderItem = new RenderItem(CreateShape(PxSphereGeometry(2)), pose, {1,1,1,1});
 	setVelocity(Vel);
+}
+
+Particle::Particle(const Particle& model) :
+	Entity(model.scene)
+{
+	// crea nueva particula a traves de los atributos de una particula modelo
+	pose = new PxTransform(model.pose->p);
+	velocity = model.velocity;
+	acc = model.acc;
+	damping = model.damping;
+	size = model.size;
+	shape = model.shape;
+	color = model.color;
+	renderItem = new RenderItem(shape, pose, color);
 }
 
 Particle::~Particle()
@@ -60,9 +77,9 @@ void Particle::integrate(double t)
 	//vel += acc * t;
 
 	// -- Euler semi implicito
-	vel += acc * t;
-	pose->p += vel * t;
+	velocity += acc * t;
+	pose->p += velocity * t;
 
 	// Damping despues de la integracion (v=v*d^t)
-	vel *= pow(damping, t);
+	velocity *= pow(damping, t);
 }

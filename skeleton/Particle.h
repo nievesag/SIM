@@ -17,8 +17,9 @@ using namespace physx;
 class Particle : public Entity
 {
 public:
-	Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double size, Vector4 color, float m, double damp);
-	Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double size);
+	Particle(Scene* scn, Vector3 pos, Vector3 vel, double siz, Vector4 col, float m, double damp);
+	Particle(Scene* scn, Vector3 pos, Vector3 vel, double size);
+	Particle(const Particle& model); // constructora con modelo
 	~Particle() override;
 
 	// integradores: euler explicito y semi implicito

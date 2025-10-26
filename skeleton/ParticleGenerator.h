@@ -20,7 +20,7 @@ using namespace physx;
 class ParticleGenerator
 {
 public:
-	ParticleGenerator(Scene* s, std::string model);
+	ParticleGenerator(Scene* s, std::string mod);
 	virtual ~ParticleGenerator();
 
 	// updates
@@ -44,7 +44,10 @@ protected:
 	std::string model;
 	Scene* scn = nullptr;
 
-	std::default_random_engine generator; // generador para usar las distribuciones
+	std::random_device rd{};
+	std::mt19937 generator{ rd() };
+
+	//std::default_random_engine generator; // generador para usar las distribuciones
 
 	std::vector<Particle*> generatedParticles; // guardo lo que voy generando
 };
@@ -57,6 +60,30 @@ public:
 		: ParticleGenerator(s, model) {}
 
 	~WaterfallGenerator() override = default;
+
+private:
+	void generateParticle() override;
+};
+
+class MistGenerator : public ParticleGenerator
+{
+public:
+	MistGenerator(Scene* s, std::string model)
+		: ParticleGenerator(s, model) {}
+
+	~MistGenerator() override = default;
+
+private:
+	void generateParticle() override;
+};
+
+class FireworkGenerator : public ParticleGenerator
+{
+public:
+	FireworkGenerator(Scene* s, std::string model)
+		: ParticleGenerator(s, model) {}
+
+	~FireworkGenerator() override = default;
 
 private:
 	void generateParticle() override;

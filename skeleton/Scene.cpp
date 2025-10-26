@@ -61,11 +61,21 @@ void Scene0::init()
 {
 	Scene::init();
 
-	// generadores
+	// ----- System
 	ParticleSystem* sys = new ParticleSystem(this);
-	ParticleGenerator* pg = new WaterfallGenerator(this, "Base");
+
+	// -- Particle generators
+	//ParticleGenerator* waterfallGenerator = new WaterfallGenerator(this, "Cascada");
+	//sys->registerGenerator(waterfallGenerator);
+
+	//ParticleGenerator* mistGenerator = new MistGenerator(this, "Niebla");
+	//sys->registerGenerator(mistGenerator);
+
+	ParticleGenerator* fireworkGenerator = new FireworkGenerator(this, "Fuegos");
+	sys->registerGenerator(fireworkGenerator);
+
+	// -- Force generators
 	ForceGenerator* fg = new GravityGenerator({ 0,0,0 }, this, {0, -9.8, 0});
-	sys->registerGenerator(pg);
 	sys->registerForceGenerator(fg);
 
 	pSystems.push_back(sys);
