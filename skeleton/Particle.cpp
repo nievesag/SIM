@@ -1,6 +1,8 @@
 #include "Particle.h"
 
-Particle::Particle(Scene* scn, Vector3 pos, Vector3 vel, double siz, Vector4 col, float m, double damp) :
+#include "Scene.h"
+
+Particle::Particle(Scene* scn, Vector3 pos, Vector3 vel, double siz, Vector4 col, float m, float damp, float maxLT) :
 	Entity(scn), damping(damp)
 {
 	// construye la particula
@@ -11,6 +13,8 @@ Particle::Particle(Scene* scn, Vector3 pos, Vector3 vel, double siz, Vector4 col
 	renderItem = new RenderItem(shape, pose, color);
 	mass = m;
 	velocity = vel;
+	lifetime = 0;
+	maxLifetime = maxLT;
 }
 
 Particle::Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double size) :
@@ -34,16 +38,21 @@ Particle::Particle(const Particle& model) :
 	shape = model.shape;
 	color = model.color;
 	renderItem = new RenderItem(shape, pose, color);
+	lifetime = model.lifetime;
+	maxLifetime = model.maxLifetime;
 }
 
 Particle::~Particle()
 {
-	DeregisterRenderItem(renderItem);
+	//DeregisterRenderItem(renderItem);
 }
 
 // actualiza su posicion
 void Particle::step(double t)
 {
+	// ---- Gestion escena ----
+	manageLife(t);
+
 	// ---- Fuerzas ----
 	applyForce();
 
@@ -82,4 +91,20 @@ void Particle::integrate(double t)
 
 	// Damping despues de la integracion (v=v*d^t)
 	velocity *= pow(damping, t);
+}
+
+void Particle::manageLife(double t)
+{
+	if ((maxLifetime != -1 && lifetime > maxLifetime)	// si tiene vida maxima y se ha pasado
+		|| pose->p.y <= -scene->getActionThreshold().y	// o se sale por arriba o abajo
+		|| pose->p.y >= scene->getActionThreshold().y
+		|| pose->p.x <= -scene->getActionThreshold().x	// o se sale por la der o izq
+		|| pose->p.x >= scene->getActionThreshold().x 
+		|| pose->p.z <= -scene->getActionThreshold().z	// o se sale por delante o detras
+		|| pose->p.z >= scene->getActionThreshold().z)
+	{
+		setAlive(false);
+	}
+
+	lifetime += t;
 }

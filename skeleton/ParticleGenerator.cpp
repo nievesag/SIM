@@ -16,18 +16,20 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		5,								// tamaño
 		{0.4,0.7,1,1},	// color
 		20,								// masa
-		0.99);						// damping
+		0.99,							// damping
+		-1);						// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Cascada"), modeloWaterfall));
 
 	// - niebla
 	Particle* modeloMist = new Particle(
-		scn,							// escena (la misma que el generador)
-		Vector3(0, 0, 0),	// origen inicial
-		{ 0, 0, 0 },	// velocidad inicial
-		30,								// tamaño
+		scn,								// escena (la misma que el generador)
+		Vector3(0, 0, 0),		// origen inicial
+		{ 0, 0, 0 },				// velocidad inicial
+		15,									// tamaño
 		{ 0.5,0.6,0.7,1 },	// color
-		3,								// masa
-		0.99);						// damping
+		0.01,									// masa
+		0.99,								// damping
+		3);							// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Niebla"), modeloMist));
 
 	// - fuego artificial
@@ -38,7 +40,8 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		5,								// tamaño
 		{ 0,1,0,1 },		// color
 		6,								// masa
-		0.99);						// damping
+		0.99,							// damping
+		10);						// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Fuegos"), modeloFirework));
 }
 

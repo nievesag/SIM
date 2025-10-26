@@ -16,6 +16,8 @@ void Scene::init()
 
 void Scene::step(double t) // update
 {
+	deleteEntities();
+
 	for (auto s : pSystems)
 	{
 		s->step(t);
@@ -24,6 +26,20 @@ void Scene::step(double t) // update
 	for (auto e : gObjects)
 	{
 		e->step(t);
+	}
+}
+
+void Scene::deleteEntities()
+{
+	int i = 0;
+	for (auto g : gObjects)
+	{
+		if (!g->getAlive())
+		{
+			delete g;
+			gObjects.erase(gObjects.begin()+i);
+		}
+		i++;
 	}
 }
 
@@ -65,14 +81,14 @@ void Scene0::init()
 	ParticleSystem* sys = new ParticleSystem(this);
 
 	// -- Particle generators
-	//ParticleGenerator* waterfallGenerator = new WaterfallGenerator(this, "Cascada");
-	//sys->registerGenerator(waterfallGenerator);
+	ParticleGenerator* waterfallGenerator = new WaterfallGenerator(this, "Cascada");
+	sys->registerGenerator(waterfallGenerator);
 
 	//ParticleGenerator* mistGenerator = new MistGenerator(this, "Niebla");
 	//sys->registerGenerator(mistGenerator);
 
-	ParticleGenerator* fireworkGenerator = new FireworkGenerator(this, "Fuegos");
-	sys->registerGenerator(fireworkGenerator);
+	//ParticleGenerator* fireworkGenerator = new FireworkGenerator(this, "Fuegos");
+	//sys->registerGenerator(fireworkGenerator);
 
 	// -- Force generators
 	ForceGenerator* fg = new GravityGenerator({ 0,0,0 }, this, {0, -9.8, 0});

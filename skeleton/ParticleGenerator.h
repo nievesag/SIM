@@ -44,12 +44,13 @@ protected:
 	std::string model;
 	Scene* scn = nullptr;
 
+	// generador para usar las distribuciones
 	std::random_device rd{};
 	std::mt19937 generator{ rd() };
 
-	//std::default_random_engine generator; // generador para usar las distribuciones
-
 	std::vector<Particle*> generatedParticles; // guardo lo que voy generando
+
+	float lifetime; // tiempo que las particulas de este generador pueden estar vivas
 };
 
 // ------- GENERADOR CASACADA -------
@@ -69,7 +70,10 @@ class MistGenerator : public ParticleGenerator
 {
 public:
 	MistGenerator(Scene* s, std::string model)
-		: ParticleGenerator(s, model) {}
+		: ParticleGenerator(s, model)
+	{
+		
+	}
 
 	~MistGenerator() override = default;
 

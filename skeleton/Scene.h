@@ -17,6 +17,8 @@ public:
 
 	virtual void step(double t); // update
 
+	void deleteEntities();
+
 	// cambio de escenas
 	virtual void load();
 	virtual void unload();
@@ -27,9 +29,13 @@ public:
 
 	virtual void keyPressed(unsigned char key, const physx::PxTransform& camera);
 
+	Vector3 getActionThreshold() { return actionThreshold; }
+
 protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
 	std::vector<ParticleSystem*> pSystems; // sistemas de particulas
+
+	Vector3 actionThreshold = {200, 200,200}; // limites de la escena a partir de los cuales se eliminan las particulas
 };
 
 // --- ESCENAS HIJAS ---

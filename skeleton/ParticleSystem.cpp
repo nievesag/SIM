@@ -8,6 +8,7 @@ ParticleSystem::ParticleSystem(Scene* scn)
 ParticleSystem::~ParticleSystem()
 {
 	for (auto g : particleGenerators) delete g;
+	for (auto fg : forceGenerators) delete fg;
 }
 
 void ParticleSystem::step(double t)
