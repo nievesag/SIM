@@ -52,7 +52,22 @@ ParticleGenerator::~ParticleGenerator()
 
 void ParticleGenerator::step(double t)
 {
+	deleteEntities();
 	generateParticle(); // creacion de las particulas
+}
+
+void ParticleGenerator::deleteEntities()
+{
+	int i = 0;
+	for (auto p : generatedParticles)
+	{
+		if (!p->getAlive())
+		{
+			delete p;
+			generatedParticles.erase(generatedParticles.begin() + i);
+		}
+		i++;
+	}
 }
 
 // ------- GENERADOR CASACADA -------

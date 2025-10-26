@@ -51,7 +51,8 @@ private:
 	Vector3 gravity = {0, -9.8f, 0}; // gravedad
 	Vector3 acc = {0,0,0}; // aceleracion
 	float damping = 0.99f; // damping -> v=v*d^t
-	// coeficiente de damping, si es 1 no hay rozamiento \ si es 0 no se mueve \ menos de 1->rozamiento ; mas de 1->deslizamiento
+	// coeficiente de damping:
+	// si es 1 no hay rozamiento \ si es 0 no se mueve \ menos de 1->rozamiento ; mas de 1->deslizamiento
 
 	// - gestion
 	float lifetime;

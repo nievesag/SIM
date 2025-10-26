@@ -16,7 +16,7 @@ void ParticleSystem::step(double t)
 	for (auto g : particleGenerators)
 	{
 		if (g != nullptr) g->step(t); // genera particula
-		//applyForces(g->getParticles()); // aplica las fuerzas a todas las particulas en este instante
+		applyForces(g->getParticles()); // aplica las fuerzas a todas las particulas en este instante
 	}
 }
 
@@ -26,7 +26,10 @@ void ParticleSystem::applyForces(std::vector<Particle*>& generatedParticles)
 	{
 		for (auto fg : forceGenerators)
 		{
-			p->addForce(fg->generateForce(*p)); // añade la fuerza generada
+			if (p != nullptr)
+			{
+				p->addForce(fg->generateForce(*p)); // añade la fuerza generada 
+			}
 		}
 	}
 }

@@ -51,6 +51,8 @@ protected:
 	std::vector<Particle*> generatedParticles; // guardo lo que voy generando
 
 	float lifetime; // tiempo que las particulas de este generador pueden estar vivas
+
+	void deleteEntities();
 };
 
 // ------- GENERADOR CASACADA -------

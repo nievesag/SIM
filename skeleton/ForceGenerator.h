@@ -44,7 +44,7 @@ public:
 	GravityGenerator(Vector3 pos, Scene* scn, Vector3 _gravity)
 		: ForceGenerator(pos, scn), gravity(_gravity)
 	{
-
+		areaRadius = 200;
 	}
 
 	Vector3 generateForce(Entity& e) override;

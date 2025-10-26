@@ -72,11 +72,10 @@ void Particle::applyForce()
 
 	resultingForce.clear();
 
-	// F=m*a
-	acc = totalForc / mass;
+	acc = totalForc / mass; // a = F/a
 
-	// Aplica la gravedad si es un objeto con gravedad
-	acc += gravity;
+	// aplica la gravedad
+	//acc += gravity;
 }
 
 void Particle::integrate(double t)
@@ -104,6 +103,7 @@ void Particle::manageLife(double t)
 		|| pose->p.z >= scene->getActionThreshold().z)
 	{
 		setAlive(false);
+		std::cout << "muerta" << std::endl;
 	}
 
 	lifetime += t;
