@@ -53,6 +53,8 @@ protected:
 	float lifetime; // tiempo que las particulas de este generador pueden estar vivas
 
 	void deleteEntities();
+
+	void deleteParticle(Particle* p);
 };
 
 // ------- GENERADOR CASACADA -------

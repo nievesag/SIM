@@ -15,6 +15,14 @@ void ParticleSystem::step(double t)
 {
 	for (auto g : particleGenerators)
 	{
+		for (auto p : g->getParticles())
+		{
+			if (!p->getAlive())
+			{
+				
+			}
+		}
+
 		if (g != nullptr) g->step(t); // genera particula
 		applyForces(g->getParticles()); // aplica las fuerzas a todas las particulas en este instante
 	}

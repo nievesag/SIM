@@ -70,6 +70,11 @@ void ParticleGenerator::deleteEntities()
 	}
 }
 
+void ParticleGenerator::deleteParticle(Particle* p)
+{
+	///generatedParticles.erase(&p);
+}
+
 // ------- GENERADOR CASACADA -------
 void WaterfallGenerator::generateParticle()
 {
