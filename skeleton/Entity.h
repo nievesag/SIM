@@ -10,7 +10,7 @@ class Entity
 {
 public:
 	Entity(Scene* scn);
-	virtual ~Entity()  { DeregisterRenderItem(renderItem); };
+	virtual ~Entity()  { DeregisterRenderItem(renderItem); }
 
 	virtual void step(double t); // update
 
@@ -41,6 +41,15 @@ public:
 		color = col;
 	}
 	void setAlive(bool a) { alive = a; }
+	void setVisible(bool v)
+	{
+		visible = v;
+	}
+	void toggleVisibility()
+	{
+		if (visible) RegisterRenderItem(renderItem);
+		else DeregisterRenderItem(renderItem);
+	}
 
 protected:
 	// --- atributos
@@ -53,6 +62,7 @@ protected:
 	Vector3 velocity = { 0,0,0 };			// velocidad, solo cambia con la aceleracion y la aceleracion cambia mediante una fuerza
 
 	bool alive = true;
+	bool visible = true;
 
-	Scene* scene;
+	Scene* scene = nullptr;
 };

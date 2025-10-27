@@ -25,25 +25,27 @@ public:
 	// integradores: euler explicito y semi implicito
 	void step(double t) override;
 
-	// getters
+	// setters
 	void setAcc(Vector3 a) { acc = a; }					// aceleracion
 	void setDamping(double d) { damping = d; }			// damping
 	void setGravity(Vector3 g) { gravity = g; }			// gravedad
 	void setLifetime(float l) { lifetime = l; }			// tiempo de vida
 	void setMaxLifetime(float l) { maxLifetime = l; }	// tiempo de vida max
+	
 
-	// setters
+	// getters
 	Vector3 getGravity() const { return gravity; }
 	float getDamping() const { return damping; }
 	float getLifetime() const { return lifetime; }			// tiempo de vida
 	float getMaxLifetime() const { return maxLifetime; }	// tiempo de vida max
+	bool getVisible() const { return visible; }
 
 	// fuerzas
 	void addForce(float x, float y, float z) { resultingForce.push_back({ x,y,z }); }
 	void addForce(Vector3 force) { resultingForce.push_back(force); }
 	void applyForce();
 
-private:
+protected:
 	std::vector<Vector3> resultingForce; // fuerza resultante
 
 	// --- atributos
