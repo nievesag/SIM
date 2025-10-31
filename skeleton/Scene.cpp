@@ -94,7 +94,10 @@ void Scene0::init()
 	//ForceGenerator* gg = new GravityGenerator({ 0,0,0 }, 50, this, {0, -9.8, 0});
 	//sys->registerForceGenerator(gg);
 
-	ForceGenerator* fg = new WindGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
+	//ForceGenerator* fg = new WindGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
+	//sys->registerForceGenerator(fg);
+
+	ForceGenerator* fg = new WhirlGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
 	sys->registerForceGenerator(fg);
 
 	pSystems.push_back(sys);

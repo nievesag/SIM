@@ -48,5 +48,8 @@ Vector3 WindGenerator::generateForce(Entity& e)
 // ------- GENERADOR TORBELLINO -------
 Vector3 WhirlGenerator::generateForce(Entity& e)
 {
-    return Vector3();
+    if (inArea(e))
+    {
+        return k * Vector3(-(e.getPosition().z - areaPos.z), 50 - (e.getPosition().y - areaPos.y), e.getPosition().x-areaPos.x);
+    }
 }

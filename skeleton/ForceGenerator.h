@@ -60,17 +60,19 @@ public:
 
 	Vector3 generateForce(Entity& e) override;
 
-private:
+protected:
 	Vector3 wind = { 0, 0, 10 }; // velocidad del viento
+
+private:
 	float k1 = 10;
 	Vector3 k2 = { 0,0,0 };
 };
 
-class WhirlGenerator : public ForceGenerator
+class WhirlGenerator : public WindGenerator
 {
 public:
 	WhirlGenerator(Vector3 pos, float areaR, Scene* scn, Vector3 _wind)
-		: ForceGenerator(pos, areaR, scn), wind(_wind)
+		: WindGenerator(pos, areaR, scn, _wind)
 	{
 		areaRadius = 200;
 	}
@@ -78,5 +80,5 @@ public:
 	Vector3 generateForce(Entity& e) override;
 
 private:
-	Vector3 wind = { 0, 0, 10 }; // velocidad del viento
+	float k = 1;
 };
