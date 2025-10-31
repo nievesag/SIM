@@ -91,7 +91,10 @@ void Scene0::init()
 	//sys->registerGenerator(fireworkGenerator);
 
 	// -- Force generators
-	ForceGenerator* fg = new GravityGenerator({ 0,0,0 }, 50, this, {0, -9.8, 0});
+	//ForceGenerator* gg = new GravityGenerator({ 0,0,0 }, 50, this, {0, -9.8, 0});
+	//sys->registerForceGenerator(gg);
+
+	ForceGenerator* fg = new WindGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
 	sys->registerForceGenerator(fg);
 
 	pSystems.push_back(sys);

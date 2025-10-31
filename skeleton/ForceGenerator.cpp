@@ -20,11 +20,16 @@ bool ForceGenerator::showArea()
     return false;
 }
 
+bool ForceGenerator::inArea(Entity& e)
+{
+    return ((e.getPosition() - areaPos).magnitude() <= areaRadius);
+}
+
 // ------- GENERADOR GRAVEDAD -------
 Vector3 GravityGenerator::generateForce(Entity& e)
 {
     // si esta dentro del area de actuacion se aplica la fuerza 
-    if ((e.getPosition() - areaPos).magnitude() <= areaRadius) 
+    if (inArea(e)) 
     {
         return gravity * e.getMass();
     }
@@ -34,7 +39,10 @@ Vector3 GravityGenerator::generateForce(Entity& e)
 // ------- GENERADOR VIENTO -------
 Vector3 WindGenerator::generateForce(Entity& e)
 {
-    return Vector3();
+    if (inArea(e))
+    {
+        return (k1 * (wind - e.getVelocity()) + k2);
+    }
 }
 
 // ------- GENERADOR TORBELLINO -------

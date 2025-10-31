@@ -27,6 +27,7 @@ public:
 
 protected:
 	bool showArea();
+	bool inArea(Entity& e);
 
 	float areaRadius; // radio de area de actuacion
 	RenderItem* area = nullptr;
@@ -45,7 +46,7 @@ public:
 	Vector3 generateForce(Entity& e) override;
 
 private:
-	Vector3 gravity = {0, -9.8, 0}; // aceleracion de la gravedad
+	Vector3 gravity = {0, -2, 0}; // aceleracion de la gravedad
 };
 
 class WindGenerator : public ForceGenerator
@@ -61,6 +62,8 @@ public:
 
 private:
 	Vector3 wind = { 0, 0, 10 }; // velocidad del viento
+	float k1 = 10;
+	Vector3 k2 = { 0,0,0 };
 };
 
 class WhirlGenerator : public ForceGenerator

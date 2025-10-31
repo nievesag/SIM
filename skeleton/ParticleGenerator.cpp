@@ -15,7 +15,7 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		{100, -9.8, 100},	// velocidad inicial
 		5,								// tamaño
 		{0.4,0.7,1,1},	// color
-		20,								// masa
+		3,								// masa
 		0.99,							// damping
 		-1);						// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Cascada"), modeloWaterfall));

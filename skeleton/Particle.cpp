@@ -38,6 +38,7 @@ Particle::Particle(const Particle& model) :
 	shape = model.shape;
 	color = model.color;
 	renderItem = new RenderItem(shape, pose, color);
+	mass = model.mass;
 	lifetime = model.lifetime;
 	maxLifetime = model.maxLifetime;
 }
@@ -50,14 +51,14 @@ Particle::~Particle()
 // actualiza su posicion
 void Particle::step(double t)
 {
-	// ---- Gestion escena ----
-	manageLife(t);
-
 	// ---- Fuerzas ----
 	applyForce();
 
 	// ---- Integrate ----
 	integrate(t);
+
+	// ---- Gestion escena ----
+	manageLife(t);
 }
 
 void Particle::applyForce()
@@ -75,7 +76,7 @@ void Particle::applyForce()
 	acc = totalForc / mass; // a = F/a
 
 	// aplica la gravedad
-	//acc += gravity;
+	acc += gravity;
 }
 
 void Particle::integrate(double t)
