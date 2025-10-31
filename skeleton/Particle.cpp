@@ -103,7 +103,6 @@ void Particle::manageLife(double t)
 		|| pose->p.z >= scene->getActionThreshold().z)
 	{
 		setAlive(false);
-		std::cout << "muerta" << std::endl;
 	}
 
 	lifetime += t;

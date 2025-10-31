@@ -63,16 +63,10 @@ void ParticleGenerator::deleteEntities()
 	{
 		if (!p->getAlive())
 		{
-			delete p;
 			generatedParticles.erase(generatedParticles.begin() + i);
 		}
 		i++;
 	}
-}
-
-void ParticleGenerator::deleteParticle(Particle* p)
-{
-	///generatedParticles.erase(&p);
 }
 
 // ------- GENERADOR CASACADA -------

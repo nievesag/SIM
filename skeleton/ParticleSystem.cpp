@@ -19,7 +19,7 @@ void ParticleSystem::step(double t)
 		{
 			if (!p->getAlive())
 			{
-				
+				g->deleteEntities();
 			}
 		}
 

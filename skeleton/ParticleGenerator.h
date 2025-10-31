@@ -37,6 +37,8 @@ public:
 	// genera la particula
 	virtual void generateParticle() = 0;
 
+	void deleteEntities();
+
 protected:
 	// modelo de particula (atributos) (tipo de particulas que genera el generador)
 	// mapa de modelos <nombre del modelo, particula modelo>
@@ -51,10 +53,6 @@ protected:
 	std::vector<Particle*> generatedParticles; // guardo lo que voy generando
 
 	float lifetime; // tiempo que las particulas de este generador pueden estar vivas
-
-	void deleteEntities();
-
-	void deleteParticle(Particle* p);
 };
 
 // ------- GENERADOR CASACADA -------
