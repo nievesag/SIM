@@ -16,17 +16,17 @@ void Scene::init()
 
 void Scene::step(double t) // update
 {
-	for (auto e : gObjects)
-	{
-		e->step(t);
-	}
+	deleteEntities();
 
 	for (auto s : pSystems)
 	{
 		s->step(t);
 	}
 
-	deleteEntities();
+	for (auto e : gObjects)
+	{
+		e->step(t);
+	}
 }
 
 void Scene::deleteEntities()

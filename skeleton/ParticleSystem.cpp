@@ -17,9 +17,9 @@ void ParticleSystem::step(double t)
 	{
 		for (auto p : g->getParticles())
 		{
-			if (!p->getAlive()) 
+			if (!p->getAlive())
 			{
-				g->deleteParticle(p);
+				
 			}
 		}
 

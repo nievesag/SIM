@@ -25,7 +25,7 @@ public:
 
 	// updates
 	void step(double t);
-	std::vector<Particle*>& getParticles() { return generatedParticles; }
+	std::vector<Particle*> getParticles() { return generatedParticles; }
 
 	// --- distribuciones estadisticas (uniforme/normal) -> posicion y velocidad siguen la distribucion
 	// uniforme -> genero un rango (min,max) de distintos valores y la distribucion puedo tomar con la misma probabilidad cualquiera de los valores
@@ -36,7 +36,6 @@ public:
 
 	// genera la particula
 	virtual void generateParticle() = 0;
-	void deleteParticle(Particle* p);
 
 protected:
 	// modelo de particula (atributos) (tipo de particulas que genera el generador)
@@ -54,6 +53,8 @@ protected:
 	float lifetime; // tiempo que las particulas de este generador pueden estar vivas
 
 	void deleteEntities();
+
+	void deleteParticle(Particle* p);
 };
 
 // ------- GENERADOR CASACADA -------
