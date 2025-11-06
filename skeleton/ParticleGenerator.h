@@ -40,7 +40,7 @@ public:
 	void deleteEntities();
 
 protected:
-	// modelo de particula (atributos) (tipo de particulas que genera el generador)
+	// modelo de particula (tipo de particulas que genera el generador)
 	// mapa de modelos <nombre del modelo, particula modelo>
 	std::unordered_map<std::string, Particle*> particles;
 	std::string model;
