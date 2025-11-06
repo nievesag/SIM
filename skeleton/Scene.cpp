@@ -16,6 +16,8 @@ void Scene::init()
 
 void Scene::step(double t) // update
 {
+	deleteEntities();
+
 	for (auto e : gObjects)
 	{
 		e->step(t);
@@ -25,8 +27,6 @@ void Scene::step(double t) // update
 	{
 		s->step(t);
 	}
-
-	deleteEntities();
 }
 
 void Scene::deleteEntities()

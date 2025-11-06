@@ -22,6 +22,7 @@ public:
 	Vector3 getVelocity() const { return velocity; }						// velocidad
 	Vector4 getColor() const { return color; }						// color
 	bool getAlive() const { return alive; }								// vivo
+	RenderItem* getRenderItem() const { return renderItem; }
 
 	// --- setters
 	virtual void setPosition(Vector3 pos) { pose->p = pos; }

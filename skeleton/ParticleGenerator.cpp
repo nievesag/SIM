@@ -19,6 +19,7 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		0.99,							// damping
 		-1);						// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Cascada"), modeloWaterfall));
+	DeregisterRenderItem(modeloWaterfall->getRenderItem());
 
 	// - niebla
 	Particle* modeloMist = new Particle(
@@ -31,6 +32,7 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		0.99,								// damping
 		3);							// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Niebla"), modeloMist));
+	DeregisterRenderItem(modeloMist->getRenderItem());
 
 	// - fuego artificial
 	Particle* modeloFirework = new Particle(
@@ -43,6 +45,7 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		0.99,							// damping
 		10);						// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Fuegos"), modeloFirework));
+	DeregisterRenderItem(modeloFirework->getRenderItem());
 }
 
 ParticleGenerator::~ParticleGenerator()

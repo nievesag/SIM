@@ -34,8 +34,9 @@ void ParticleSystem::applyForces(std::vector<Particle*>& generatedParticles)
 	{
 		for (auto fg : forceGenerators)
 		{
-			if (p != nullptr)
+			if (p != nullptr && fg != nullptr)
 			{
+				//std::cout << fg << std::endl;
 				p->addForce(fg->generateForce(*p)); // añade la fuerza generada 
 			}
 		}

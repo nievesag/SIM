@@ -42,7 +42,10 @@ public:
 
 	// fuerzas
 	void addForce(float x, float y, float z) { resultingForce.push_back({ x,y,z }); }
-	void addForce(Vector3 force) { resultingForce.push_back(force); }
+	void addForce(const Vector3& force)
+	{
+		resultingForce.push_back(force);
+	}
 	void applyForce();
 
 protected:

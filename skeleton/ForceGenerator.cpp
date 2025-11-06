@@ -34,6 +34,7 @@ Vector3 GravityGenerator::generateForce(Entity& e)
         return gravity * e.getMass();
     }
     // si esta fuera no se aplica fuerza
+    return { 0,0,0 };
 }
 
 // ------- GENERADOR VIENTO -------
@@ -43,6 +44,7 @@ Vector3 WindGenerator::generateForce(Entity& e)
     {
         return (k1 * (wind - e.getVelocity()) + k2);
     }
+    return { 0,0,0 };
 }
 
 // ------- GENERADOR TORBELLINO -------
@@ -52,4 +54,5 @@ Vector3 WhirlGenerator::generateForce(Entity& e)
     {
         return k * Vector3(-(e.getPosition().z - areaPos.z), 50 - (e.getPosition().y - areaPos.y), e.getPosition().x-areaPos.x);
     }
+    return { 0,0,0 };
 }
