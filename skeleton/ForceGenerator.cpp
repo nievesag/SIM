@@ -1,5 +1,8 @@
 #include "ForceGenerator.h"
 
+#define _USE_MATH_DEFINES
+#include <cmath> 
+
 ForceGenerator::ForceGenerator(Vector3 pos, float areaR, Scene* s)
     : areaPos(pos), areaRadius(areaR)
 {
@@ -57,8 +60,8 @@ Vector3 WhirlGenerator::generateForce(Entity& e)
     return { 0,0,0 };
 }
 
-MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, int p, Vector3 forceB)
-    : ForceGenerator(pos, areaR, scn), pole(p), B(forceB)
+MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, int p, float B)
+    : ForceGenerator(pos, areaR, scn), pole(p), b(B)
 {
     // construye el iman
     physx::PxTransform* pose = new PxTransform(pos);
@@ -74,7 +77,10 @@ Vector3 MagnetismGenerator::generateForce(Entity& e)
     if (inArea(e))
     {
         // F=q*(vxB)
-        return e.getq() * (e.getVelocity().cross(B));
+        //return e.getq() * (e.getVelocity().cross(B));
+        Vector3 force = 
+            (e.getq() * b) / std::pow((e.getPosition() - areaPos).magnitude()
+        return (1 / 4 * std::atan(1.0)) * ( / );
     }
     return { 0,0,0 };
 }

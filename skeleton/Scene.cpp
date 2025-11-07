@@ -100,7 +100,7 @@ void Scene0::init()
 	//ForceGenerator* fg = new WhirlGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
 	//sys->registerForceGenerator(fg);
 
-	magnetism = new MagnetismGenerator({ -50,0,0 }, 50, this, 0, {20,0,0});
+	magnetism = new MagnetismGenerator({ -50,0,0 }, 50, this, 0, {-20,0,0});
 	sys->registerForceGenerator(magnetism);
 
 	particle = new Particle(
