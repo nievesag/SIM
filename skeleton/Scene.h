@@ -4,6 +4,7 @@
 
 #include "Entity.h"
 #include "Particle.h"
+#include "ForceGenerator.h"
 
 class ParticleSystem;
 
@@ -50,4 +51,8 @@ public:
 	void load() override;
 	void unload() override;
 	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
+
+private:
+	ForceGenerator* magnetism = nullptr;
+	Particle* particle = nullptr;
 };
