@@ -119,7 +119,7 @@ void WaterfallGenerator::generateParticle()
 			// creamos la nueva particula
 			Particle* p = new Particle(*it->second);
 
-			p->setPosition(newOrg);
+			p->setPosition(-newOrg);
 			p->setVelocity(newVel);
 
 			p->setq(it->second->getq());
