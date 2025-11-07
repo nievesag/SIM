@@ -81,7 +81,7 @@ void Scene0::init()
 	ParticleSystem* sys = new ParticleSystem(this);
 
 	// -- Particle generators
-	ParticleGenerator* waterfallGenerator = new WaterfallGenerator(this, "Cascada");
+	ParticleGenerator* waterfallGenerator = new WaterfallGenerator(this, "Carga");
 	sys->registerGenerator(waterfallGenerator);
 
 	//ParticleGenerator* mistGenerator = new MistGenerator(this, "Niebla");
@@ -97,8 +97,11 @@ void Scene0::init()
 	//ForceGenerator* fg = new WindGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
 	//sys->registerForceGenerator(fg);
 
-	ForceGenerator* fg = new WhirlGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
-	sys->registerForceGenerator(fg);
+	//ForceGenerator* fg = new WhirlGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
+	//sys->registerForceGenerator(fg);
+
+	ForceGenerator* magnetism = new MagnetismGenerator({ 0,0,0 }, 50, this, 0, {0,10,0});
+	sys->registerForceGenerator(magnetism);
 
 	pSystems.push_back(sys);
 }

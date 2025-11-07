@@ -82,3 +82,17 @@ public:
 private:
 	float k = 1;
 };
+
+class MagnetismGenerator : public ForceGenerator 
+{
+public:
+	MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, int p, Vector3 forceB);
+
+	Vector3 generateForce(Entity& e) override;
+
+private:
+	int pole = 0; // 0 -> NORTE ; 1 -> SUR
+
+	Vector3 B = {0,0,0}; // fuerza del campo magnetico (tesla)
+
+};

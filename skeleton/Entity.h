@@ -15,14 +15,15 @@ public:
 	virtual void step(double t); // update
 
 	// --- getters
-	virtual Vector3 getPosition() const { return pose->p; }			// transform p
+	virtual Vector3 getPosition() const { return pose->p; }				// transform p
 	virtual physx::PxQuat getRotation() const { return pose->q; }		// transform q
 	double getSize() const { return size; }								// tamano
 	double getMass() const { return mass; }								// masa
-	Vector3 getVelocity() const { return velocity; }						// velocidad
-	Vector4 getColor() const { return color; }						// color
+	Vector3 getVelocity() const { return velocity; }					// velocidad
+	Vector4 getColor() const { return color; }							// color
 	bool getAlive() const { return alive; }								// vivo
 	RenderItem* getRenderItem() const { return renderItem; }
+	float getq() const { return q; }
 
 	// --- setters
 	virtual void setPosition(Vector3 pos) { pose->p = pos; }
@@ -51,19 +52,22 @@ public:
 		if (visible) RegisterRenderItem(renderItem);
 		else DeregisterRenderItem(renderItem);
 	}
+	void setq(float newq) { q = newq; }
 
 protected:
 	// --- atributos
 	physx::PxTransform* pose = nullptr;			// transform
 	double size = 5;							// tamano
 	physx::PxShape* shape = nullptr;			// forma
-	Vector4 color = { 1,1,1,1 };	// color
+	Vector4 color = { 1,1,1,1 };				// color
 	RenderItem* renderItem = nullptr;			// renderItem
 	double mass = 1;							// masa
-	Vector3 velocity = { 0,0,0 };			// velocidad, solo cambia con la aceleracion y la aceleracion cambia mediante una fuerza
+	Vector3 velocity = { 0,0,0 };				// velocidad, solo cambia con la aceleracion y la aceleracion cambia mediante una fuerza
 
 	bool alive = true;
 	bool visible = true;
 
 	Scene* scene = nullptr;
+
+	float q = 0; // carga magnetica de la particula
 };

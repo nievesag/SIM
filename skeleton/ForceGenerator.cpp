@@ -56,3 +56,25 @@ Vector3 WhirlGenerator::generateForce(Entity& e)
     }
     return { 0,0,0 };
 }
+
+MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, int p, Vector3 forceB)
+    : ForceGenerator(pos, areaR, scn), pole(p), B(forceB)
+{
+    // construye el iman
+    physx::PxTransform* pose = new PxTransform(pos);
+    physx::PxShape* shape = CreateShape(PxBoxGeometry(10, 10, 10));
+    Vector4 color = { 1,1,1,1 };
+    if (pole == 0) color = { 1,0,0,1 }; // norte
+    else if (pole == 1) color = { 0,0,1,1 }; // sur
+    RenderItem* renderItem = new RenderItem(shape, pose, color);
+}
+
+Vector3 MagnetismGenerator::generateForce(Entity& e)
+{
+    if (inArea(e))
+    {
+        // F=q*(vxB)
+        return e.getq() * (e.getVelocity().cross(B));
+    }
+    return { 0,0,0 };
+}

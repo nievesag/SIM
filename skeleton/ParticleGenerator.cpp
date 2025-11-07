@@ -46,6 +46,20 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		10);						// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Fuegos"), modeloFirework));
 	DeregisterRenderItem(modeloFirework->getRenderItem());
+
+	// - particula cargada
+	Particle* modeloCharge = new Particle(
+		scn,							// escena (la misma que el generador)
+		Vector3(0, 0, 0),				// origen inicial
+		{ 100, -9.8, 100 },				// velocidad inicial
+		5,								// tamaño
+		{ 0,1,0,1 },					// color
+		2,								// masa
+		0.99,							// damping
+		-1);							// tiempo de vida max
+	modeloCharge->setq(2);
+	particles.emplace(std::make_pair(std::string("Carga"), modeloCharge));
+	DeregisterRenderItem(modeloCharge->getRenderItem());
 }
 
 ParticleGenerator::~ParticleGenerator()
@@ -107,6 +121,8 @@ void WaterfallGenerator::generateParticle()
 
 			p->setPosition(newOrg);
 			p->setVelocity(newVel);
+
+			p->setq(it->second->getq());
 
 			generatedParticles.push_back(p);
 			scn->addEntity(p);
