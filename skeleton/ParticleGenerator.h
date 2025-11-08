@@ -53,6 +53,9 @@ protected:
 	std::vector<Particle*> generatedParticles; // guardo lo que voy generando
 
 	float lifetime; // tiempo que las particulas de este generador pueden estar vivas
+
+	int maxParticles = 0; // particulas maximas que puede generar este generador
+	int numParticles = 0; // particulas generadas por cada generador
 };
 
 // ------- GENERADOR CASACADA -------
@@ -90,6 +93,21 @@ public:
 		: ParticleGenerator(s, model) {}
 
 	~FireworkGenerator() override = default;
+
+private:
+	void generateParticle() override;
+};
+
+class ChargedGenerator : public ParticleGenerator
+{
+public:
+	ChargedGenerator(Scene* s, std::string model)
+		: ParticleGenerator(s, model)
+	{
+		maxParticles = 1;
+	}
+
+	~ChargedGenerator() override = default;
 
 private:
 	void generateParticle() override;

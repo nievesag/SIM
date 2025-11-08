@@ -81,7 +81,7 @@ void Scene0::init()
 	ParticleSystem* sys = new ParticleSystem(this);
 
 	// -- Particle generators
-	//ParticleGenerator* waterfallGenerator = new WaterfallGenerator(this, "Carga");
+	//ParticleGenerator* waterfallGenerator = new WaterfallGenerator(this, "Cascada");
 	//sys->registerGenerator(waterfallGenerator);
 
 	//ParticleGenerator* mistGenerator = new MistGenerator(this, "Niebla");
@@ -89,6 +89,9 @@ void Scene0::init()
 
 	//ParticleGenerator* fireworkGenerator = new FireworkGenerator(this, "Fuegos");
 	//sys->registerGenerator(fireworkGenerator);
+
+	ParticleGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
+	sys->registerGenerator(chargedGenerator);
 
 	// -- Force generators
 	//ForceGenerator* gg = new GravityGenerator({ 0,0,0 }, 50, this, {0, -9.8, 0});
@@ -100,34 +103,15 @@ void Scene0::init()
 	//ForceGenerator* fg = new WhirlGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
 	//sys->registerForceGenerator(fg);
 
-	magnetism = new MagnetismGenerator({ -50,0,0 }, 50, this, 0, -0.1);
+	magnetism = new MagnetismGenerator({ -50,0,0 }, 50, this, -0.05);
 	sys->registerForceGenerator(magnetism);
 
-	particle = new Particle(
-		this,							// escena (la misma que el generador)
-		Vector3(-10, 0, 0),	// origen inicial
-		{ 0, 0, 0 },			// velocidad inicial
-		5,								// tamaño
-		{ 0.4,0.7,1,1 },	// color
-		3,								// masa
-		0.99,							// damping
-		-1);						// tiempo de vida max
-
-	particle->setPosition({-10,0,0});
-	particle->setVelocity({0,0,0});
-
-	particle->setq(0.1);
-
-	gObjects.push_back(particle);
-
-	//pSystems.push_back(sys);
+	pSystems.push_back(sys);
 }
 
 void Scene0::step(double t)
 {
 	Scene::step(t);
-
-	particle->addForce(magnetism->generateForce(*particle));
 }
 
 void Scene0::load()

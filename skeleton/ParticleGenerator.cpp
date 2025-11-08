@@ -225,3 +225,51 @@ void FireworkGenerator::generateParticle()
 		std::cout << "[!] NO EXISTE MODELO: " << model << std::endl;
 	}
 }
+
+// ------- GENERADOR PARTICULAS CARGADAS -------
+void ChargedGenerator::generateParticle()
+{
+	// buscamos si existe el modelo en el mapa
+	auto it = particles.find(model);
+
+	if (it != particles.end()) // si existe ese modelo...
+	{
+		if (numParticles < maxParticles) // y aun puedo generar particulas
+		{
+			// distribuciones
+			std::uniform_int_distribution<> particlesToGenerateDistr(1, 1);
+
+			int particlesToGenerate = particlesToGenerateDistr(generator); // particulas que se generaran en este tick
+
+			for (int i = 0; i < particlesToGenerate; i++)
+			{
+				Vector3 newOrg;	// posicion en la que se genera
+				Vector3 newVel;	// velocidad con la que se genera
+
+				// org
+				newOrg.x = -20;
+				newOrg.y = 0;
+				newOrg.z = 0;
+				// vel
+				newVel.x = 0;
+				newVel.y = 0;
+				newVel.z = 0;
+
+				// creamos la nueva particula
+				Particle* p = new Particle(*it->second);
+
+				p->setPosition(newOrg);
+				p->setVelocity(newVel);
+				p->setq(0.1);
+
+				generatedParticles.push_back(p);
+				scn->addEntity(p);
+				numParticles++;
+			}
+		}
+	}
+	else
+	{
+		std::cout << "[!] NO EXISTE MODELO: " << model << std::endl;
+	}
+}
