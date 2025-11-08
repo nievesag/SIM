@@ -33,6 +33,7 @@
     <ClCompile Include="ForceGenerator.cpp">
       <Filter>ParticleManagement</Filter>
     </ClCompile>
+    <ClCompile Include="ChargedEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -68,6 +69,7 @@
     <ClInclude Include="Particle.h">
       <Filter>ParticleManagement</Filter>
     </ClInclude>
+    <ClInclude Include="ChargedEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

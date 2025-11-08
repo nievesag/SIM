@@ -20,6 +20,7 @@ public:
 	Particle(Scene* scn, Vector3 pos, Vector3 vel, double siz, Vector4 col, float m, float damp, float maxLT);
 	Particle(Scene* scn, Vector3 pos, Vector3 vel, double size);
 	Particle(const Particle& model); // constructora con modelo
+	Particle(const Particle& model, float newSize); // constructora con modelo para diferentes tamaños
 	~Particle() override;
 
 	// integradores: euler explicito y semi implicito
@@ -31,7 +32,6 @@ public:
 	void setGravity(Vector3 g) { gravity = g; }			// gravedad
 	void setLifetime(float l) { lifetime = l; }			// tiempo de vida
 	void setMaxLifetime(float l) { maxLifetime = l; }	// tiempo de vida max
-	
 
 	// getters
 	Vector3 getGravity() const { return gravity; }

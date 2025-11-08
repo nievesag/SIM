@@ -254,6 +254,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="ChargedEntity.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />
@@ -271,6 +272,7 @@
   <ItemGroup>
     <ClInclude Include="axis.h" />
     <ClInclude Include="callbacks.hpp" />
+    <ClInclude Include="ChargedEntity.h" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ForceGenerator.h" />

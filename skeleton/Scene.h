@@ -5,6 +5,9 @@
 #include "Entity.h"
 #include "Particle.h"
 #include "ForceGenerator.h"
+#include "ParticleGenerator.h"
+#include "ChargedEntity.h"
+
 
 class ParticleSystem;
 
@@ -54,5 +57,7 @@ public:
 
 private:
 	ForceGenerator* magnetism = nullptr;
-	Particle* particle = nullptr;
+	ChargedGenerator* chargedGenerator = nullptr;
+	TrailGenerator* trailGenerator = nullptr;
+	bool fatherPart = false;
 };

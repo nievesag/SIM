@@ -12,6 +12,7 @@
 #include <iostream>
 #include <random>
 
+#include "ChargedEntity.h"
 #include "Particle.h"
 
 class Scene;
@@ -24,7 +25,7 @@ public:
 	virtual ~ParticleGenerator();
 
 	// updates
-	void step(double t);
+	virtual void step(double t);
 	std::vector<Particle*> getParticles() { return generatedParticles; }
 
 	// --- distribuciones estadisticas (uniforme/normal) -> posicion y velocidad siguen la distribucion
@@ -108,7 +109,38 @@ public:
 	}
 
 	~ChargedGenerator() override = default;
+	void addChargedEnitity(ChargedEntity* p);
+
+private:
+	void generateParticle() override {};
+};
+
+class TrailGenerator : public ParticleGenerator
+{
+public:
+	TrailGenerator(Scene* s, std::string model)
+		: ParticleGenerator(s, model) {}
+
+	~TrailGenerator() override = default;
+
+	void setFatherPart(Entity* fp) { fatherPart = fp; }
+
+	//virtual void step(double t) override;
+
+	Vector3 getPosition() const { return position; }
+	Vector3 getDirection() const { return direction; }
+
+	void setPosition(Vector3 p) { position = p; }
+	void setDirection(Vector3 d) { direction = d; }
+	void setFatherSize(float s) { size = s; }
+	void setFatherAlive(bool a) { fatherAlive = a; }
 
 private:
 	void generateParticle() override;
+	Entity* fatherPart = nullptr; // estas particulas siguen a una padre
+
+	Vector3 position;
+	Vector3 direction;
+	float size;
+	bool fatherAlive = true;
 };

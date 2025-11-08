@@ -43,6 +43,23 @@ Particle::Particle(const Particle& model) :
 	maxLifetime = model.maxLifetime;
 }
 
+Particle::Particle(const Particle& model, float newSize)
+	: Entity(model.scene)
+{
+	// crea nueva particula a traves de los atributos de una particula modelo con variacion de tamaño
+	pose = new PxTransform(model.pose->p);
+	velocity = model.velocity;
+	acc = model.acc;
+	damping = model.damping;
+	size = newSize;
+	shape = CreateShape(PxSphereGeometry(newSize));
+	color = model.color;
+	renderItem = new RenderItem(shape, pose, color);
+	mass = model.mass;
+	lifetime = model.lifetime;
+	maxLifetime = model.maxLifetime;
+}
+
 Particle::~Particle()
 {
 	//DeregisterRenderItem(renderItem);

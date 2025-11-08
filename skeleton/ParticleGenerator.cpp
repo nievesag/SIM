@@ -4,6 +4,16 @@
 
 #include "Scene.h"
 
+/// <summary>
+/// En la constructura se construyen las particulas modelos
+/// MODELOS:
+/// - Cascada
+/// - Niebla
+/// - Fuegos
+/// - Carga
+/// - Rastro
+/// [Estos strings definen a los modelos]
+/// </summary>
 ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 	: scn(s), model(mod)
 {
@@ -28,7 +38,7 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		{ 0, 0, 0 },				// velocidad inicial
 		15,									// tamaño
 		{ 0.5,0.6,0.7,1 },	// color
-		0.01,									// masa
+		0.01,								// masa
 		0.99,								// damping
 		3);							// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Niebla"), modeloMist));
@@ -50,16 +60,29 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 	// - particula cargada
 	Particle* modeloCharge = new Particle(
 		scn,							// escena (la misma que el generador)
-		Vector3(0, 0, 0),				// origen inicial
-		{ 100, -9.8, 100 },				// velocidad inicial
+		Vector3(0, 0, 0),	// origen inicial
+		{ 100, -9.8, 100 }, // velocidad inicial
 		5,								// tamaño
-		{ 0,1,0,1 },					// color
+		{ 0,1,0,1 },		// color
 		2,								// masa
 		0.99,							// damping
-		-1);							// tiempo de vida max
+		-1);						// tiempo de vida max
 	modeloCharge->setq(2);
 	particles.emplace(std::make_pair(std::string("Carga"), modeloCharge));
 	DeregisterRenderItem(modeloCharge->getRenderItem());
+
+	// - particula rastro
+	Particle* modeloTrail = new Particle(
+		scn,								// escena (la misma que el generador)
+		Vector3(0, 0, 0),		// origen inicial
+		{ 0, 0, 0 },				// velocidad inicial
+		1,									// tamaño
+		{ 1,1,1,1 },			// color
+		1,									// masa
+		0.99,								// damping
+		0.2);							// tiempo de vida max
+	particles.emplace(std::make_pair(std::string("Rastro"), modeloTrail));
+	DeregisterRenderItem(modeloTrail->getRenderItem());
 }
 
 ParticleGenerator::~ParticleGenerator()
@@ -82,7 +105,11 @@ void ParticleGenerator::deleteEntities()
 		{
 			generatedParticles.erase(generatedParticles.begin() + i);
 		}
+		else
+		{
 		i++;
+			
+		}
 	}
 }
 
@@ -227,44 +254,60 @@ void FireworkGenerator::generateParticle()
 }
 
 // ------- GENERADOR PARTICULAS CARGADAS -------
-void ChargedGenerator::generateParticle()
+void ChargedGenerator::addChargedEnitity(ChargedEntity* p)
+{
+	generatedParticles.push_back(p);
+	scn->addEntity(p);
+}
+
+// ------- GENERADOR RASTRO -------
+
+void TrailGenerator::generateParticle()
 {
 	// buscamos si existe el modelo en el mapa
 	auto it = particles.find(model);
 
 	if (it != particles.end()) // si existe ese modelo...
 	{
-		if (numParticles < maxParticles) // y aun puedo generar particulas
+		if (fatherAlive)
 		{
 			// distribuciones
-			std::uniform_int_distribution<> particlesToGenerateDistr(1, 1);
+			std::uniform_int_distribution<> particlesToGenerateDistr(1, 2);
+			std::normal_distribution<> lifetimeDistr(0.1, 0.2);
+
+			/*
+			std::uniform_int_distribution<> posXDistr(fatherPart->getPosition().x - fatherPart->getSize() / 3,
+				fatherPart->getPosition().x + fatherPart->getSize() / 3);
+			std::uniform_int_distribution<> posYDistr(fatherPart->getPosition().y - fatherPart->getSize() / 3,
+				fatherPart->getPosition().y + fatherPart->getSize() / 3);
+			std::uniform_int_distribution<> posZDistr(fatherPart->getPosition().z - fatherPart->getSize() / 3,
+				fatherPart->getPosition().z + fatherPart->getSize() / 3);
+			std::uniform_int_distribution<> sizeDistr(1, fatherPart->getSize() / 2);
+			*/
 
 			int particlesToGenerate = particlesToGenerateDistr(generator); // particulas que se generaran en este tick
 
 			for (int i = 0; i < particlesToGenerate; i++)
 			{
-				Vector3 newOrg;	// posicion en la que se genera
-				Vector3 newVel;	// velocidad con la que se genera
+				Vector3 newOrg = position;
+				Vector3 newVel = direction;
 
 				// org
-				newOrg.x = -20;
-				newOrg.y = 0;
-				newOrg.z = 0;
-				// vel
-				newVel.x = 0;
-				newVel.y = 0;
-				newVel.z = 0;
+				//newOrg.x = posXDistr(generator);
+				//newOrg.y = posYDistr(generator);
+				//newOrg.z = posZDistr(generator);
+
+				//float newSize = sizeDistr(generator);
 
 				// creamos la nueva particula
 				Particle* p = new Particle(*it->second);
 
 				p->setPosition(newOrg);
 				p->setVelocity(newVel);
-				p->setq(0.1);
+				p->setMaxLifetime(lifetimeDistr(generator));
 
 				generatedParticles.push_back(p);
 				scn->addEntity(p);
-				numParticles++;
 			}
 		}
 	}
@@ -273,3 +316,5 @@ void ChargedGenerator::generateParticle()
 		std::cout << "[!] NO EXISTE MODELO: " << model << std::endl;
 	}
 }
+
+

@@ -1,4 +1,5 @@
 #include "Scene.h"
+
 #include "ProjectileGenerator.h"
 #include "RenderUtils.hpp"
 #include "ParticleSystem.h"
@@ -90,9 +91,16 @@ void Scene0::init()
 	//ParticleGenerator* fireworkGenerator = new FireworkGenerator(this, "Fuegos");
 	//sys->registerGenerator(fireworkGenerator);
 
-	ParticleGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
+	trailGenerator = new TrailGenerator(this, "Rastro");
+	sys->registerGenerator(trailGenerator);
+
+	chargedGenerator = new ChargedGenerator(this, "Carga");
 	sys->registerGenerator(chargedGenerator);
 
+	ChargedEntity* bola = new ChargedEntity(this, { -20, 0,0 }, 3, -0.1, trailGenerator);
+	chargedGenerator->addChargedEnitity(bola);
+
+	/*
 	// -- Force generators
 	//ForceGenerator* gg = new GravityGenerator({ 0,0,0 }, 50, this, {0, -9.8, 0});
 	//sys->registerForceGenerator(gg);
@@ -102,8 +110,12 @@ void Scene0::init()
 
 	//ForceGenerator* fg = new WhirlGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
 	//sys->registerForceGenerator(fg);
+	*/
 
-	magnetism = new MagnetismGenerator({ -50,0,0 }, 50, this, -0.05);
+	magnetism = new MagnetismGenerator({ -50,0,0 }, 50, this, -0.01);
+	sys->registerForceGenerator(magnetism);
+
+	magnetism = new MagnetismGenerator({ 50,0,0 }, 50, this, 0.2);
 	sys->registerForceGenerator(magnetism);
 
 	pSystems.push_back(sys);
@@ -112,6 +124,12 @@ void Scene0::init()
 void Scene0::step(double t)
 {
 	Scene::step(t);
+
+	if (!fatherPart)
+	{
+		//trailGenerator->setFatherPart(chargedGenerator->getParticles().front());
+		fatherPart = true;
+	}
 }
 
 void Scene0::load()
