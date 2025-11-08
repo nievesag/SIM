@@ -81,7 +81,8 @@ Vector3 MagnetismGenerator::generateForce(Entity& e)
         // F = (u q1 * q2) / (4 pi r^2)
 
         // falta permeabilidad del medio!!!!!!!!!!!
-    	double F = b * e.getq() / 4 * M_PI * std::pow((e.getPosition() - areaPos).magnitude(), 2);
+        double u = 0.7; // 4 * pi * 10^-7
+    	double F = u * b * e.getq() / 4 * M_PI * std::pow((e.getPosition() - areaPos).magnitude(), 2);
 
         Vector3 action = (e.getPosition() - areaPos);
 

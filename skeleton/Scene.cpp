@@ -115,7 +115,7 @@ void Scene0::init()
 	magnetism = new MagnetismGenerator({ -50,0,0 }, 50, this, -0.01);
 	sys->registerForceGenerator(magnetism);
 
-	magnetism = new MagnetismGenerator({ 50,0,0 }, 50, this, 0.2);
+	magnetism = new MagnetismGenerator({ 30,0,0 }, 50, this, 0.2);
 	sys->registerForceGenerator(magnetism);
 
 	pSystems.push_back(sys);
@@ -127,7 +127,6 @@ void Scene0::step(double t)
 
 	if (!fatherPart)
 	{
-		//trailGenerator->setFatherPart(chargedGenerator->getParticles().front());
 		fatherPart = true;
 	}
 }
