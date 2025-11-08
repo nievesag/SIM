@@ -4,7 +4,9 @@
 #include "RenderUtils.hpp"
 #include "ParticleSystem.h"
 #include "ParticleGenerator.h"
+#include "Wall.h"
 class Pipe;
+#include <fstream>
 
 Scene::~Scene()
 {
@@ -78,6 +80,8 @@ void Scene::keyPressed(unsigned char key, const physx::PxTransform& camera)
 void Scene0::init()
 {
 	Scene::init();
+
+	readFile("mapa1.txt");
 
 	pipe = new Pipe(this, { 30,100,0 });
 	addEntity(pipe);
@@ -173,4 +177,42 @@ void Scene0::newToy(Vector3 pos)
 	//toy->addForce({ 0,200,0 }); // ?????????
 
 	chargedGenerator->addChargedEnitity(toy);
+}
+
+void Scene0::readFile(std::string file)
+{
+	std::ifstream entrada(file);
+
+	if (!entrada.is_open())
+	{
+		std::cout << "Error abriendo archivo\n";
+		return;
+	}
+
+	// para poder hacer cin para leer el archivo
+	auto cinbuf = std::cin.rdbuf(entrada.rdbuf());
+
+	std::cin >> height >> width;  // mapa
+
+	std::string fila;
+	for (int i = 0; i < height; i++)
+	{
+		std::cin >> fila;
+
+		for (int j = 0; j < width; j++)
+		{
+			std::cout << j << " " << i << std::endl;
+
+			// MURO
+			if (fila[j] == 'x')
+			{
+				Wall* wall = new Wall(this, 20, Vector3( j * 40, i * 40,0  ), false);
+			}
+			// VACIO
+			else if (fila[j] == 'o')
+			{
+				Wall* wall = new Wall(this, 20, Vector3(j * 40, i * 40, 0), true);
+			}
+		}
+	}
 }

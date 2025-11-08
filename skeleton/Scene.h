@@ -37,6 +37,7 @@ public:
 	Vector3 getActionThreshold() { return actionThreshold; }
 
 	virtual void newToy(Vector3 pos) = 0;
+	virtual void readFile(std::string file) = 0;
 
 protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
@@ -60,6 +61,8 @@ public:
 
 	void newToy(Vector3 pos) override;
 
+	void readFile(std::string file) override;
+
 private:
 	ParticleSystem* sys = nullptr;
 
@@ -69,6 +72,8 @@ private:
 	ChargedGenerator* chargedGenerator = nullptr;
 	TrailGenerator* trailGenerator = nullptr;
 	bool fatherPart = false;
+
+	int width = 0, height = 0;
 
 	Pipe* pipe = nullptr;
 };

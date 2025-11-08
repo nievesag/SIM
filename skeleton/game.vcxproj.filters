@@ -35,6 +35,7 @@
     </ClCompile>
     <ClCompile Include="ChargedEntity.cpp" />
     <ClCompile Include="Pipe.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -72,6 +73,7 @@
     </ClInclude>
     <ClInclude Include="ChargedEntity.h" />
     <ClInclude Include="Pipe.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

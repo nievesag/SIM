@@ -11,7 +11,6 @@ Pipe::Pipe(Scene* scn, Vector3 pos)
 	shape = CreateShape(physx::PxBoxGeometry(10, pipeLenght, 10));
 	color = { 0.4,0.5,0.6,1 };
 	renderItem = new RenderItem(shape, pose, color);
-	RegisterRenderItem(renderItem);
 }
 
 void Pipe::step(double t)
