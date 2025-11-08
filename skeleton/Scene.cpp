@@ -4,6 +4,7 @@
 #include "RenderUtils.hpp"
 #include "ParticleSystem.h"
 #include "ParticleGenerator.h"
+class Pipe;
 
 Scene::~Scene()
 {
@@ -78,8 +79,11 @@ void Scene0::init()
 {
 	Scene::init();
 
+	pipe = new Pipe(this, { 30,100,0 });
+	addEntity(pipe);
+
 	// ----- System
-	ParticleSystem* sys = new ParticleSystem(this);
+	sys = new ParticleSystem(this);
 
 	// -- Particle generators
 	//ParticleGenerator* waterfallGenerator = new WaterfallGenerator(this, "Cascada");
@@ -115,7 +119,7 @@ void Scene0::init()
 	magnetism = new MagnetismGenerator({ -50,0,0 }, 50, this, -0.01);
 	sys->registerForceGenerator(magnetism);
 
-	magnetism = new MagnetismGenerator({ 30,0,0 }, 50, this, 0.2);
+	magnetism = new MagnetismGenerator({ 50,0,0 }, 50, this, 0.2);
 	sys->registerForceGenerator(magnetism);
 
 	pSystems.push_back(sys);
@@ -145,14 +149,28 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 {
 	switch(toupper(key))
 	{
-	//case 'B': break;
-	//case ' ':	break;
 	case 'H':
 	{
-		// disparo
+		magnetism->toggleForce();
+		break;
+	}
+	case 'N':
+	{
+		pipe->eject();
 		break;
 	}
 	default:
 		break;
 	}
+}
+
+void Scene0::newToy(Vector3 pos)
+{
+	TrailGenerator* trail = new TrailGenerator(this, "Rastro");
+	sys->registerGenerator(trail);
+
+	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1, trail);
+	//toy->addForce({ 0,200,0 }); // ?????????
+
+	chargedGenerator->addChargedEnitity(toy);
 }

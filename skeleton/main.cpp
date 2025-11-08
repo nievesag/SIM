@@ -16,7 +16,7 @@
 
 #include "SceneManager.h"
 
-std::string display_text = "This is a test";
+std::string display_text = "Juego de imanes";
 
 using namespace physx;
 

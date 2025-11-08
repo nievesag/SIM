@@ -13,4 +13,3 @@ public:
 private:
 	TrailGenerator* trailGenerator = nullptr;
 };
-

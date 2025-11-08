@@ -7,6 +7,7 @@
 #include "ForceGenerator.h"
 #include "ParticleGenerator.h"
 #include "ChargedEntity.h"
+#include "Pipe.h"
 
 
 class ParticleSystem;
@@ -35,6 +36,8 @@ public:
 
 	Vector3 getActionThreshold() { return actionThreshold; }
 
+	virtual void newToy(Vector3 pos) = 0;
+
 protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
 	std::vector<ParticleSystem*> pSystems; // sistemas de particulas
@@ -55,9 +58,17 @@ public:
 	void unload() override;
 	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
 
+	void newToy(Vector3 pos) override;
+
 private:
-	ForceGenerator* magnetism = nullptr;
+	ParticleSystem* sys = nullptr;
+
+	std::vector<MagnetismGenerator*> magnets;
+
+	MagnetismGenerator* magnetism = nullptr;
 	ChargedGenerator* chargedGenerator = nullptr;
 	TrailGenerator* trailGenerator = nullptr;
 	bool fatherPart = false;
+
+	Pipe* pipe = nullptr;
 };

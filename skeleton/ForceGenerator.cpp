@@ -76,13 +76,13 @@ MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, flo
 
 Vector3 MagnetismGenerator::generateForce(Entity& e)
 {
-    if (inArea(e) && e.getq() != 0) // si esta en el area y es una particula cargada
+    if (inArea(e) && e.getq() != 0 && isActive) // si esta en el area y es una particula cargada
     {
         // F = (u q1 * q2) / (4 pi r^2)
 
         // falta permeabilidad del medio!!!!!!!!!!!
         double u = 0.7; // 4 * pi * 10^-7
-    	double F = u * b * e.getq() / 4 * M_PI * std::pow((e.getPosition() - areaPos).magnitude(), 2);
+    	double F = b * e.getq() / 4 * M_PI * std::pow((e.getPosition() - areaPos).magnitude(), 2);
 
         Vector3 action = (e.getPosition() - areaPos);
 

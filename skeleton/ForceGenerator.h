@@ -90,6 +90,9 @@ public:
 
 	Vector3 generateForce(Entity& e) override;
 
+	void toggleForce() { isActive = !isActive; }
+
 private:
 	float b = 0; // carga del campo magnetico
+	bool isActive = true;
 };
