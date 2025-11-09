@@ -75,16 +75,21 @@ void Scene::keyPressed(unsigned char key, const physx::PxTransform& camera)
 
 }
 
+void Scene::specialkey(int key, const physx::PxTransform& camera)
+{
+
+}
+
 // ------------------------ ESCENAS HIJAS ------------------------
 // Escena 0
 void Scene0::init()
 {
 	Scene::init();
 
-	readFile("mapa1.txt");
+	//readFile("mapa1.txt");
 
-	pipe = new Pipe(this, { 30,100,0 });
-	addEntity(pipe);
+	//pipe = new Pipe(this, { 30,100,0 });
+	//addEntity(pipe);
 
 	// ----- System
 	sys = new ParticleSystem(this);
@@ -105,7 +110,7 @@ void Scene0::init()
 	chargedGenerator = new ChargedGenerator(this, "Carga");
 	sys->registerGenerator(chargedGenerator);
 
-	ChargedEntity* bola = new ChargedEntity(this, { -20, 0,0 }, 3, -0.1, trailGenerator);
+	ChargedEntity* bola = new ChargedEntity(this, { 40, 200,0 }, 3, -0.1, trailGenerator);
 	chargedGenerator->addChargedEnitity(bola);
 
 	/*
@@ -120,11 +125,13 @@ void Scene0::init()
 	//sys->registerForceGenerator(fg);
 	*/
 
-	magnetism = new MagnetismGenerator({ -50,0,0 }, 50, this, -0.01);
-	sys->registerForceGenerator(magnetism);
+	magnetism1 = new MagnetismGenerator({ -50,100,0 }, 50, this, -0.01);
+	sys->registerForceGenerator(magnetism1);
+	magnets.push_back(magnetism1);
 
-	magnetism = new MagnetismGenerator({ 50,0,0 }, 50, this, 0.2);
-	sys->registerForceGenerator(magnetism);
+	magnetism2 = new MagnetismGenerator({ 50,100,0 }, 50, this, 0.2);
+	sys->registerForceGenerator(magnetism2);
+	magnets.push_back(magnetism2);
 
 	pSystems.push_back(sys);
 }
@@ -153,9 +160,9 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 {
 	switch(toupper(key))
 	{
-	case 'H':
+	case 'Z':
 	{
-		magnetism->toggleForce();
+		magnetism1->toggleForce();
 		break;
 	}
 	case 'N':
@@ -163,9 +170,65 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 		pipe->eject();
 		break;
 	}
+	case 'Q':
+	{
+		std::cout << "iman " << 0 << " seleccionado" << std::endl;
+		selectedMagnet = magnets[0];
+		break;
+	}
+	// MAGNET UP
+	case 'T':
+	{
+		if (selectedMagnet != nullptr) selectedMagnet->move({0,1,0});
+	}
+	// MAGNET DOWN
+	case 'G':
+	{
+		if (selectedMagnet != nullptr) selectedMagnet->move({ 0,-1,0 });
+	}
+	// MAGNET LEFT
+	case 'F':
+	{
+		if (selectedMagnet != nullptr) selectedMagnet->move({ -1,0,0 });
+	}
+	// MAGNET RIGHT
+	case 'H':
+	{
+		if (selectedMagnet != nullptr) selectedMagnet->move({ 1,0,0 });
+	}
+	case 'I': // colocar el iman
+	{
+		if (selectedMagnet != nullptr)
+		{
+			if (map[(int)selectedMagnet->getAreaPose()->p.y][(int)selectedMagnet->getAreaPose()->p.z]->getEmpty())
+			{
+				std::cout << "HOLA" << std::endl;
+			}
+			else
+			{
+				std::cout << "ADIOS" << std::endl;
+			}
+		}
+	}
 	default:
 		break;
 	}
+}
+
+void Scene0::specialkey(int key, const physx::PxTransform& camera)
+{
+	/*
+	// Handle keyboard input
+	switch (key)
+	{
+	case :
+
+		break;
+	case GLFW_KEY_A:
+
+		break;
+	}
+	*/
 }
 
 void Scene0::newToy(Vector3 pos)
@@ -195,6 +258,8 @@ void Scene0::readFile(std::string file)
 	std::cin >> height >> width;  // mapa
 
 	std::string fila;
+	std::vector<Wall*> line;
+
 	for (int i = 0; i < height; i++)
 	{
 		std::cin >> fila;
@@ -207,12 +272,16 @@ void Scene0::readFile(std::string file)
 			if (fila[j] == 'x')
 			{
 				Wall* wall = new Wall(this, 20, Vector3( j * 40, i * 40,0  ), false);
+				line.push_back(wall);
 			}
 			// VACIO
 			else if (fila[j] == 'o')
 			{
-				Wall* wall = new Wall(this, 20, Vector3(j * 40, i * 40, 0), true);
+				Wall* empty = new Wall(this, 20, Vector3(j * 40, i * 40, 0), true);
+				line.push_back(empty);
 			}
 		}
+
+		map.push_back(line);
 	}
 }

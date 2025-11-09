@@ -7,8 +7,8 @@ ForceGenerator::ForceGenerator(Vector3 pos, float areaR, Scene* s)
     : areaPos(pos), areaRadius(areaR)
 {
     // construye area
-    const PxTransform* areat = new PxTransform(areaPos);
-    area = new RenderItem(CreateShape(PxSphereGeometry(areaRadius)), areat, { 1,0,0,0.5 });
+    areaPose = new PxTransform(areaPos);
+    area = new RenderItem(CreateShape(PxSphereGeometry(areaRadius)), areaPose, { 1,0,0,0.5 });
 }
 
 ForceGenerator::~ForceGenerator()
@@ -64,14 +64,14 @@ MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, flo
     : ForceGenerator(pos, areaR, scn), b(B)
 {
     // construye el iman
-    physx::PxTransform* pose = new PxTransform(pos);
+    magnetPose = new PxTransform(pos);
     physx::PxShape* shape = CreateShape(PxBoxGeometry(10, 10, 10));
 
     Vector4 color = { 1,1,1,1 };
     if (b < 0) color = { 1,0,0,1 }; // norte
     else if (b > 1) color = { 0,0,1,1 }; // sur
 
-    RegisterRenderItem(new RenderItem(shape, pose, color));
+    RegisterRenderItem(new RenderItem(shape, magnetPose, color));
 }
 
 Vector3 MagnetismGenerator::generateForce(Entity& e)
@@ -82,11 +82,17 @@ Vector3 MagnetismGenerator::generateForce(Entity& e)
 
         // falta permeabilidad del medio!!!!!!!!!!!
         double u = 0.7; // 4 * pi * 10^-7
-    	double F = b * e.getq() / 4 * M_PI * std::pow((e.getPosition() - areaPos).magnitude(), 2);
+    	double F = b * e.getq() / 4 * M_PI * std::pow((e.getPosition() - areaPose->p).magnitude(), 2);
 
-        Vector3 action = (e.getPosition() - areaPos);
+        Vector3 action = (e.getPosition() - areaPose->p);
 
         return F * action;
     }
     return { 0,0,0 };
+}
+
+void MagnetismGenerator::move(Vector3 dir)
+{
+    areaPose->p += dir * 5;
+    magnetPose->p += dir * 5;
 }

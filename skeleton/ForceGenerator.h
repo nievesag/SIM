@@ -25,6 +25,8 @@ public:
 	// en el update de cada particula llamas a generateForce
 	virtual Vector3 generateForce(Entity& e) = 0;
 
+	PxTransform* getAreaPose() const { return areaPose; }
+
 protected:
 	bool showArea();
 	bool inArea(Entity& e);
@@ -32,6 +34,7 @@ protected:
 	float areaRadius; // radio de area de actuacion
 	RenderItem* area = nullptr;
 	Vector3 areaPos = { 0,0,0 };
+	PxTransform* areaPose = nullptr;
 };
 
 class GravityGenerator : public ForceGenerator
@@ -92,7 +95,11 @@ public:
 
 	void toggleForce() { isActive = !isActive; }
 
+	void move(Vector3 dir);
+
 private:
 	float b = 0; // carga del campo magnetico
 	bool isActive = true;
+
+	physx::PxTransform* magnetPose = nullptr;
 };

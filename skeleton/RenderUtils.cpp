@@ -5,7 +5,6 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 
-
 using namespace physx;
 
 extern void initPhysics(bool interactive);
@@ -137,7 +136,8 @@ void exitCallback(void)
 void renderLoop()
 {
 	StartCounter();
-	sCamera = new Camera(PxVec3(50.0f, 50.0f, 50.0f), PxVec3(-0.6f,-0.2f,-0.7f));
+	sCamera = new Camera(PxVec3(100.0f, 100.0f, 380.0f), 
+		PxVec3(0.0f,0.0f,-1.0f));
 
 	setupDefaultWindow("SIM");
 	setupDefaultRenderState();

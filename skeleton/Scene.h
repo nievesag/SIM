@@ -8,7 +8,7 @@
 #include "ParticleGenerator.h"
 #include "ChargedEntity.h"
 #include "Pipe.h"
-
+class Wall;
 
 class ParticleSystem;
 
@@ -33,6 +33,7 @@ public:
 	void addSystem(ParticleSystem* sys);
 
 	virtual void keyPressed(unsigned char key, const physx::PxTransform& camera);
+	virtual void specialkey(int key, const physx::PxTransform& camera); // special keypress event
 
 	Vector3 getActionThreshold() { return actionThreshold; }
 
@@ -58,6 +59,7 @@ public:
 	void load() override;
 	void unload() override;
 	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
+	void specialkey(int key, const physx::PxTransform& camera) override;
 
 	void newToy(Vector3 pos) override;
 
@@ -66,11 +68,19 @@ public:
 private:
 	ParticleSystem* sys = nullptr;
 
+	std::vector<std::vector<Wall*>> map;
+
 	std::vector<MagnetismGenerator*> magnets;
 
-	MagnetismGenerator* magnetism = nullptr;
+	MagnetismGenerator* magnetism1 = nullptr;
+	MagnetismGenerator* magnetism2 = nullptr;
+
+	MagnetismGenerator* selectedMagnet = nullptr;
+
 	ChargedGenerator* chargedGenerator = nullptr;
+
 	TrailGenerator* trailGenerator = nullptr;
+
 	bool fatherPart = false;
 
 	int width = 0, height = 0;
