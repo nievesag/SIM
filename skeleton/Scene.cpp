@@ -183,6 +183,7 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	// MAGNET UP
 	case 'T':
 	{
+		std::cout << "UP" << std::endl;
 		if (selectedMagnet != nullptr) selectedMagnet->move({0,1,0});
 	}
 	// MAGNET DOWN
@@ -199,20 +200,6 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	case 'H':
 	{
 		if (selectedMagnet != nullptr) selectedMagnet->move({ 1,0,0 });
-	}
-	case 'I': // colocar el iman
-	{
-		if (selectedMagnet != nullptr)
-		{
-			if (map[(int)selectedMagnet->getAreaPose()->p.y][(int)selectedMagnet->getAreaPose()->p.z]->getEmpty())
-			{
-				std::cout << "HOLA" << std::endl;
-			}
-			else
-			{
-				std::cout << "ADIOS" << std::endl;
-			}
-		}
 	}
 	default:
 		break;
@@ -275,13 +262,13 @@ void Scene0::readFile(std::string file)
 			// MURO
 			if (fila[j] == 'x')
 			{
-				Wall* wall = new Wall(this, 20, Vector3( j * 40, i * 40,0  ), false);
+				Wall* wall = new Wall(this, 20, Vector3( j * -40, i * -40,0  ), false);
 				line.push_back(wall);
 			}
 			// VACIO
 			else if (fila[j] == 'o')
 			{
-				Wall* empty = new Wall(this, 20, Vector3(j * 40, i * 40, 0), true);
+				Wall* empty = new Wall(this, 20, Vector3(j * -40, i * -40, 0), true);
 				line.push_back(empty);
 			}
 		}

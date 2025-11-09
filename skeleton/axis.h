@@ -19,16 +19,16 @@ class axis
 public:
 	axis() 
 	{
-		tO = new PxTransform({ 0, 0, 0 });
+		tO = new PxTransform( 0, 0, 0 );
 		bolaO = new RenderItem(CreateShape(PxSphereGeometry(1)), tO, { 1,1,1,1 });
 
-		tX = new PxTransform({ separacion * ax{}.X.getX(), 0, 0 });
+		tX = new PxTransform( separacion * ax{}.X.getX(), 0, 0 );
 		bolaX = new RenderItem(CreateShape(PxSphereGeometry(1)), tX, { 1,0,0,1 });
 
-		tY = new PxTransform({ 0, separacion * ax{}.Y.getY(), 0 });
+		tY = new PxTransform( 0, separacion * ax{}.Y.getY(), 0 );
 		bolaY = new RenderItem(CreateShape(PxSphereGeometry(1)), tY, { 0,1,0,1 });
 
-		tZ = new PxTransform({ 0, 0 , separacion * ax{}.Z.getZ() });
+		tZ = new PxTransform( 0, 0 , separacion * ax{}.Z.getZ() );
 		bolaZ = new RenderItem(CreateShape(PxSphereGeometry(1)), tZ, { 0,0,1,1 });
 	}
 
