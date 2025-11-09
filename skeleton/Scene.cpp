@@ -35,15 +35,18 @@ void Scene::step(double t) // update
 
 void Scene::deleteEntities()
 {
-	int i = 0;
 	for (auto g : gObjects)
 	{
 		if (!g->getAlive())
 		{
-			delete g;
-			gObjects.erase(gObjects.begin()+i);
+			auto it = std::find(gObjects.begin(), gObjects.end(), g);
+
+			if (it != gObjects.end())
+			{
+				delete g;
+				gObjects.erase(it);
+			}
 		}
-		i++;
 	}
 }
 
@@ -86,7 +89,7 @@ void Scene0::init()
 {
 	Scene::init();
 
-	//readFile("mapa1.txt");
+	readFile("mapa1.txt");
 
 	//pipe = new Pipe(this, { 30,100,0 });
 	//addEntity(pipe);
@@ -174,6 +177,7 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	{
 		std::cout << "iman " << 0 << " seleccionado" << std::endl;
 		selectedMagnet = magnets[0];
+		selectedMagnet->setPos(map[0][0]->getPosition());
 		break;
 	}
 	// MAGNET UP

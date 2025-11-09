@@ -96,3 +96,9 @@ void MagnetismGenerator::move(Vector3 dir)
     areaPose->p += dir * 5;
     magnetPose->p += dir * 5;
 }
+
+void MagnetismGenerator::setPos(Vector3 newPos)
+{
+    areaPose->p = newPos;
+    magnetPose->p = newPos;
+}

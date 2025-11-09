@@ -98,17 +98,16 @@ void ParticleGenerator::step(double t)
 
 void ParticleGenerator::deleteEntities()
 {
-	int i = 0;
 	for (auto p : generatedParticles)
 	{
 		if (!p->getAlive())
 		{
-			generatedParticles.erase(generatedParticles.begin() + i);
-		}
-		else
-		{
-		i++;
-			
+			auto it = std::find(generatedParticles.begin(), generatedParticles.end(), p);
+
+			if (it != generatedParticles.end())
+			{
+				generatedParticles.erase(it);
+			}
 		}
 	}
 }

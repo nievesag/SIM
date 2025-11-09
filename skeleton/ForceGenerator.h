@@ -96,6 +96,7 @@ public:
 	void toggleForce() { isActive = !isActive; }
 
 	void move(Vector3 dir);
+	void setPos(Vector3 newPos);
 
 private:
 	float b = 0; // carga del campo magnetico
