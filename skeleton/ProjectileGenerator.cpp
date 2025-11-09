@@ -2,38 +2,20 @@
 #include "Scene.h"
 #include "RenderUtils.hpp"
 
-ProjectileGenerator::ProjectileGenerator(Vector3 Pos, Vector3 Vel, double size, char type, Scene* s)
+ProjectileGenerator::ProjectileGenerator(Vector3 Pos, Vector3 Vel, double size, std::string type, Scene* s)
 	: scn(s)
 {
-	switch (toupper(type))
-	{
-	case 'H':
-	{
-		Particle* b = new Particle(scn, Pos, Vel, size);
-		std::pair<float, float> const simAtributes = getSimulationAtributes(4,9.8,Vel.magnitude(),50);
-		b->setMass(simAtributes.first);
-		//b->setAcc({ 0,-b->getGravity(),0 });
-		balas.push_back(b);
-
-		Particle* b1 = new Particle(scn, Pos, Vel, size);
-		std::pair<float, float> const simAtributes1 = getSimulationAtributes(4, 9.8, Vel.magnitude(), 50);
-		b1->setMass(simAtributes1.first);
-		//b1->setGravity(simAtributes1.second);
-		//b1->setAcc({ 0,-b1->getGravity(),0 });
-		balas.push_back(b1);
-
-		Particle* b2 = new Particle(scn, Pos, Vel, size);
-		std::pair<float, float> const simAtributes2 = getSimulationAtributes(4, 9.8, Vel.magnitude(), 50);
-		b2->setMass(simAtributes1.first);
-		//b2->setGravity(simAtributes1.second);
-		//b2->setAcc({ 0,-b2->getGravity(),0 });
-		balas.push_back(b2);
-
-		break;
-	}
-	default:
-		break;
-	}
+	Particle* modelo = new Particle(
+		scn,							// escena (la misma que el generador)
+		Pos,							// origen inicial
+		Vel,							// velocidad inicial
+		5,								// tamaño
+		{ 0.4,0.7,1,1 },	// color
+		3,								// masa
+		0.99,							// damping
+		-1);						// tiempo de vida max
+	model = modelo;
+	DeregisterRenderItem(modelo->getRenderItem());
 }
 
 ProjectileGenerator::~ProjectileGenerator()
@@ -41,27 +23,12 @@ ProjectileGenerator::~ProjectileGenerator()
 
 }
 
-void ProjectileGenerator::shoot(char type)
+void ProjectileGenerator::shoot()
 {
-	switch (toupper(type))
+	if (balasCount < balasMax)
 	{
-	case 'H':
-	{
-		if (!balas.empty()) 
-		{
-			// GetCamera()->getDir().getNormalized()* vel
-
-			// balas[0]->setPos(GetCamera()->getEye());
-			// balas[0]->setPos(GetCamera()->getEye());
-
-			scn->addEntity(*balas.begin());
-			balas.erase(balas.begin());
-		}
-		
-		break;
-	}
-	default:
-		break;
+		scn->addEntity(new Particle(*model));
+		balasCount++;
 	}
 }
 

@@ -136,8 +136,8 @@ void exitCallback(void)
 void renderLoop()
 {
 	StartCounter();
-	sCamera = new Camera(PxVec3(-100.0f, -100.0f, -380.0f), 
-		PxVec3(0.0f,0.0f,1.0f));
+	sCamera = new Camera(PxVec3(100.0f, 100.0f, 380.0f), 
+		PxVec3(0.0f,0.0f,-1.0f));
 
 	setupDefaultWindow("SIM");
 	setupDefaultRenderState();

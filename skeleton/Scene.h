@@ -8,6 +8,7 @@
 #include "ParticleGenerator.h"
 #include "ChargedEntity.h"
 #include "Pipe.h"
+#include "ProjectileGenerator.h"
 class Wall;
 
 class ParticleSystem;
@@ -74,6 +75,8 @@ private:
 
 	MagnetismGenerator* magnetism1 = nullptr;
 	MagnetismGenerator* magnetism2 = nullptr;
+
+	ProjectileGenerator* pGen = nullptr;
 
 	MagnetismGenerator* selectedMagnet = nullptr;
 

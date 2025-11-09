@@ -91,8 +91,8 @@ void Scene0::init()
 
 	readFile("mapa1.txt");
 
-	//pipe = new Pipe(this, { 30,100,0 });
-	//addEntity(pipe);
+	pipe = new Pipe(this, { 30,100,0 });
+	addEntity(pipe);
 
 	// ----- System
 	sys = new ParticleSystem(this);
@@ -116,17 +116,19 @@ void Scene0::init()
 	ChargedEntity* bola = new ChargedEntity(this, { 40, 200,0 }, 3, -0.1, trailGenerator);
 	chargedGenerator->addChargedEnitity(bola);
 
+	pGen = new ProjectileGenerator(GetCamera()->getEye(), GetCamera()->getDir().getNormalized() * 0.2, 5, "h", this);
+
 	/*
 	// -- Force generators
 	//ForceGenerator* gg = new GravityGenerator({ 0,0,0 }, 50, this, {0, -9.8, 0});
 	//sys->registerForceGenerator(gg);
 
-	//ForceGenerator* fg = new WindGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
-	//sys->registerForceGenerator(fg);
-
 	//ForceGenerator* fg = new WhirlGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
 	//sys->registerForceGenerator(fg);
 	*/
+
+	//ForceGenerator* fg = new WindGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
+	//sys->registerForceGenerator(fg);
 
 	magnetism1 = new MagnetismGenerator({ -50,100,0 }, 50, this, -0.01);
 	sys->registerForceGenerator(magnetism1);
@@ -183,7 +185,6 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	// MAGNET UP
 	case 'T':
 	{
-		std::cout << "UP" << std::endl;
 		if (selectedMagnet != nullptr) selectedMagnet->move({0,1,0});
 	}
 	// MAGNET DOWN
@@ -200,6 +201,10 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	case 'H':
 	{
 		if (selectedMagnet != nullptr) selectedMagnet->move({ 1,0,0 });
+	}
+	case 'I':
+	{
+		pGen->shoot();
 	}
 	default:
 		break;
@@ -228,7 +233,9 @@ void Scene0::newToy(Vector3 pos)
 	sys->registerGenerator(trail);
 
 	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1, trail);
+	toy->setVelocity({ 0,-100,0 }); // ?????????
 	//toy->addForce({ 0,200,0 }); // ?????????
+	//toy->setAcc({ 0,200,0 });
 
 	chargedGenerator->addChargedEnitity(toy);
 }
@@ -262,13 +269,13 @@ void Scene0::readFile(std::string file)
 			// MURO
 			if (fila[j] == 'x')
 			{
-				Wall* wall = new Wall(this, 20, Vector3( j * -40, i * -40,0  ), false);
+				Wall* wall = new Wall(this, 20, Vector3( j * 40, i * 40,0  ), false);
 				line.push_back(wall);
 			}
 			// VACIO
 			else if (fila[j] == 'o')
 			{
-				Wall* empty = new Wall(this, 20, Vector3(j * -40, i * -40, 0), true);
+				Wall* empty = new Wall(this, 20, Vector3(j * 40, i * 40, 0), true);
 				line.push_back(empty);
 			}
 		}
