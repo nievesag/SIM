@@ -177,34 +177,39 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	}
 	case 'Q':
 	{
-		std::cout << "iman " << 0 << " seleccionado" << std::endl;
 		selectedMagnet = magnets[0];
 		selectedMagnet->setPos(map[0][0]->getPosition());
+		std::cout << "iman " << 0 << " seleccionado" << std::endl;
 		break;
 	}
 	// MAGNET UP
 	case 'T':
 	{
-		if (selectedMagnet != nullptr) selectedMagnet->move({0,1,0});
+		if (selectedMagnet != nullptr) selectedMagnet->move({0,1.0f,0});
+		break;
 	}
 	// MAGNET DOWN
 	case 'G':
 	{
-		if (selectedMagnet != nullptr) selectedMagnet->move({ 0,-1,0 });
+		if (selectedMagnet != nullptr) selectedMagnet->move({ 0,-1.0f,0 });
+		break;
 	}
 	// MAGNET LEFT
 	case 'F':
 	{
-		if (selectedMagnet != nullptr) selectedMagnet->move({ -1,0,0 });
+		if (selectedMagnet != nullptr) selectedMagnet->move({ -1.0f,0,0 });
+		break;
 	}
 	// MAGNET RIGHT
 	case 'H':
 	{
-		if (selectedMagnet != nullptr) selectedMagnet->move({ 1,0,0 });
+		if (selectedMagnet != nullptr) selectedMagnet->move({ 1.0f,0,0 });
+		break;
 	}
 	case 'I':
 	{
 		pGen->shoot();
+		break;
 	}
 	default:
 		break;

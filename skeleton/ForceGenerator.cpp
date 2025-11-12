@@ -93,6 +93,8 @@ Vector3 MagnetismGenerator::generateForce(Entity& e)
 
 void MagnetismGenerator::move(Vector3 dir)
 {
+
+
     areaPose->p += dir * 5;
     magnetPose->p += dir * 5;
 }
