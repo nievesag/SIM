@@ -163,13 +163,21 @@ void Scene0::unload()
 
 void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 {
+	//int modifiers = glutGetModifiers();
+
+	//bool ctrl = false;
+	//if (modifiers & GLUT_ACTIVE_CTRL) // pulsas el control
+	//{
+	//	ctrl = true;
+	//}
+
 	int modifiers = glutGetModifiers();
 
-	bool ctrl = false;
-	if (modifiers & GLUT_ACTIVE_CTRL) // pulsas el control
+	if (modifiers & GLUT_ACTIVE_CTRL && key == 17) // pulsar control && q
 	{
-		 ctrl = true;
-
+		selectedMagnet = magnets[1];
+		selectedMagnet->setPos(map[0][0]->getPosition());
+		std::cout << "iman " << 0 << " seleccionado" << std::endl;
 	}
 
 	switch(toupper(key))
@@ -184,41 +192,6 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 		pipe->eject();
 		break;
 	}
-	case 'Q':
-	{
-		if (ctrl)
-		{
-			selectedMagnet = magnets[0];
-			selectedMagnet->setPos(map[0][0]->getPosition());
-			std::cout << "iman " << 0 << " seleccionado" << std::endl;
-		}
-
-		break;
-	}
-	// MAGNET UP
-	case 'T':
-	{
-		if (selectedMagnet != nullptr) selectedMagnet->move({0,1.0f,0});
-		break;
-	}
-	// MAGNET DOWN
-	case 'G':
-	{
-		if (selectedMagnet != nullptr) selectedMagnet->move({ 0,-1.0f,0 });
-		break;
-	}
-	// MAGNET LEFT
-	case 'F':
-	{
-		if (selectedMagnet != nullptr) selectedMagnet->move({ -1.0f,0,0 });
-		break;
-	}
-	// MAGNET RIGHT
-	case 'H':
-	{
-		if (selectedMagnet != nullptr) selectedMagnet->move({ 1.0f,0,0 });
-		break;
-	}
 	case 'I':
 	{
 		pGen->shoot();
@@ -231,22 +204,21 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 
 void Scene0::specialKeyPressed(int key, const physx::PxTransform& camera)
 {
-	switch (toupper(key))
+	switch (key)
 	{
 	case GLUT_KEY_UP:
-		//do something here
+		if (selectedMagnet != nullptr) selectedMagnet->move({ 0,1.0f,0 });
 		break;
 	case GLUT_KEY_DOWN:
-		//do something here
+		if (selectedMagnet != nullptr) selectedMagnet->move({ 0,-1.0f,0 });
 		break;
 	case GLUT_KEY_LEFT:
-		//do something here
+		if (selectedMagnet != nullptr) selectedMagnet->move({ -1.0f,0,0 });
 		break;
 	case GLUT_KEY_RIGHT:
-		//do something here
+		if (selectedMagnet != nullptr) selectedMagnet->move({ 1.0f,0,0 });
 		break;
 	}
-
 }
 
 void Scene0::newToy(Vector3 pos)
