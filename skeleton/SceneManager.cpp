@@ -78,3 +78,10 @@ void SceneManager::keyPressed(unsigned char key, const physx::PxTransform& camer
 	}
 	*/
 }
+
+void SceneManager::specialKeyPressed(int key, const physx::PxTransform& camera)
+{
+	PX_UNUSED(camera);
+
+	for (auto e : vScenes) e->specialKeyPressed(key, camera);
+}

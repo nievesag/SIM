@@ -22,5 +22,6 @@ public:
 
 	void step(double t); // update
 	void keyPressed(unsigned char key, const physx::PxTransform& camera); // input
+	void specialKeyPressed(int key, const physx::PxTransform& camera); // input
 };
 

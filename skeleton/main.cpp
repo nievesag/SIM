@@ -133,6 +133,13 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	*/
 }
 
+void specialKeyPress(int key, const PxTransform& camera)
+{
+	PX_UNUSED(camera);
+
+	sceneManager->specialKeyPressed(key, camera);
+}
+
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
 {
 	PX_UNUSED(actor1);

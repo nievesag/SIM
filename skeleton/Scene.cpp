@@ -78,7 +78,7 @@ void Scene::keyPressed(unsigned char key, const physx::PxTransform& camera)
 
 }
 
-void Scene::specialkey(int key, const physx::PxTransform& camera)
+void Scene::specialKeyPressed(int key, const physx::PxTransform& camera)
 {
 
 }
@@ -163,6 +163,15 @@ void Scene0::unload()
 
 void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 {
+	int modifiers = glutGetModifiers();
+
+	bool ctrl = false;
+	if (modifiers & GLUT_ACTIVE_CTRL) // pulsas el control
+	{
+		 ctrl = true;
+
+	}
+
 	switch(toupper(key))
 	{
 	case 'Z':
@@ -177,9 +186,13 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	}
 	case 'Q':
 	{
-		selectedMagnet = magnets[0];
-		selectedMagnet->setPos(map[0][0]->getPosition());
-		std::cout << "iman " << 0 << " seleccionado" << std::endl;
+		if (ctrl)
+		{
+			selectedMagnet = magnets[0];
+			selectedMagnet->setPos(map[0][0]->getPosition());
+			std::cout << "iman " << 0 << " seleccionado" << std::endl;
+		}
+
 		break;
 	}
 	// MAGNET UP
@@ -216,20 +229,24 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	}
 }
 
-void Scene0::specialkey(int key, const physx::PxTransform& camera)
+void Scene0::specialKeyPressed(int key, const physx::PxTransform& camera)
 {
-	/*
-	// Handle keyboard input
-	switch (key)
+	switch (toupper(key))
 	{
-	case :
-
+	case GLUT_KEY_UP:
+		//do something here
 		break;
-	case GLFW_KEY_A:
-
+	case GLUT_KEY_DOWN:
+		//do something here
+		break;
+	case GLUT_KEY_LEFT:
+		//do something here
+		break;
+	case GLUT_KEY_RIGHT:
+		//do something here
 		break;
 	}
-	*/
+
 }
 
 void Scene0::newToy(Vector3 pos)

@@ -34,7 +34,7 @@ public:
 	void addSystem(ParticleSystem* sys);
 
 	virtual void keyPressed(unsigned char key, const physx::PxTransform& camera);
-	virtual void specialkey(int key, const physx::PxTransform& camera); // special keypress event
+	virtual void specialKeyPressed(int key, const physx::PxTransform& camera); // special keypress event
 
 	Vector3 getActionThreshold() { return actionThreshold; }
 
@@ -60,7 +60,7 @@ public:
 	void load() override;
 	void unload() override;
 	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
-	void specialkey(int key, const physx::PxTransform& camera) override;
+	void specialKeyPressed(int key, const physx::PxTransform& camera) override;
 
 	void newToy(Vector3 pos) override;
 
