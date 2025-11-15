@@ -52,15 +52,22 @@ void Scene::deleteEntities()
 
 void Scene::load()
 {
-	
+	for (auto e : gObjects)
+	{
+		e->setVisible(true);
+		e->toggleVisibility();
+	}
 }
 
 void Scene::unload()
 {
 	// para eliminarlos de la escena
 	for (auto e : gObjects)
-		delete e;
-	gObjects.clear();
+	{
+		e->setVisible(false);
+		e->toggleVisibility();
+	}
+	//gObjects.clear();
 }
 
 void Scene::addEntity(Entity* ent)
@@ -89,10 +96,10 @@ void Scene0::init()
 {
 	Scene::init();
 
-	readFile("mapa1.txt");
+	//readFile("mapa1.txt");
 
-	pipe = new Pipe(this, { 30,100,0 });
-	addEntity(pipe);
+	//pipe = new Pipe(this, { 30,100,0 });
+	//addEntity(pipe);
 
 	// ----- System
 	sys = new ParticleSystem(this);
@@ -107,29 +114,30 @@ void Scene0::init()
 	//ParticleGenerator* fireworkGenerator = new FireworkGenerator(this, "Fuegos");
 	//sys->registerGenerator(fireworkGenerator);
 
-	trailGenerator = new TrailGenerator(this, "Rastro");
+	/*trailGenerator = new TrailGenerator(this, "Rastro");
 	sys->registerGenerator(trailGenerator);
 
 	chargedGenerator = new ChargedGenerator(this, "Carga");
 	sys->registerGenerator(chargedGenerator);
 
 	ChargedEntity* bola = new ChargedEntity(this, { 40, 200,0 }, 3, -0.1, trailGenerator);
-	chargedGenerator->addChargedEnitity(bola);
+	chargedGenerator->addChargedEnitity(bola);*/
+
+	randomMass = new RandomMassGenerator(this, "Cascada");
+	sys->registerGenerator(randomMass);
+
+	//ParticleGenerator* waterfallGenerator = new WaterfallGenerator(this, "Cascada");
+	//sys->registerGenerator(waterfallGenerator);
 
 	pGen = new ProjectileGenerator(GetCamera()->getEye(), GetCamera()->getDir().getNormalized() * 0.2, 5, "h", this);
 
+	//torbellino = new WhirlGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
+	//sys->registerForceGenerator(torbellino);
+
+	viento = new WindGenerator({ 0,0,0 }, 50, this, { 40, 0, 0 });
+	sys->registerForceGenerator(viento);
+
 	/*
-	// -- Force generators
-	//ForceGenerator* gg = new GravityGenerator({ 0,0,0 }, 50, this, {0, -9.8, 0});
-	//sys->registerForceGenerator(gg);
-
-	//ForceGenerator* fg = new WhirlGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
-	//sys->registerForceGenerator(fg);
-	*/
-
-	//ForceGenerator* fg = new WindGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
-	//sys->registerForceGenerator(fg);
-
 	magnetism1 = new MagnetismGenerator({ -50,100,0 }, 50, this, -0.01);
 	sys->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
@@ -137,6 +145,7 @@ void Scene0::init()
 	magnetism2 = new MagnetismGenerator({ 50,100,0 }, 50, this, 0.2);
 	sys->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
+	*/
 
 	pSystems.push_back(sys);
 }
@@ -184,7 +193,7 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	{
 	case 'Z':
 	{
-		magnetism1->toggleForce();
+		if (selectedMagnet != nullptr) selectedMagnet->toggleForce();
 		break;
 	}
 	case 'N':
@@ -195,6 +204,12 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	case 'I':
 	{
 		pGen->shoot();
+		break;
+	}
+	case 'P':
+	{
+		viento->toggleForce();
+		randomMass->toggleGeneration();
 		break;
 	}
 	default:
@@ -227,9 +242,7 @@ void Scene0::newToy(Vector3 pos)
 	sys->registerGenerator(trail);
 
 	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1, trail);
-	toy->setVelocity({ 0,-100,0 }); // ?????????
-	//toy->addForce({ 0,200,0 }); // ?????????
-	//toy->setAcc({ 0,200,0 });
+	toy->setVelocity({ 0,-100,0 });
 
 	chargedGenerator->addChargedEnitity(toy);
 }
@@ -276,4 +289,71 @@ void Scene0::readFile(std::string file)
 
 		map.push_back(line);
 	}
+}
+
+void Scene1::init()
+{
+	Scene::init();
+
+	ParticleSystem* sys = new ParticleSystem(this);
+
+	ParticleGenerator* randomMass = new RandomMassGenerator(this, "Cascada");
+	sys->registerGenerator(randomMass);
+
+	pSystems.push_back(sys);
+}
+
+void Scene1::step(double t)
+{
+	Scene::step(t);
+}
+
+void Scene1::load()
+{
+	Scene::load();
+}
+
+void Scene1::unload()
+{
+	Scene::unload();
+}
+
+void Scene1::keyPressed(unsigned char key, const physx::PxTransform& camera)
+{
+}
+
+void Scene1::specialKeyPressed(int key, const physx::PxTransform& camera)
+{
+}
+
+void Scene1::newToy(Vector3 pos)
+{
+}
+
+void Scene1::readFile(std::string file)
+{
+}
+
+// -------- ESCENA 2
+void Scene2::init()
+{
+	Scene::init();
+
+	ParticleSystem* sys = new ParticleSystem(this);
+
+	/*ParticleGenerator* randomMass = new RandomMassGenerator(this, "Cascada");
+	sys->registerGenerator(randomMass);*/
+
+	ParticleGenerator* wGenerator = new WaterfallGenerator(this, "Cascada");
+	sys->registerGenerator(wGenerator);
+
+	ForceGenerator* torbellino = new WhirlGenerator({ 0,0,0 }, 100, this, { 0, -50, 50 });
+	sys->registerForceGenerator(torbellino);
+
+	pSystems.push_back(sys);
+}
+
+void Scene2::step(double t)
+{
+	Scene::step(t);
 }

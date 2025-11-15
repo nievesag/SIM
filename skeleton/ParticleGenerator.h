@@ -40,6 +40,8 @@ public:
 
 	void deleteEntities();
 
+	void toggleGeneration() { isActive = !isActive; }
+
 protected:
 	// modelo de particula (tipo de particulas que genera el generador)
 	// mapa de modelos <nombre del modelo, particula modelo>
@@ -57,6 +59,8 @@ protected:
 
 	int maxParticles = 0; // particulas maximas que puede generar este generador
 	int numParticles = 0; // particulas generadas por cada generador
+
+	bool isActive = true;
 };
 
 // ------- GENERADOR CASACADA -------
@@ -72,6 +76,7 @@ private:
 	void generateParticle() override;
 };
 
+// ------- GENERADOR NIEBLA -------
 class MistGenerator : public ParticleGenerator
 {
 public:
@@ -87,6 +92,7 @@ private:
 	void generateParticle() override;
 };
 
+// ------- GENERADOR FUEGOS -------
 class FireworkGenerator : public ParticleGenerator
 {
 public:
@@ -99,6 +105,24 @@ private:
 	void generateParticle() override;
 };
 
+// ------- GENERADOR DISTINTAS MASAS -------
+class RandomMassGenerator : public ParticleGenerator
+{
+public:
+	RandomMassGenerator(Scene* s, std::string model)
+		: ParticleGenerator(s, model) {}
+
+	~RandomMassGenerator() override = default;
+
+	void setXpos(float x) { xPos = x; }
+
+private:
+	void generateParticle() override;
+
+	float xPos = 0;
+};
+
+// ------- GENERADOR CON CARGA -------
 class ChargedGenerator : public ParticleGenerator
 {
 public:
@@ -115,6 +139,7 @@ private:
 	void generateParticle() override {};
 };
 
+// ------- GENERADOR RASTRO -------
 class TrailGenerator : public ParticleGenerator
 {
 public:

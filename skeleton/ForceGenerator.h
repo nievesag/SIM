@@ -27,6 +27,16 @@ public:
 
 	PxTransform* getAreaPose() const { return areaPose; }
 
+	void toggleForce() { isActive = !isActive; }
+
+	void toggleAreaVisibility()
+	{
+		if (isActive) RegisterRenderItem(area);
+		else DeregisterRenderItem(area);
+	}
+
+	void setActive(bool a) { isActive = a; }
+
 protected:
 	bool showArea();
 	bool inArea(Entity& e);
@@ -35,6 +45,8 @@ protected:
 	RenderItem* area = nullptr;
 	Vector3 areaPos = { 0,0,0 };
 	PxTransform* areaPose = nullptr;
+
+	bool isActive = true;
 };
 
 class GravityGenerator : public ForceGenerator
@@ -93,14 +105,11 @@ public:
 
 	Vector3 generateForce(Entity& e) override;
 
-	void toggleForce() { isActive = !isActive; }
-
 	void move(Vector3 dir);
 	void setPos(Vector3 newPos);
 
 private:
 	float b = 0; // carga del campo magnetico
-	bool isActive = true;
 
 	physx::PxTransform* magnetPose = nullptr;
 };

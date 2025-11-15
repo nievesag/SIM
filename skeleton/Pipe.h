@@ -13,7 +13,7 @@ private:
 	float maxYpos = 20;
 	physx::PxVec3 maxPos;
 	physx::PxVec3 orgPos;
-	Vector3 vel = {0, -9.8, 0};
+	Vector3 vel = {0, -20, 0};
 	float pipeLenght = 30;
 
 	int state = -1; // 0 = bajar / 1 = subir

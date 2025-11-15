@@ -67,26 +67,58 @@ public:
 	void readFile(std::string file) override;
 
 private:
-	ParticleSystem* sys = nullptr;
-
+	int width = 0, height = 0; // tamaño del mapa
 	std::vector<std::vector<Wall*>> map;
 
-	std::vector<MagnetismGenerator*> magnets;
+	ParticleSystem* sys = nullptr; // sistema de particulas
 
-	MagnetismGenerator* magnetism1 = nullptr;
-	MagnetismGenerator* magnetism2 = nullptr;
+	std::vector<MagnetismGenerator*> magnets; // vector de todos los imanes
+	MagnetismGenerator* magnetism1 = nullptr; // iman 1
+	MagnetismGenerator* magnetism2 = nullptr; // iman 2
 
-	ProjectileGenerator* pGen = nullptr;
+	MagnetismGenerator* selectedMagnet = nullptr;	// iman que tienes seleccionado
 
-	MagnetismGenerator* selectedMagnet = nullptr;
-
-	ChargedGenerator* chargedGenerator = nullptr;
-
-	TrailGenerator* trailGenerator = nullptr;
-
+	ChargedGenerator* chargedGenerator = nullptr;	// generador de particulas con carga
+	TrailGenerator* trailGenerator = nullptr;		// rastro que deja la particula
 	bool fatherPart = false;
 
-	int width = 0, height = 0;
+	Pipe* pipe = nullptr; // tuberia que suelta la particula
 
-	Pipe* pipe = nullptr;
+	ForceGenerator* viento = nullptr;
+	ForceGenerator* torbellino = nullptr;
+	ParticleGenerator* randomMass = nullptr;
+
+	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
+};
+
+class Scene1 : public Scene
+{
+public:
+	Scene1() = default;
+	void init() override;
+	void step(double t) override;
+	void load() override;
+	void unload() override;
+	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
+	void specialKeyPressed(int key, const physx::PxTransform& camera) override;
+
+	void newToy(Vector3 pos) override;
+
+	void readFile(std::string file) override;
+};
+
+class Scene2 : public Scene
+{
+public:
+	Scene2() = default;
+	void init() override;
+	void step(double t) override;
+	void load() override { Scene::load(); }
+	void unload() override { Scene::unload(); }
+	void keyPressed(unsigned char key, const physx::PxTransform& camera) override {}
+	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
+
+	void newToy(Vector3 pos) override {}
+
+	void readFile(std::string file) override {}
 };

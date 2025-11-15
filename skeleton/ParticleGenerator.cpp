@@ -22,9 +22,9 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 	Particle* modeloWaterfall = new Particle(
 		scn,							// escena (la misma que el generador)
 		Vector3(0, 0, 0),	// origen inicial
-		{100, -9.8, 100},	// velocidad inicial
+		{0, 0, 0},	// velocidad inicial
 		5,								// tamaño
-		{0.4,0.7,1,1},	// color
+		{0.4,0.7,1,1},	// color  
 		3,								// masa
 		0.99,							// damping
 		-1);						// tiempo de vida max
@@ -252,6 +252,61 @@ void FireworkGenerator::generateParticle()
 	}
 }
 
+// ------- GENERADOR DISTINTAS MASAS -------
+void RandomMassGenerator::generateParticle()
+{
+	// buscamos si existe el modelo en el mapa
+	auto it = particles.find(model);
+
+	if (it != particles.end()) // si existe ese modelo...
+	{
+		if (isActive)
+		{
+			std::uniform_int_distribution<> particlesToGenerateDistr(1, 3);
+			std::normal_distribution<> posYZDistr(0, 10);
+			std::uniform_real_distribution<> lifetimeDistr(1, 3);
+			std::uniform_real_distribution<> sizeDistr(2, 5);
+			std::uniform_real_distribution<> massDistr(2, 5);
+			//std::normal_distribution<> massDistr(20, 10);
+
+			int particlesToGenerate = particlesToGenerateDistr(generator);
+
+			for (int i = 0; i < particlesToGenerate; i++)
+			{
+				Vector3 newOrg;	// posicion en la que se genera
+				Vector3 newVel;	// velocidad con la que se genera
+				float size = sizeDistr(generator);
+				float mass = massDistr(generator);
+
+				newOrg.x = xPos;
+				newOrg.y = posYZDistr(generator);
+				newOrg.z = posYZDistr(generator);
+
+				newVel.x = 0;
+				newVel.y = 0;
+				newVel.z = 0;
+
+				float lifetime = lifetimeDistr(generator);
+
+				// creamos la nueva particula
+				Particle* p = new Particle(*it->second);
+
+				p->setPosition(newOrg);
+				p->setVelocity(newVel);
+				p->setMaxLifetime(lifetime);
+				p->setMass(mass);
+
+				generatedParticles.push_back(p);
+				scn->addEntity(p);
+			}
+		}
+	}
+	else
+	{
+		std::cout << "[!] NO EXISTE MODELO: " << model << std::endl;
+	}
+}
+
 // ------- GENERADOR PARTICULAS CARGADAS -------
 void ChargedGenerator::addChargedEnitity(ChargedEntity* p)
 {
@@ -260,7 +315,6 @@ void ChargedGenerator::addChargedEnitity(ChargedEntity* p)
 }
 
 // ------- GENERADOR RASTRO -------
-
 void TrailGenerator::generateParticle()
 {
 	// buscamos si existe el modelo en el mapa
@@ -274,29 +328,12 @@ void TrailGenerator::generateParticle()
 			std::uniform_int_distribution<> particlesToGenerateDistr(1, 2);
 			std::normal_distribution<> lifetimeDistr(0.1, 0.2);
 
-			/*
-			std::uniform_int_distribution<> posXDistr(fatherPart->getPosition().x - fatherPart->getSize() / 3,
-				fatherPart->getPosition().x + fatherPart->getSize() / 3);
-			std::uniform_int_distribution<> posYDistr(fatherPart->getPosition().y - fatherPart->getSize() / 3,
-				fatherPart->getPosition().y + fatherPart->getSize() / 3);
-			std::uniform_int_distribution<> posZDistr(fatherPart->getPosition().z - fatherPart->getSize() / 3,
-				fatherPart->getPosition().z + fatherPart->getSize() / 3);
-			std::uniform_int_distribution<> sizeDistr(1, fatherPart->getSize() / 2);
-			*/
-
 			int particlesToGenerate = particlesToGenerateDistr(generator); // particulas que se generaran en este tick
 
 			for (int i = 0; i < particlesToGenerate; i++)
 			{
 				Vector3 newOrg = position;
 				Vector3 newVel = direction;
-
-				// org
-				//newOrg.x = posXDistr(generator);
-				//newOrg.y = posYDistr(generator);
-				//newOrg.z = posZDistr(generator);
-
-				//float newSize = sizeDistr(generator);
 
 				// creamos la nueva particula
 				Particle* p = new Particle(*it->second);
@@ -315,5 +352,3 @@ void TrailGenerator::generateParticle()
 		std::cout << "[!] NO EXISTE MODELO: " << model << std::endl;
 	}
 }
-
-

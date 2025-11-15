@@ -6,6 +6,8 @@
 SceneManager::SceneManager()
 {
 	addScene(new Scene0());
+	addScene(new Scene1());
+	addScene(new Scene2());
 }
 
 SceneManager::~SceneManager()
@@ -33,12 +35,12 @@ void SceneManager::changeScene(size_t scnId)
 			vScenes[currentScene]->unload(); // quitar escena anterior
 			currentScene = scnId;
 			vScenes[currentScene]->load(); // poner escena nueva
-			cout << "[SCENE] Escena " << char(scnId) << ".\n";
+			cout << "[SCENE] Escena " << std::to_string(scnId) << ".\n";
 		}
 	}
 	else
 	{
-		cout << "[NOTA] No existe la escena " << char(scnId) << ".\n";
+		cout << "[NOTA] No existe la escena " << std::to_string(scnId) << ".\n";
 	}
 }
 
