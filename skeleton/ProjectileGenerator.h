@@ -23,8 +23,6 @@ using namespace physx;
 class ProjectileGenerator
 {
 public:
-	ProjectileGenerator(Vector3 Pos, Vector3 Vel, double size, char type, Scene* s);
-	ProjectileGenerator(Scene* s, std::string mod);
 	ProjectileGenerator(Scene* s);
 	~ProjectileGenerator();
 
@@ -46,4 +44,3 @@ private:
 	std::unordered_map<std::string, Projectile*> projectiles;
 	std::string model;
 };
-

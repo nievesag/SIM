@@ -4,59 +4,6 @@
 
 class Projectile;
 
-ProjectileGenerator::ProjectileGenerator(Vector3 Pos, Vector3 Vel, double size, char type, Scene* s)
-	: scn(s)
-{
-	switch (toupper(type))
-	{
-	case 'H':
-	{
-			/*
-		Particle* b = new Particle(s, Pos, Vel, size);
-		std::pair<float, Vector3> const simAtributes = getSimulationAtributes(4, {0,-9.8f,0}, Vel.magnitude(), 50);
-		b->setMass(simAtributes.first);
-		b->setGravity(simAtributes.second);
-		b->setAcc({ b->getGravity() });
-		balas.push_back(b);
-
-		Particle* b1 = new Particle(s, Pos, Vel, size);
-		std::pair<float, Vector3> const simAtributes1 = getSimulationAtributes(4, { 0,-9.8f,0 }, Vel.magnitude(), 50);
-		b1->setMass(simAtributes1.first);
-		b1->setGravity(simAtributes1.second);
-		b1->setAcc({ b1->getGravity()});
-		balas.push_back(b1);
-
-		Particle* b2 = new Particle(s, Pos, Vel, size);
-		std::pair<float, Vector3> const simAtributes2 = getSimulationAtributes(4, { 0,-9.8f,0 }, Vel.magnitude(), 50);
-		b2->setMass(simAtributes1.first);
-		b2->setGravity(simAtributes1.second);
-		b2->setAcc({ b2->getGravity() });
-		balas.push_back(b2);
-		*/
-
-		break;
-	}
-	default:
-		break;
-	}
-}
-
-ProjectileGenerator::ProjectileGenerator(Scene* s, std::string mod)
-{
-	// --- crear modelos de proyectiles
-	// - cannon
-	Vector3 cameraPos = GetCamera()->getEye();
-	Vector3 cameraDir = GetCamera()->getDir().getNormalized();
-	Vector3 cameraProjVel = cameraDir * 100;
-	Projectile* modeloCannon = new Projectile(s, cameraPos, cameraProjVel, 5);
-		std::pair<float, Vector3> const simAtributes = getSimulationAtributes(4, { 0,-9.8f,0 }, cameraProjVel.magnitude(), 50);
-		modeloCannon->setMass(simAtributes.first);
-		modeloCannon->setGravity(simAtributes.second);
-		modeloCannon->setAcc({ modeloCannon->getGravity() });
-	projectiles.emplace(std::make_pair(std::string("Cannon"), modeloCannon));
-	DeregisterRenderItem(modeloCannon->getRenderItem());
-}
-
 ProjectileGenerator::ProjectileGenerator(Scene* s)
 	: scn(s)
 {
