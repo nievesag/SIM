@@ -24,6 +24,7 @@ public:
 	bool getAlive() const { return alive; }								// vivo
 	RenderItem* getRenderItem() const { return renderItem; }
 	float getq() const { return q; }
+	Scene* getScene() const { return scene; }
 
 	// --- setters
 	virtual void setPosition(Vector3 pos) { pose->p = pos; }

@@ -97,50 +97,29 @@ void Scene0::init()
 
 	readFile("mapa1.txt");
 
-	pipe = new Pipe(this, { 30,100,0 });
+	pipe = new Pipe(this, {160,240,0 });
 	addEntity(pipe);
 
 	// ----- System
 	sys = new ParticleSystem(this);
 
 	// -- Particle generators
-	//ParticleGenerator* waterfallGenerator = new WaterfallGenerator(this, "Cascada");
-	//sys->registerGenerator(waterfallGenerator);
-
-	//ParticleGenerator* mistGenerator = new MistGenerator(this, "Niebla");
-	//sys->registerGenerator(mistGenerator);
-
-	//ParticleGenerator* fireworkGenerator = new FireworkGenerator(this, "Fuegos");
-	//sys->registerGenerator(fireworkGenerator);
-
 	trailGenerator = new TrailGenerator(this, "Rastro");
 	sys->registerGenerator(trailGenerator);
 
 	chargedGenerator = new ChargedGenerator(this, "Carga");
 	sys->registerGenerator(chargedGenerator);
 
-	ChargedEntity* bola = new ChargedEntity(this, { 40, 200,0 }, 3, -0.1, trailGenerator);
+	ChargedEntity* bola = new ChargedEntity(this, { 140, 200,0 }, 3, -0.1, trailGenerator);
 	chargedGenerator->addChargedEnitity(bola);
 
 	pGen = new ProjectileGenerator(this);
 
-	/*
-	// -- Force generators
-	//ForceGenerator* gg = new GravityGenerator({ 0,0,0 }, 50, this, {0, -9.8, 0});
-	//sys->registerForceGenerator(gg);
-
-	//ForceGenerator* fg = new WhirlGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
-	//sys->registerForceGenerator(fg);
-	*/
-
-	//ForceGenerator* fg = new WindGenerator({ 0,0,0 }, 50, this, { 0, -10, 20 });
-	//sys->registerForceGenerator(fg);
-
-	magnetism1 = new MagnetismGenerator({ -50,100,0 }, 50, this, -0.01);
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.01);
 	sys->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
-	magnetism2 = new MagnetismGenerator({ 50,100,0 }, 50, this, 0.2);
+	magnetism2 = new MagnetismGenerator({ 90,140,0 }, 70, this, 0.2);
 	sys->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
@@ -200,7 +179,6 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	if (modifiers & GLUT_ACTIVE_CTRL && key == 17) // pulsar control && q
 	{
 		selectedMagnet = magnets[1];
-		selectedMagnet->setPos(map[0][0]->getPosition());
 		std::cout << "iman " << 0 << " seleccionado" << std::endl;
 	}
 
@@ -223,12 +201,6 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 		{
 			pGen->shoot("Cannon");
 		}
-		break;
-	}
-	case 'P':
-	{
-		viento->toggleForce();
-		randomMass->toggleGeneration();
 		break;
 	}
 	default:
@@ -261,7 +233,7 @@ void Scene0::newToy(Vector3 pos)
 	sys->registerGenerator(trail);
 
 	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1, trail);
-	toy->setVelocity({ 0,-100,0 });
+	toy->setVelocity({ 0,-50,0 });
 
 	chargedGenerator->addChargedEnitity(toy);
 }
@@ -310,6 +282,11 @@ void Scene0::readFile(std::string file)
 	}
 }
 
+void Scene0::splash(Vector3 pos)
+{
+
+}
+
 void Scene1::init()
 {
 	Scene::init();
@@ -348,6 +325,16 @@ void Scene1::unload()
 
 void Scene1::keyPressed(unsigned char key, const physx::PxTransform& camera)
 {
+	switch (toupper(key))
+	{
+	case 'R':
+	{
+		if (viento != nullptr) viento->toggleForce();
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void Scene1::specialKeyPressed(int key, const physx::PxTransform& camera)
@@ -381,4 +368,59 @@ void Scene2::init()
 void Scene2::step(double t)
 {
 	Scene::step(t);
+}
+
+void Scene2::keyPressed(unsigned char key, const physx::PxTransform& camera)
+{
+	switch (toupper(key))
+	{
+	case 'R':
+	{
+		if (torbellino != nullptr) torbellino->toggleForce();
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+// -------- ESCENA 3
+void Scene3::init()
+{
+	Scene::init();
+
+	ParticleSystem* sys = new ParticleSystem(this);
+
+	// -- Particle generators
+	TrailGenerator* trailGenerator = new TrailGenerator(this, "Rastro");
+	sys->registerGenerator(trailGenerator);
+
+	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
+	sys->registerGenerator(chargedGenerator);
+
+	bola = new ChargedEntity(this, { 140, 200,0 }, 3, -0.1, trailGenerator);
+	chargedGenerator->addChargedEnitity(bola);
+
+	fGenerator = new SplashGenerator(this, "Splash");
+	sys->registerGenerator(fGenerator);
+
+	//fuegos = new WhirlGenerator({ 0,0,0 }, 100, this, { 0, -50, 50 });
+	//sys->registerForceGenerator(fuegos);
+
+	pSystems.push_back(sys);
+}
+
+void Scene3::step(double t)
+{
+	Scene::step(t);
+}
+
+void Scene3::keyPressed(unsigned char key, const physx::PxTransform& camera)
+{
+}
+
+void Scene3::splash(Vector3 pos)
+{
+	fGenerator->setSplasPos(pos);
+	fGenerator->setSplash(true);
 }

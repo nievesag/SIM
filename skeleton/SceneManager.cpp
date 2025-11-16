@@ -8,6 +8,7 @@ SceneManager::SceneManager()
 	addScene(new Scene0());
 	addScene(new Scene1());
 	addScene(new Scene2());
+	addScene(new Scene3());
 }
 
 SceneManager::~SceneManager()

@@ -32,7 +32,7 @@ bool ForceGenerator::inArea(Entity& e)
 Vector3 GravityGenerator::generateForce(Entity& e)
 {
     // si esta dentro del area de actuacion se aplica la fuerza 
-    if (inArea(e)) 
+    if (inArea(e) && isActive) 
     {
         return gravity * e.getMass();
     }
@@ -43,7 +43,7 @@ Vector3 GravityGenerator::generateForce(Entity& e)
 // ------- GENERADOR VIENTO -------
 Vector3 WindGenerator::generateForce(Entity& e)
 {
-    if (inArea(e))
+    if (inArea(e) && isActive)
     {
         return (k1 * (wind - e.getVelocity()) + k2);
     }
@@ -53,7 +53,7 @@ Vector3 WindGenerator::generateForce(Entity& e)
 // ------- GENERADOR TORBELLINO -------
 Vector3 WhirlGenerator::generateForce(Entity& e)
 {
-    if (inArea(e))
+    if (inArea(e) && isActive)
     {
         return k * Vector3(-(e.getPosition().z - areaPos.z), 50 - (e.getPosition().y - areaPos.y), e.getPosition().x-areaPos.x);
     }

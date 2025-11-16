@@ -105,6 +105,25 @@ private:
 	void generateParticle() override;
 };
 
+// ------- GENERADOR SPLASH -------
+class SplashGenerator : public ParticleGenerator
+{
+public:
+	SplashGenerator(Scene* s, std::string model)
+		: ParticleGenerator(s, model) {}
+
+	~SplashGenerator() override = default;
+	void setSplasPos(Vector3 s) { splashPos = s; }
+
+	void generateParticle() override;
+
+	void setSplash(bool s) { isSplashing = s; }
+
+private:
+	Vector3 splashPos = { 0,0,0 };
+	bool isSplashing = false;
+};
+
 // ------- GENERADOR DISTINTAS MASAS -------
 class RandomMassGenerator : public ParticleGenerator
 {

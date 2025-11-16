@@ -1,7 +1,8 @@
-5
-5
-xxoxx
-xooox
-xooox
-xooox
-xxxox
+6
+6
+xxxxxx
+ooooxx
+xooxxx
+xoooox
+xoooox
+xxxxox

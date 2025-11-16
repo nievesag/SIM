@@ -41,6 +41,7 @@ public:
 
 	virtual void newToy(Vector3 pos) = 0;
 	virtual void readFile(std::string file) = 0;
+	virtual void splash(Vector3 pos) = 0;
 
 protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
@@ -66,6 +67,7 @@ public:
 	void newToy(Vector3 pos) override;
 
 	void readFile(std::string file) override;
+	void splash(Vector3 pos) override;
 
 private:
 	int width = 0, height = 0; // tamaño del mapa
@@ -107,6 +109,8 @@ public:
 
 	void readFile(std::string file) override;
 
+	void splash(Vector3 pos) override {}
+
 private:
 	ForceGenerator* viento = nullptr;
 };
@@ -131,13 +135,56 @@ public:
 		torbellino->setAreaVisibility(false);
 		torbellino->toggleAreaVisibility();
 	}
-	void keyPressed(unsigned char key, const physx::PxTransform& camera) override {}
+	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
 	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
 
 	void newToy(Vector3 pos) override {}
+	void splash(Vector3 pos) override {}
 
 	void readFile(std::string file) override {}
 
 private:
 	ForceGenerator* torbellino = nullptr;
+};
+
+class Scene3 : public Scene
+{
+public:
+	Scene3() = default;
+	void init() override;
+	void step(double t) override;
+	void load() override
+	{
+		Scene::load();
+
+		if (fuegos != nullptr)
+		{
+			fuegos->setAreaVisibility(true);
+			fuegos->toggleAreaVisibility();
+		}
+	}
+	void unload() override
+	{
+		Scene::unload();
+
+		if (fuegos != nullptr)
+		{
+			fuegos->setAreaVisibility(false);
+			fuegos->toggleAreaVisibility();
+		}
+	}
+	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
+	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
+
+	void newToy(Vector3 pos) override {}
+	void splash(Vector3 pos) override;
+
+	void readFile(std::string file) override {}
+
+private:
+	ForceGenerator* fuegos = nullptr;
+
+	ChargedEntity* bola = nullptr;
+
+	SplashGenerator* fGenerator = nullptr;
 };

@@ -1,5 +1,6 @@
 #include "ChargedEntity.h"
 #include "ParticleGenerator.h"
+#include "Scene.h"
 
 ChargedEntity::ChargedEntity(Scene* scn, Vector3 pos, float size, float q, TrailGenerator* _trailGenerator)
 	: Particle(scn, pos, {0,0,0}, size), trailGenerator(_trailGenerator)
@@ -21,4 +22,10 @@ void ChargedEntity::step(double t)
 	Particle::step(t);
 
 	trailGenerator->setFatherAlive(getAlive());
+
+	if (getPosition().y < -200)
+	{
+		//std::cout << "hola" << std::endl;
+		getScene()->splash(getPosition());
+	}
 }
