@@ -4,6 +4,7 @@
 
 #include "Entity.h"
 #include "Particle.h"
+#include "Projectile.h"
 #include "ForceGenerator.h"
 #include "ParticleGenerator.h"
 #include "ChargedEntity.h"
@@ -105,6 +106,9 @@ public:
 	void newToy(Vector3 pos) override;
 
 	void readFile(std::string file) override;
+
+private:
+	ForceGenerator* viento = nullptr;
 };
 
 class Scene2 : public Scene
@@ -113,12 +117,27 @@ public:
 	Scene2() = default;
 	void init() override;
 	void step(double t) override;
-	void load() override { Scene::load(); }
-	void unload() override { Scene::unload(); }
+	void load() override
+	{ 
+		Scene::load();
+
+		torbellino->setAreaVisibility(true);
+		torbellino->toggleAreaVisibility();
+	}
+	void unload() override
+	{
+		Scene::unload();
+
+		torbellino->setAreaVisibility(false);
+		torbellino->toggleAreaVisibility();
+	}
 	void keyPressed(unsigned char key, const physx::PxTransform& camera) override {}
 	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
 
 	void newToy(Vector3 pos) override {}
 
 	void readFile(std::string file) override {}
+
+private:
+	ForceGenerator* torbellino = nullptr;
 };

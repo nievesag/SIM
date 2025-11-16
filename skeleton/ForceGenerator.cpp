@@ -7,8 +7,8 @@ ForceGenerator::ForceGenerator(Vector3 pos, float areaR, Scene* s)
     : areaPos(pos), areaRadius(areaR)
 {
     // construye area
-    //areaPose = new PxTransform(areaPos);
-    //area = new RenderItem(CreateShape(PxSphereGeometry(areaRadius)), areaPose, { 1,0,0,0.5 });
+    areaPose = new PxTransform(areaPos);
+    area = new RenderItem(CreateShape(PxSphereGeometry(areaRadius)), areaPose, { 1,0,0,0.5 });
 }
 
 ForceGenerator::~ForceGenerator()
@@ -70,8 +70,9 @@ MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, flo
     Vector4 color = { 1,1,1,1 };
     if (b < 0) color = { 1,0,0,1 }; // norte
     else if (b > 1) color = { 0,0,1,1 }; // sur
-
-    RegisterRenderItem(new RenderItem(shape, magnetPose, color));
+            
+    magnet = new RenderItem(shape, magnetPose, color);
+    RegisterRenderItem(magnet);
 }
 
 Vector3 MagnetismGenerator::generateForce(Entity& e)

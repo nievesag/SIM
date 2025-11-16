@@ -1,3 +1,6 @@
+
+#pragma once
+
 #pragma once
 
 #include <PxPhysicsAPI.h>
@@ -12,6 +15,7 @@
 #include <unordered_map>
 
 #include "Particle.h"
+#include "Projectile.h"
 
 class Scene;
 using namespace physx;
@@ -19,7 +23,9 @@ using namespace physx;
 class ProjectileGenerator
 {
 public:
-	ProjectileGenerator(Vector3 Pos, Vector3 Vel, double size, std::string type, Scene* s);
+	ProjectileGenerator(Vector3 Pos, Vector3 Vel, double size, char type, Scene* s);
+	ProjectileGenerator(Scene* s, std::string mod);
+	ProjectileGenerator(Scene* s);
 	~ProjectileGenerator();
 
 	// para definir la masa simulada Ms = Mr * (Vr^2 / Vs^2)
@@ -28,14 +34,16 @@ public:
 	// GetCamera()->getDir(); // direccion camera (para adaptar la velocidad de las particulas) => normalizar y multiplicar por el vector velocidad
 	// GetCamera()->getEye(); // centro de la camara (posicion para inicializar las particulas)
 
-	void shoot();
+	void shoot(std::string m);
 
 private:
-	Particle* model = nullptr;
+	int maxBalasCannon = 4;
+	int currentBalasCannon = 0;
 
-	int balasCount = 0;
-	int balasMax = 4;
 	Scene* scn = nullptr;
-	std::pair<float, float> getSimulationAtributes(float massR, float gravityR, float vR, float vS);
+	std::pair<float, Vector3> getSimulationAtributes(float massR, Vector3 gravityR, float vR, float vS);
+
+	std::unordered_map<std::string, Projectile*> projectiles;
+	std::string model;
 };
 

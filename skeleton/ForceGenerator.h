@@ -29,9 +29,11 @@ public:
 
 	void toggleForce() { isActive = !isActive; }
 
+	void setAreaVisibility(bool v) { areaVisible = v; }
+
 	void toggleAreaVisibility()
 	{
-		if (isActive) RegisterRenderItem(area);
+		if (areaVisible) RegisterRenderItem(area);
 		else DeregisterRenderItem(area);
 	}
 
@@ -45,6 +47,8 @@ protected:
 	RenderItem* area = nullptr;
 	Vector3 areaPos = { 0,0,0 };
 	PxTransform* areaPose = nullptr;
+
+	bool areaVisible = true;
 
 	bool isActive = true;
 };
@@ -108,8 +112,15 @@ public:
 	void move(Vector3 dir);
 	void setPos(Vector3 newPos);
 
+	void toggleMagnetVisibility()
+	{
+		if (areaVisible) RegisterRenderItem(magnet);
+		else DeregisterRenderItem(magnet);
+	}
+
 private:
 	float b = 0; // carga del campo magnetico
 
 	physx::PxTransform* magnetPose = nullptr;
+	RenderItem* magnet = nullptr;
 };

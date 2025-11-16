@@ -63,7 +63,7 @@ protected:
 	float lifetime;
 	float maxLifetime = -1;
 
-	void integrate(double t);
+	virtual void integrate(double t);
 
 	void manageLife(double t);
 };
