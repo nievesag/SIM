@@ -110,8 +110,11 @@ void Scene0::init()
 	chargedGenerator = new ChargedGenerator(this, "Carga");
 	sys->registerGenerator(chargedGenerator);
 
-	ChargedEntity* bola = new ChargedEntity(this, { 140, 200,0 }, 3, -0.1, trailGenerator);
+	ChargedEntity* bola = new ChargedEntity(this, { 0, 0,0 }, 3, -0.1, trailGenerator);
 	chargedGenerator->addChargedEnitity(bola);
+
+	sGenerator = new SplashGenerator(this, "Splash");
+	sys->registerGenerator(sGenerator);
 
 	pGen = new ProjectileGenerator(this);
 
@@ -119,7 +122,7 @@ void Scene0::init()
 	sys->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
-	magnetism2 = new MagnetismGenerator({ 90,140,0 }, 70, this, 0.2);
+	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 0.2);
 	sys->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
@@ -156,8 +159,10 @@ void Scene0::unload()
 
 	magnetism1->setAreaVisibility(false);
 	magnetism2->setAreaVisibility(false);
+
 	magnetism1->toggleAreaVisibility();
 	magnetism2->toggleAreaVisibility();
+
 	magnetism1->toggleMagnetVisibility();
 	magnetism2->toggleMagnetVisibility();
 
@@ -284,7 +289,8 @@ void Scene0::readFile(std::string file)
 
 void Scene0::splash(Vector3 pos)
 {
-
+	sGenerator->setSplasPos(pos);
+	sGenerator->setSplash(true);
 }
 
 void Scene1::init()
@@ -401,11 +407,8 @@ void Scene3::init()
 	bola = new ChargedEntity(this, { 140, 200,0 }, 3, -0.1, trailGenerator);
 	chargedGenerator->addChargedEnitity(bola);
 
-	fGenerator = new SplashGenerator(this, "Splash");
-	sys->registerGenerator(fGenerator);
-
-	//fuegos = new WhirlGenerator({ 0,0,0 }, 100, this, { 0, -50, 50 });
-	//sys->registerForceGenerator(fuegos);
+	sGenerator = new SplashGenerator(this, "Splash");
+	sys->registerGenerator(sGenerator);
 
 	pSystems.push_back(sys);
 }
@@ -421,6 +424,6 @@ void Scene3::keyPressed(unsigned char key, const physx::PxTransform& camera)
 
 void Scene3::splash(Vector3 pos)
 {
-	fGenerator->setSplasPos(pos);
-	fGenerator->setSplash(true);
+	sGenerator->setSplasPos(pos);
+	sGenerator->setSplash(true);
 }

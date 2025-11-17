@@ -70,9 +70,9 @@ MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, flo
     Vector4 color = { 1,1,1,1 };
     if (b < 0) color = { 1,0,0,1 }; // norte
     else if (b > 1) color = { 0,0,1,1 }; // sur
-            
+
     magnet = new RenderItem(shape, magnetPose, color);
-    RegisterRenderItem(magnet);
+    //RegisterRenderItem(magnet);
 }
 
 Vector3 MagnetismGenerator::generateForce(Entity& e)

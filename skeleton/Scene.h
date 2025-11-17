@@ -92,6 +92,8 @@ private:
 	ParticleGenerator* randomMass = nullptr;
 
 	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
+
+	SplashGenerator* sGenerator = nullptr;
 };
 
 class Scene1 : public Scene
@@ -186,5 +188,5 @@ private:
 
 	ChargedEntity* bola = nullptr;
 
-	SplashGenerator* fGenerator = nullptr;
+	SplashGenerator* sGenerator = nullptr;
 };
