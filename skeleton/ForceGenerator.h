@@ -20,6 +20,7 @@ class ForceGenerator
 {
 public:
 	ForceGenerator(Vector3 pos, float areaR, Scene* s);
+	ForceGenerator() {};
 	virtual ~ForceGenerator();
 
 	// en el update de cada particula llamas a generateForce
@@ -123,4 +124,19 @@ private:
 
 	physx::PxTransform* magnetPose = nullptr;
 	RenderItem* magnet = nullptr;
+};
+
+class SpringForceGenerator : public ForceGenerator 
+{
+public:
+	SpringForceGenerator(double _k, double _restingLength, Particle* _other);
+
+	Vector3 generateForce(Entity& e) override;
+
+	void setK(double _k) { k = _k; }
+
+protected:
+	double k; // coeficiente de elasticidad
+	double restingLength; // longitud en reposo del muelle
+	Particle* other; // particula con la que genera la fuerza
 };

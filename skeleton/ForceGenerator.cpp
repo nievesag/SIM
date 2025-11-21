@@ -103,3 +103,25 @@ void MagnetismGenerator::setPos(Vector3 newPos)
     areaPose->p = newPos;
     magnetPose->p = newPos;
 }
+
+SpringForceGenerator::SpringForceGenerator(double _k, double _restingLength, Particle* _other)
+    : k(_k), restingLength(_restingLength), other(_other)
+{
+
+}
+
+Vector3 SpringForceGenerator::generateForce(Entity& e)
+{
+    Vector3 force = { 0,0,0 };
+
+    if (&e != nullptr && other != nullptr) 
+    {
+        Vector3 springLenght = other->getPosition() - e.getPosition();
+        float realLenght = springLenght.normalize();
+        float delta = realLenght - restingLength;
+
+        force = springLenght * delta * k;
+    }
+
+    return force;
+}

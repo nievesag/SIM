@@ -237,10 +237,29 @@ void Scene0::newToy(Vector3 pos)
 	TrailGenerator* trail = new TrailGenerator(this, "Rastro");
 	sys->registerGenerator(trail);
 
+	SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
+	sys->registerGenerator(springGenerator);
+
+	// crea toy
 	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1, trail);
 	toy->setVelocity({ 0,-50,0 });
 
+	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
+	sys->registerGenerator(chargedGenerator);
 	chargedGenerator->addChargedEnitity(toy);
+
+	// pie
+	Particle* pie = new Particle(this, pos, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
+	addEntity(pie);
+	springGenerator->addSpringEnitity(toy);
+	springGenerator->addSpringEnitity(pie);
+
+	// muelles
+	SpringForceGenerator* spring1 = new SpringForceGenerator(500, 5, pie);
+	sys->registerForceGenerator(spring1);
+	SpringForceGenerator* spring2 = new SpringForceGenerator(500, 5, toy);
+	sys->registerForceGenerator(spring2);
+
 }
 
 void Scene0::readFile(std::string file)
@@ -426,4 +445,45 @@ void Scene3::splash(Vector3 pos)
 {
 	sGenerator->setSplasPos(pos);
 	sGenerator->setSplash(true);
+}
+
+// -------- ESCENA 4
+void Scene4::init()
+{
+	Scene::init();
+
+	ParticleSystem* sys = new ParticleSystem(this);
+
+	TrailGenerator* trail = new TrailGenerator(this, "Rastro");
+	sys->registerGenerator(trail);
+
+	SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
+	sys->registerGenerator(springGenerator);
+
+	// crea toy
+	ChargedEntity* toy = new ChargedEntity(this, {0,0,0}, 3, -0.1, trail);
+	toy->setVelocity({ 0,-50,0 });
+
+	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
+	sys->registerGenerator(chargedGenerator);
+	chargedGenerator->addChargedEnitity(toy);
+
+	// pie
+	Particle* pie = new Particle(this, {0,0,0}, {0,0,0}, 2, {0,0,1,1}, 1.5, 0.99, -1);
+	addEntity(pie);
+	springGenerator->addSpringEnitity(toy);
+	springGenerator->addSpringEnitity(pie);
+
+	// muelles
+	SpringForceGenerator* spring1 = new SpringForceGenerator(1, 10, pie);
+	sys->registerForceGenerator(spring1);
+	SpringForceGenerator* spring2 = new SpringForceGenerator(1, 10, toy);
+	sys->registerForceGenerator(spring2);
+
+	pSystems.push_back(sys);
+}
+
+void Scene4::step(double t)
+{
+	Scene::step(t);
 }

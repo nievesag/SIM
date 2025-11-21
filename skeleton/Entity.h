@@ -29,12 +29,13 @@ public:
 	// --- setters
 	virtual void setPosition(Vector3 pos) { pose->p = pos; }
 	virtual void setRotation(physx::PxQuat rot) { pose->q = rot; }
-	virtual void setShape(physx::PxShape* shp, float siz)
+	virtual void setShapeWithSize(physx::PxShape* shp, float siz)
 	{
 		renderItem->shape = shp;
 		shape = shp;
 		size = siz;
 	}
+	virtual void setShape(physx::PxShape* shp) { shape = shp; }
 	void setSize(float siz) noexcept { size = siz; }
 	void setMass(float mas) noexcept { mass = mas; }
 	void setVelocity(Vector3 v) noexcept { velocity = v; }

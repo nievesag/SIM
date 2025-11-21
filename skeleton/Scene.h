@@ -190,3 +190,29 @@ private:
 
 	SplashGenerator* sGenerator = nullptr;
 };
+
+class Scene4 : public Scene
+{
+public:
+	Scene4() = default;
+	void init() override;
+	void step(double t) override;
+	void load() override
+	{
+		Scene::load();
+	}
+	void unload() override
+	{
+		Scene::unload();
+	}
+	void keyPressed(unsigned char key, const physx::PxTransform& camera) override {};
+	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
+
+	void newToy(Vector3 pos) override {}
+	void splash(Vector3 pos) override {};
+
+	void readFile(std::string file) override {}
+
+private:
+	ChargedEntity* bola = nullptr;
+};

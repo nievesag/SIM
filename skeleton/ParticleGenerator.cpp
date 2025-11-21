@@ -64,7 +64,7 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		{ 100, -9.8, 100 }, // velocidad inicial
 		5,								// tamaño
 		{ 0,1,0,1 },		// color
-		2,								// masa
+		3,								// masa
 		0.99,							// damping
 		-1);						// tiempo de vida max
 	modeloCharge->setq(2);
@@ -74,13 +74,13 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 	// - particula rastro
 	Particle* modeloTrail = new Particle(
 		scn,								// escena (la misma que el generador)
-		Vector3(0, 0, 0),		// origen inicial
-		{ 0, 0, 0 },				// velocidad inicial
+		Vector3(0, 0, 0),					// origen inicial
+		{ 0, 0, 0 },						// velocidad inicial
 		1,									// tamaño
-		{ 1,1,1,1 },			// color
+		{ 1, 0.984, 0, 1 },					// color
 		1,									// masa
 		0.99,								// damping
-		0.2);							// tiempo de vida max
+		0.2);								// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Rastro"), modeloTrail));
 	DeregisterRenderItem(modeloTrail->getRenderItem());
 
@@ -375,6 +375,12 @@ void ChargedGenerator::addChargedEnitity(ChargedEntity* p)
 {
 	generatedParticles.push_back(p);
 	scn->addEntity(p);
+}
+
+// ------- GENERADOR PARTICULAS MUELLEADAS -------
+void SpringParticleGenerator::addSpringEnitity(Particle* p)
+{
+	generatedParticles.push_back(p);
 }
 
 // ------- GENERADOR RASTRO -------

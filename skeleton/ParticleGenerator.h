@@ -158,6 +158,23 @@ private:
 	void generateParticle() override {};
 };
 
+// ------- GENERADOR CON MUELLE -------
+class SpringParticleGenerator : public ParticleGenerator
+{
+public:
+	SpringParticleGenerator(Scene* s, std::string model)
+		: ParticleGenerator(s, model)
+	{
+
+	}
+
+	~SpringParticleGenerator() override = default;
+	void addSpringEnitity(Particle* p);
+
+private:
+	void generateParticle() override {};
+};
+
 // ------- GENERADOR RASTRO -------
 class TrailGenerator : public ParticleGenerator
 {

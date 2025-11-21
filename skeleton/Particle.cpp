@@ -17,6 +17,23 @@ Particle::Particle(Scene* scn, Vector3 pos, Vector3 vel, double siz, Vector4 col
 	maxLifetime = maxLT;
 }
 
+/*
+Particle::Particle(Scene* scn, Vector3 pos, Vector3 vel, double siz, Vector4 col, float m, float damp, float maxLT, physx::PxShape* s)
+	: Entity(scn), damping(damp)
+{
+	// construye la particula
+	pose = new PxTransform(pos);
+	size = siz;
+	shape = s;
+	color = col;
+	renderItem = new RenderItem(shape, pose, color);
+	mass = m;
+	velocity = vel;
+	lifetime = 0;
+	maxLifetime = maxLT;
+}
+*/
+
 Particle::Particle(Scene* scn, Vector3 Pos, Vector3 Vel, double size) :
 	Entity(scn)
 {
