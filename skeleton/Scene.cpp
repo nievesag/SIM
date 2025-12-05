@@ -447,21 +447,22 @@ void Scene3::splash(Vector3 pos)
 	sGenerator->setSplash(true);
 }
 
-// -------- ESCENA 4
+// -------- ESCENA 4 -> muelles
 void Scene4::init()
 {
 	Scene::init();
 
 	ParticleSystem* sys = new ParticleSystem(this);
 
-	TrailGenerator* trail = new TrailGenerator(this, "Rastro");
-	sys->registerGenerator(trail);
+	//TrailGenerator* trail = new TrailGenerator(this, "Rastro");
+	//sys->registerGenerator(trail);
 
 	SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
 	sys->registerGenerator(springGenerator);
 
 	// crea toy
-	ChargedEntity* toy = new ChargedEntity(this, {0,0,0}, 3, -0.1, trail);
+	ChargedEntity* toy = new ChargedEntity(this, {0,0,0}, 3, -0.1, nullptr);
+	toy->setLifetime(-1);
 	toy->setVelocity({ 0,-50,0 });
 
 	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
@@ -487,3 +488,15 @@ void Scene4::step(double t)
 {
 	Scene::step(t);
 }
+
+// -------- ESCENA 5 -> flotacion
+void Scene5::init()
+{
+
+}
+
+void Scene5::step(double t)
+{
+	Scene::step(t);
+}
+

@@ -214,5 +214,31 @@ public:
 	void readFile(std::string file) override {}
 
 private:
+	//ChargedEntity* bola = nullptr;
+};
+
+class Scene5 : public Scene
+{
+public:
+	Scene5() = default;
+	void init() override;
+	void step(double t) override;
+	void load() override
+	{
+		Scene::load();
+	}
+	void unload() override
+	{
+		Scene::unload();
+	}
+	void keyPressed(unsigned char key, const physx::PxTransform& camera) override {};
+	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
+
+	void newToy(Vector3 pos) override {}
+	void splash(Vector3 pos) override {};
+
+	void readFile(std::string file) override {}
+
+private:
 	ChargedEntity* bola = nullptr;
 };

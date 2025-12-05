@@ -137,6 +137,7 @@ void Particle::manageLife(double t)
 		|| pose->p.z <= -scene->getActionThreshold().z	// o se sale por delante o detras
 		|| pose->p.z >= scene->getActionThreshold().z)
 	{
+		std::cout << "muere" << std::endl;
 		setAlive(false);
 	}
 

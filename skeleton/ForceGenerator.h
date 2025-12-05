@@ -140,3 +140,17 @@ protected:
 	double restingLength; // longitud en reposo del muelle
 	Particle* other; // particula con la que genera la fuerza
 };
+
+class BuoyancyForceGenerator : public ForceGenerator 
+{
+public:
+	BuoyancyForceGenerator(float h, float V, float d);
+
+	Vector3 generateForce(Entity& e) override;
+
+protected:
+	float height;
+	float volume;
+	float liquidDensity;
+	float gravity = 9.8;
+};

@@ -15,13 +15,19 @@ ChargedEntity::~ChargedEntity()
 
 void ChargedEntity::step(double t)
 {
-	trailGenerator->setPosition(getPosition());
-	trailGenerator->setDirection(getRotation().rotate(physx::PxVec3(-1, 0, 0)));
-	trailGenerator->setFatherSize(getSize());
+	if (trailGenerator != nullptr) 
+	{
+		trailGenerator->setPosition(getPosition());
+		trailGenerator->setDirection(getRotation().rotate(physx::PxVec3(-1, 0, 0)));
+		trailGenerator->setFatherSize(getSize());
+	}
 
 	Particle::step(t);
 
-	trailGenerator->setFatherAlive(getAlive());
+	if (trailGenerator != nullptr)
+	{
+		trailGenerator->setFatherAlive(getAlive());
+	}
 
 	if (getPosition().y < -200)
 	{

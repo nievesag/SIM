@@ -60,6 +60,7 @@ Vector3 WhirlGenerator::generateForce(Entity& e)
     return { 0,0,0 };
 }
 
+// ------- GENERADOR MAGNETISMO -------
 MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, float B)
     : ForceGenerator(pos, areaR, scn), b(B)
 {
@@ -104,6 +105,7 @@ void MagnetismGenerator::setPos(Vector3 newPos)
     magnetPose->p = newPos;
 }
 
+// ------- GENERADOR MUELLES -------
 SpringForceGenerator::SpringForceGenerator(double _k, double _restingLength, Particle* _other)
     : k(_k), restingLength(_restingLength), other(_other)
 {
@@ -122,6 +124,21 @@ Vector3 SpringForceGenerator::generateForce(Entity& e)
 
         force = springLenght * delta * k;
     }
+
+    return force;
+}
+
+// ------- GENERADOR FLOTACION -------
+BuoyancyForceGenerator::BuoyancyForceGenerator(float h, float V, float d)
+{
+
+}
+
+Vector3 BuoyancyForceGenerator::generateForce(Entity& e)
+{
+    Vector3 force = { 0,0,0 };
+
+
 
     return force;
 }
