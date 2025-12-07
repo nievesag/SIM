@@ -116,6 +116,11 @@ Vector3 SpringForceGenerator::generateForce(Entity& e)
 {
     Vector3 force = { 0,0,0 };
 
+    if (other != nullptr && !other->getAlive())
+    {
+        other = nullptr;
+    }
+
     if (&e != nullptr && other != nullptr) 
     {
         Vector3 springLenght = other->getPosition() - e.getPosition();
