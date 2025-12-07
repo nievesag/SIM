@@ -492,7 +492,30 @@ void Scene4::step(double t)
 // -------- ESCENA 5 -> flotacion
 void Scene5::init()
 {
+	Scene::init();
 
+	ParticleSystem* sys = new ParticleSystem(this);
+
+	//TrailGenerator* trail = new TrailGenerator(this, "Rastro");
+	//sys->registerGenerator(trail);
+
+	SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
+	sys->registerGenerator(springGenerator);
+
+	// crea toy
+	ChargedEntity* toy = new ChargedEntity(this, { 0,0,0 }, 3, -0.1, nullptr);
+	toy->setMass(50);
+	toy->setLifetime(-1);
+
+	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
+	sys->registerGenerator(chargedGenerator);
+	chargedGenerator->addChargedEnitity(toy);
+
+	// agua
+	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({0,0,0}, 50, this, -50, 10, 1000);
+	sys->registerForceGenerator(agua);
+
+	pSystems.push_back(sys);
 }
 
 void Scene5::step(double t)

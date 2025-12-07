@@ -144,7 +144,10 @@ protected:
 class BuoyancyForceGenerator : public ForceGenerator 
 {
 public:
-	BuoyancyForceGenerator(float h, float V, float d);
+	// h -> altura del liquido
+	// v -> volumen del liquido
+	// d -> densidad del liquido
+	BuoyancyForceGenerator(Vector3 pos, float areaR, Scene* s, float h, float V, float d);
 
 	Vector3 generateForce(Entity& e) override;
 

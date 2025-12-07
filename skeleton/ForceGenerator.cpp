@@ -134,7 +134,8 @@ Vector3 SpringForceGenerator::generateForce(Entity& e)
 }
 
 // ------- GENERADOR FLOTACION -------
-BuoyancyForceGenerator::BuoyancyForceGenerator(float h, float V, float d)
+BuoyancyForceGenerator::BuoyancyForceGenerator(Vector3 pos, float areaR, Scene* s, float h, float V, float d)
+    : ForceGenerator(pos, areaR, s), height(h), volume(V), liquidDensity(d)
 {
 
 }
@@ -143,7 +144,25 @@ Vector3 BuoyancyForceGenerator::generateForce(Entity& e)
 {
     Vector3 force = { 0,0,0 };
 
+    float h = e.getPosition().y; // centro del objeto que flota
+    float h0 = areaPos.y; // centro de la superficie liquida
 
+    float immersed;
+
+    if (h - h0 > height * 0.5f)
+    {
+        immersed = 0.0;
+    }
+    else if (h0 - h > height * 0.5f)
+    {
+        immersed = 1.0;
+    }
+    else
+    {
+        immersed = (h0 - h) / height + 0.5f; // profundidad normalizada
+    }
+
+    force.y = liquidDensity * volume * immersed * 9.8f * 0.8f;
 
     return force;
 }

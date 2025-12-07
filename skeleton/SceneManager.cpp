@@ -9,7 +9,8 @@ SceneManager::SceneManager()
 	//addScene(new Scene1());
 	//addScene(new Scene2());
 	//addScene(new Scene3());
-	addScene(new Scene4());
+	//addScene(new Scene4());
+	addScene(new Scene5());
 }
 
 SceneManager::~SceneManager()

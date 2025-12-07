@@ -209,7 +209,7 @@ public:
 	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
 
 	void newToy(Vector3 pos) override {}
-	void splash(Vector3 pos) override {};
+	void splash(Vector3 pos) override {}
 
 	void readFile(std::string file) override {}
 
@@ -235,10 +235,12 @@ public:
 	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
 
 	void newToy(Vector3 pos) override {}
-	void splash(Vector3 pos) override {};
+	void splash(Vector3 pos) override {}
 
 	void readFile(std::string file) override {}
 
 private:
+	ForceGenerator* agua = nullptr;
+
 	ChargedEntity* bola = nullptr;
 };
