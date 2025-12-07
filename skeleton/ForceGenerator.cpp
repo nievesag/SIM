@@ -162,7 +162,7 @@ Vector3 BuoyancyForceGenerator::generateForce(Entity& e)
         immersed = (h0 - h) / height + 0.5f; // profundidad normalizada
     }
 
-    force.y = liquidDensity * volume * immersed * 9.8f * 0.8f;
+    force.y = liquidDensity * volume * immersed * 9.8f;
 
     return force;
 }

@@ -499,12 +499,12 @@ void Scene5::init()
 	//TrailGenerator* trail = new TrailGenerator(this, "Rastro");
 	//sys->registerGenerator(trail);
 
-	SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
-	sys->registerGenerator(springGenerator);
+	//SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
+	//sys->registerGenerator(springGenerator);
 
 	// crea toy
 	ChargedEntity* toy = new ChargedEntity(this, { 0,0,0 }, 3, -0.1, nullptr);
-	toy->setMass(50);
+	toy->setMass(1);
 	toy->setLifetime(-1);
 
 	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
@@ -512,7 +512,7 @@ void Scene5::init()
 	chargedGenerator->addChargedEnitity(toy);
 
 	// agua
-	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({0,0,0}, 50, this, -50, 10, 1000);
+	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({0,0,0}, 50, this, -10, 5, 1);
 	sys->registerForceGenerator(agua);
 
 	pSystems.push_back(sys);
