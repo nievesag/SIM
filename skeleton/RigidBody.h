@@ -76,7 +76,7 @@ class RigidBodyDynamic : public RigidBody
 public:
 	RigidBodyDynamic(Scene* scn, 
 		PxPhysics* gPhysics, PxScene* gScene, PxMaterial* mat = nullptr, bool kin = false,
-		Vector3 pos, Vector3 vel, double siz, Vector4 col, float m, float damp, float maxLT,
+		Vector3 pos, Vector3 vel, double siz, PxVec3 vol, Vector4 col, float m, float damp, float maxLT,
 		Shape sh, double density = -1,
 		PxVec3 angVel = { 0, 0, 0 }, PxVec3 tensor = { 1,1,1 });
 
@@ -193,7 +193,7 @@ private:
 	float lifetime;
 	float maxLifetime = -1;
 
-	virtual void integrate(double t);
+	//virtual void integrate(double t);
 
 	void manageLife(double t);
 
