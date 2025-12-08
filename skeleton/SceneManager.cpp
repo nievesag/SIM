@@ -3,14 +3,16 @@
 #include <cctype>
 #include <iostream>
 
-SceneManager::SceneManager()
+SceneManager::SceneManager(PxPhysics* px_physics, PxScene* px_scene) :
+	gPhysics(px_physics), gScene(px_scene)
 {
 	//addScene(new Scene0());
 	//addScene(new Scene1());
 	//addScene(new Scene2());
 	//addScene(new Scene3());
 	//addScene(new Scene4());
-	addScene(new Scene5());
+	//addScene(new Scene5());
+	addScene(new Scene6(gPhysics, gScene));
 }
 
 SceneManager::~SceneManager()

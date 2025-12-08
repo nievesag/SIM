@@ -3,8 +3,9 @@
 #include "Scene.h"
 
 #include <vector>
-#include <foundation/PxTransform.h>
+#include <PxPhysics.h>
 using namespace std;
+using namespace physx;
 
 class SceneManager
 {
@@ -12,8 +13,11 @@ private:
 	std::vector<Scene*> vScenes;
 	size_t currentScene = 0;
 
+	PxPhysics* gPhysics = nullptr;
+	PxScene* gScene = nullptr;
+
 public:
-	SceneManager();
+	SceneManager(PxPhysics* px_physics, PxScene* px_scene);
 	~SceneManager();
 
 	// gestion escenas

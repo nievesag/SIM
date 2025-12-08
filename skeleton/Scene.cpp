@@ -8,6 +8,12 @@
 class Pipe;
 #include <fstream>
 
+Scene::Scene(PxPhysics* gPhysics, PxScene* gScene)
+	: gPhysics(gPhysics), gScene(gScene)
+{
+
+}
+
 Scene::~Scene()
 {
 
@@ -90,7 +96,8 @@ void Scene::specialKeyPressed(int key, const physx::PxTransform& camera)
 }
 
 // ------------------------ ESCENAS HIJAS ------------------------
-// Escena 0
+
+// -------- ESCENA 0 -> main
 void Scene0::init()
 {
 	Scene::init();
@@ -288,6 +295,7 @@ void Scene0::readFile(std::string file)
 		{
 			std::cout << j << " " << i << std::endl;
 
+			/*
 			// MURO
 			if (fila[j] == 'x')
 			{
@@ -300,6 +308,7 @@ void Scene0::readFile(std::string file)
 				Wall* empty = new Wall(this, 20, Vector3(j * 40, i * 40, 0), true);
 				line.push_back(empty);
 			}
+			*/
 		}
 
 		map.push_back(line);
@@ -312,6 +321,7 @@ void Scene0::splash(Vector3 pos)
 	sGenerator->setSplash(true);
 }
 
+// -------- ESCENA 1 -> viento
 void Scene1::init()
 {
 	Scene::init();
@@ -374,7 +384,7 @@ void Scene1::readFile(std::string file)
 {
 }
 
-// -------- ESCENA 2
+// -------- ESCENA 2 -> torbellino
 void Scene2::init()
 {
 	Scene::init();
@@ -409,7 +419,7 @@ void Scene2::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	}
 }
 
-// -------- ESCENA 3
+// -------- ESCENA 3 -> splash
 void Scene3::init()
 {
 	Scene::init();
@@ -512,7 +522,7 @@ void Scene5::init()
 	chargedGenerator->addChargedEnitity(toy);
 
 	// agua
-	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({0,0,0}, 50, this, -10, 5, 1);
+	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({ 0,0,0 }, 50, this, -10, 5, 1);
 	sys->registerForceGenerator(agua);
 
 	pSystems.push_back(sys);
@@ -523,3 +533,31 @@ void Scene5::step(double t)
 	Scene::step(t);
 }
 
+// -------- ESCENA 5 -> solidos rigidos
+void Scene6::init()
+{
+	Scene::init();
+
+	ParticleSystem* sys = new ParticleSystem(this);
+
+	//TrailGenerator* trail = new TrailGenerator(this, "Rastro");
+	//sys->registerGenerator(trail);
+
+	//SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
+	//sys->registerGenerator(springGenerator);
+
+	//StaticRigidBody* suelo = new StaticRigidBody(this, gPhysics, gScene);
+	//suelo->setShape(CreateShape(PxBoxGeometry(100, 100, 100)), 100);
+	//suelo->setPosition({ 0,-100,0 });
+	//addGameObject(suelo);
+
+	Wall* pared = new Wall(this, 5.0f, { 0,0,0 }, false, gPhysics, gScene);
+	addEntity(pared);
+
+	pSystems.push_back(sys);
+}
+
+void Scene6::step(double t)
+{
+	Scene::step(t);
+}

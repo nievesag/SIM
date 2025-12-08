@@ -35,17 +35,22 @@ public:
 		shape = shp;
 		size = siz;
 	}
-	virtual void setShape(physx::PxShape* shp) { shape = shp; }
+	virtual void setShape(physx::PxShape* sh, float si)
+	{
+		renderItem->shape = sh;
+		shape = sh;
+		size = si;
+	}
 	void setSize(float siz) noexcept { size = siz; }
 	void setMass(float mas) noexcept { mass = mas; }
-	void setVelocity(Vector3 v) noexcept { velocity = v; }
+	void setVelocity(Vector3 v) { velocity = v; }
 	void setColor(Vector4 col)
 	{
 		renderItem->color = col;
 		color = col;
 	}
 	void setAlive(bool a) { alive = a; }
-	void setVisible(bool v)
+	virtual void setVisible(bool v)
 	{
 		visible = v;
 	}

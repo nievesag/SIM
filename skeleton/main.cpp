@@ -75,7 +75,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	// --- scene manager
-	sceneManager = new SceneManager();
+	sceneManager = new SceneManager(gPhysics, gScene);
 }
 
 // Function to configure what happens in each step of physics

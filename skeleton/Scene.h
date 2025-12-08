@@ -18,6 +18,7 @@ class Scene
 {
 public:
 	Scene() = default;
+	Scene(PxPhysics* gPhysics = nullptr, PxScene* gScene = nullptr);
 	virtual ~Scene();
 
 	virtual void init();
@@ -34,20 +35,29 @@ public:
 	void addEntity(Entity* ent);
 	void addSystem(ParticleSystem* sys);
 
+	// input
 	virtual void keyPressed(unsigned char key, const physx::PxTransform& camera);
 	virtual void specialKeyPressed(int key, const physx::PxTransform& camera); // special keypress event
 
+	// juego
 	Vector3 getActionThreshold() { return actionThreshold; }
 
 	virtual void newToy(Vector3 pos) = 0;
 	virtual void readFile(std::string file) = 0;
 	virtual void splash(Vector3 pos) = 0;
 
+	// px
+	PxPhysics* getPxPhysics() const	{ return gPhysics; }
+	PxScene* getPxScene() const { return gScene; }
+
 protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
 	std::vector<ParticleSystem*> pSystems; // sistemas de particulas
 
 	Vector3 actionThreshold = {200, 200,200}; // limites de la escena a partir de los cuales se eliminan las particulas
+	
+	PxPhysics* gPhysics = nullptr;
+	PxScene* gScene = nullptr;
 };
 
 // --- ESCENAS HIJAS ---
@@ -149,6 +159,7 @@ private:
 	ForceGenerator* torbellino = nullptr;
 };
 
+// 
 class Scene3 : public Scene
 {
 public:
@@ -191,6 +202,7 @@ private:
 	SplashGenerator* sGenerator = nullptr;
 };
 
+// muelles
 class Scene4 : public Scene
 {
 public:
@@ -217,6 +229,7 @@ private:
 	//ChargedEntity* bola = nullptr;
 };
 
+// flotacion
 class Scene5 : public Scene
 {
 public:
@@ -232,6 +245,35 @@ public:
 		Scene::unload();
 	}
 	void keyPressed(unsigned char key, const physx::PxTransform& camera) override {};
+	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
+
+	void newToy(Vector3 pos) override {}
+	void splash(Vector3 pos) override {}
+
+	void readFile(std::string file) override {}
+
+private:
+	ForceGenerator* agua = nullptr;
+
+	ChargedEntity* bola = nullptr;
+};
+
+// solidos rigidos
+class Scene6 : public Scene
+{
+public:
+	Scene6(PxPhysics* gphys, PxScene* gscn): Scene(gphys, gscn) {};
+	void init() override;
+	void step(double t) override;
+	void load() override
+	{
+		Scene::load();
+	}
+	void unload() override
+	{
+		Scene::unload();
+	}
+	void keyPressed(unsigned char key, const physx::PxTransform& camera) override {}
 	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
 
 	void newToy(Vector3 pos) override {}
