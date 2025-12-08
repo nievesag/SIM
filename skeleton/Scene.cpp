@@ -543,6 +543,10 @@ void Scene6::init()
 	Wall* pared = new Wall(this, 5.0f, { 0,0,0 }, false, gPhysics, gScene);
 	addEntity(pared);
 
+	// Scene* scn, PxPhysics* gPhysics, PxScene* gScene, PxMaterial* mat, 
+	//bool kin, Vector3 pos, Vector3 vel, double siz, PxVec3 vol, Vector4 col, float m, float damp, float maxLT,
+	//	Shape sh, double d, PxVec3 angVel, PxVec3 tensor
+
 	RigidBodyDynamic* box1 = new RigidBodyDynamic(this, gPhysics, gScene);
 	//box1->setDensity(1);
 	addEntity(box1);

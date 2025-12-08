@@ -6,7 +6,7 @@ RigidBodyStatic::RigidBodyStatic(Scene* scn, PxPhysics* gPhysics, PxScene* gScen
 {
 	size = siz;
 
-	PxVec3 volume = { size, size, size };
+	Vector3 volume = { size, size, size };
 
 	color = col;
 	pose = new physx::PxTransform(pos);
