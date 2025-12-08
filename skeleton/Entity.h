@@ -17,14 +17,15 @@ public:
 	// --- getters
 	virtual Vector3 getPosition() const { return pose->p; }				// transform p
 	virtual physx::PxQuat getRotation() const { return pose->q; }		// transform q
-	double getSize() const { return size; }								// tamano
-	double getMass() const { return mass; }								// masa
-	Vector3 getVelocity() const { return velocity; }					// velocidad
-	Vector4 getColor() const { return color; }							// color
-	bool getAlive() const { return alive; }								// vivo
-	RenderItem* getRenderItem() const { return renderItem; }
-	float getq() const { return q; }
-	Scene* getScene() const { return scene; }
+	virtual double getSize() const { return size; }								// tamano
+	virtual double getMass() const { return mass; }								// masa
+	virtual Vector3 getVelocity() const { return velocity; }					// velocidad
+	virtual Vector4 getColor() const { return color; }							// color
+	virtual bool getAlive() const { return alive; }								// vivo
+	virtual RenderItem* getRenderItem() const { return renderItem; }
+	virtual float getq() const { return q; }
+	virtual Scene* getScene() const { return scene; }
+	virtual physx::PxShape* getShape() const { return shape; }
 
 	// --- setters
 	virtual void setPosition(Vector3 pos) { pose->p = pos; }
@@ -41,25 +42,25 @@ public:
 		shape = sh;
 		size = si;
 	}
-	void setSize(float siz) noexcept { size = siz; }
-	void setMass(float mas) noexcept { mass = mas; }
-	void setVelocity(Vector3 v) { velocity = v; }
-	void setColor(Vector4 col)
+	virtual void setSize(float siz) noexcept { size = siz; }
+	virtual void setMass(float mas) noexcept { mass = mas; }
+	virtual void setVelocity(Vector3 v) { velocity = v; }
+	virtual void setColor(Vector4 col)
 	{
 		renderItem->color = col;
 		color = col;
 	}
-	void setAlive(bool a) { alive = a; }
+	virtual void setAlive(bool a) { alive = a; }
 	virtual void setVisible(bool v)
 	{
 		visible = v;
 	}
-	void toggleVisibility()
+	virtual void toggleVisibility()
 	{
 		if (visible) RegisterRenderItem(renderItem);
 		else DeregisterRenderItem(renderItem);
 	}
-	void setq(float newq) { q = newq; }
+	virtual void setq(float newq) { q = newq; }
 
 protected:
 	// --- atributos

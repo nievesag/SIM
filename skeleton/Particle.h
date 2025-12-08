@@ -25,7 +25,7 @@ public:
 	~Particle() override;
 
 	// integradores: euler explicito y semi implicito
-	void step(double t) override;
+	virtual void step(double t) override;
 
 	// setters
 	void setAcc(Vector3 a) { acc = a; }					// aceleracion
@@ -42,12 +42,12 @@ public:
 	bool getVisible() const { return visible; }
 
 	// fuerzas
-	void addForce(float x, float y, float z) { resultingForce.push_back({ x,y,z }); }
-	void addForce(const Vector3& force)
+	virtual void addForce(float x, float y, float z) { resultingForce.push_back({ x,y,z }); }
+	virtual void addForce(const Vector3& force)
 	{
 		resultingForce.push_back(force);
 	}
-	void applyForce();
+	virtual void applyForce();
 
 protected:
 	std::vector<Vector3> resultingForce; // fuerza resultante

@@ -540,19 +540,12 @@ void Scene6::init()
 
 	ParticleSystem* sys = new ParticleSystem(this);
 
-	//TrailGenerator* trail = new TrailGenerator(this, "Rastro");
-	//sys->registerGenerator(trail);
-
-	//SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
-	//sys->registerGenerator(springGenerator);
-
-	//StaticRigidBody* suelo = new StaticRigidBody(this, gPhysics, gScene);
-	//suelo->setShape(CreateShape(PxBoxGeometry(100, 100, 100)), 100);
-	//suelo->setPosition({ 0,-100,0 });
-	//addGameObject(suelo);
-
 	Wall* pared = new Wall(this, 5.0f, { 0,0,0 }, false, gPhysics, gScene);
 	addEntity(pared);
+
+	RigidBodyDynamic* box1 = new RigidBodyDynamic(this, gPhysics, gScene);
+	//box1->setDensity(1);
+	addEntity(box1);
 
 	pSystems.push_back(sys);
 }
