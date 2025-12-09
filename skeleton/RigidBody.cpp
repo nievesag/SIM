@@ -120,8 +120,8 @@ void RigidBodyDynamic::step(double t)
 	// ---- Gestion escena ----
 	manageLife(t);
 
-	std::cout << actor->getGlobalPose().p.y  << std::endl;
+	//std::cout << actor->getGlobalPose().p.y  << std::endl;
 	//std::cout << actor->getMass()  << std::endl;
 	//std::cout << mass  << std::endl;
-	 std::cout << pose->p.x << " " << pose->p.y << " " << pose->p.z << " " << std::endl;
+	//std::cout << pose->p.x << " " << pose->p.y << " " << pose->p.z << " " << std::endl;
 }
