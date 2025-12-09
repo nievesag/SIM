@@ -43,7 +43,10 @@ public:
 		size = si;
 	}
 	virtual void setSize(float siz) { size = siz; }
-	virtual void setMass(float mas) { mass = mas; }
+	virtual void setMass(float mas)
+	{
+		mass = mas;
+	}
 	virtual void setVelocity(Vector3 v) { velocity = v; }
 	virtual void setColor(Vector4 col)
 	{
@@ -69,7 +72,7 @@ protected:
 	physx::PxShape* shape = nullptr;			// forma
 	Vector4 color = { 1,1,1,1 };				// color
 	RenderItem* renderItem = nullptr;			// renderItem
-	double mass = 1;							// masa
+	float mass = 1;							// masa
 	Vector3 velocity = { 0,0,0 };				// velocidad, solo cambia con la aceleracion y la aceleracion cambia mediante una fuerza
 
 	bool alive = true;

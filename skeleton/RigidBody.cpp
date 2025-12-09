@@ -68,6 +68,7 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, PxPhysics* gPhysics, PxScene* gSc
 		actor->setLinearVelocity(vel);
 		actor->setAngularVelocity(angVel);
 	}
+	actor->addForce(PxVec3(1000, 0, 0));
 }
 
 void RigidBodyDynamic::applyForce()
@@ -118,4 +119,9 @@ void RigidBodyDynamic::step(double t)
 
 	// ---- Gestion escena ----
 	manageLife(t);
+
+	std::cout << actor->getGlobalPose().p.y  << std::endl;
+	//std::cout << actor->getMass()  << std::endl;
+	//std::cout << mass  << std::endl;
+	 std::cout << pose->p.x << " " << pose->p.y << " " << pose->p.z << " " << std::endl;
 }

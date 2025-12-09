@@ -540,6 +540,7 @@ void Scene6::init()
 	Scene::init();
 
 	Wall* pared = new Wall(this, 5.0f, { 0,0,0 }, false, gPhysics, gScene);
+	gScene->addActor(*pared->getActor());
 	addEntity(pared);
 
 	RigidBodySystem* sys = new RigidBodySystem(this, gPhysics, gScene);
@@ -548,12 +549,15 @@ void Scene6::init()
 	sys->registerGenerator(rbGen);
 
 	RigidBodyDynamic* bola = new RigidBodyDynamic(this, gPhysics, gScene);
+	bola->setMass(10);
 	bola->setLinearVelocity({ 0,5,0 });
 	bola->setAngularVelocity({ 0,0,0 });
+	gScene->addActor(*bola->getActor());
 
 	bola->setPosition({0,100,0});
 	bola->setDensity(1);
-	rbGen->addEntity(bola);
+	//rbGen->addEntity(bola);
+	addEntity(bola);
 
 	// Scene* scn, PxPhysics* gPhysics, PxScene* gScene, PxMaterial* mat, 
 	//bool kin, Vector3 pos, Vector3 vel, double siz, PxVec3 vol, Vector4 col, float m, float damp, float maxLT,

@@ -65,6 +65,8 @@ public:
 		actor->setGlobalPose(*pose);
 	}
 
+	PxRigidActor* getActor() override { return actor; }
+
 private:
 	physx::PxRigidStatic* actor = nullptr; // puntero al actor estatico
 };
@@ -140,6 +142,7 @@ public:
 	void setMass(float mas) override // mass
 	{
 		actor->setMass(mas);
+		float cojones = actor->getMass();
 		Entity::setMass(mas);
 	}
 
