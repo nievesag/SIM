@@ -13,20 +13,21 @@
 #include "Particle.h"
 #include "ParticleGenerator.h"
 #include "ForceGenerator.h"
+#include "System.h"
 
 using namespace physx;
 
 // para gestionar conjuntos de particulas y organizar la escena
 // cada sistema de particulas va a ser gestionado por si mismo con sus atributos
 
-class ParticleSystem
+class ParticleSystem : public System
 {
 public:
 	ParticleSystem(Scene* scn);
 	~ParticleSystem();
 
 	// update
-	void step(double t);
+	void step(double t) override;
 
 	// registra el generador de particulas
 	void registerGenerator(ParticleGenerator* g) 
@@ -47,6 +48,5 @@ protected:
 	// llamas a todos los generadores con la informacion de esa particula, el resultado sera la suma de todas las fuerzas que la afecten
 	// el update de la particula sera fuerzaParticula = fuerza que recibe en ese instante del update
 
-	Scene* scene = nullptr;
 	void applyForces(std::vector<Particle*>& generatedParticles);
 };

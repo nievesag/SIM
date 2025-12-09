@@ -12,6 +12,7 @@
 #include "ProjectileGenerator.h"
 class Wall;
 
+class System;
 class ParticleSystem;
 
 class Scene
@@ -33,7 +34,7 @@ public:
 
 	// gestion entidades
 	void addEntity(Entity* ent);
-	void addSystem(ParticleSystem* sys);
+	void addSystem(System* sys);
 
 	// input
 	virtual void keyPressed(unsigned char key, const physx::PxTransform& camera);
@@ -52,7 +53,7 @@ public:
 
 protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
-	std::vector<ParticleSystem*> pSystems; // sistemas de particulas
+	std::vector<System*> pSystems; // sistemas de particulas
 
 	Vector3 actionThreshold = {200, 200,200}; // limites de la escena a partir de los cuales se eliminan las particulas
 	

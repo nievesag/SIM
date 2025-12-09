@@ -1,7 +1,7 @@
 #include "ParticleSystem.h"
 
 ParticleSystem::ParticleSystem(Scene* scn)
-	: scene(scn)
+	: System(scn)
 {
 }
 

@@ -74,10 +74,11 @@ private:
 class RigidBodyDynamic : public RigidBody
 {
 public:
-	RigidBodyDynamic(Scene* scn, 
-		PxPhysics* gPhysics, PxScene* gScene, PxMaterial* mat, bool kin = false,
-		Vector3 pos, Vector3 vel, double siz, PxVec3 vol, Vector4 col, float m, float damp, float maxLT,
-		Shape sh, double density = -1,
+	RigidBodyDynamic(Scene* scn = nullptr, 
+		PxPhysics* gPhysics = nullptr, PxScene* gScene = nullptr, PxMaterial* mat = nullptr, bool kin = false,
+		Vector3 pos = { 0,0,0 }, Vector3 vel = { 0,0,0 }, float siz = 5, PxVec3 vol = { 1,1,1 },
+		Vector4 col = { 1,1,1,1 }, float m = 10, float damp = 0.8, float maxLT = -1,
+		Shape sh = SPHERE, double density = -1,
 		PxVec3 angVel = { 0, 0, 0 }, PxVec3 tensor = { 1,1,1 });
 
 	void step(double t) override;

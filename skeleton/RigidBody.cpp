@@ -19,7 +19,7 @@ RigidBodyStatic::RigidBodyStatic(Scene* scn, PxPhysics* gPhysics, PxScene* gScen
 
 // --- DYNAMIC
 RigidBodyDynamic::RigidBodyDynamic(Scene* scn, PxPhysics* gPhysics, PxScene* gScene, PxMaterial* mat, 
-	bool kin, Vector3 pos, Vector3 vel, double siz, PxVec3 vol, Vector4 col, float m, float damp, float maxLT,
+	bool kin, Vector3 pos, Vector3 vel, float siz, PxVec3 vol, Vector4 col, float m, float damp, float maxLT,
 	Shape sh, double d, PxVec3 angVel, PxVec3 tensor)
 	: RigidBody(scn), gScene(gScene), maxLifetime(maxLT), sh(sh), gMaterial(mat), damping(damp)
 {
@@ -49,7 +49,7 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, PxPhysics* gPhysics, PxScene* gSc
 
 	pose = new PxTransform(pos);
 	actor = gPhysics->createRigidDynamic(*pose);
-	//actor->userData = static_cast<void*>(this);
+	actor->userData = static_cast<void*>(this);
 	actor->attachShape(*shape);
 	renderItem = new RenderItem(shape, actor, color);
 

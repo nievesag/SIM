@@ -42,8 +42,8 @@ public:
 		shape = sh;
 		size = si;
 	}
-	virtual void setSize(float siz) noexcept { size = siz; }
-	virtual void setMass(float mas) noexcept { mass = mas; }
+	virtual void setSize(float siz) { size = siz; }
+	virtual void setMass(float mas) { mass = mas; }
 	virtual void setVelocity(Vector3 v) { velocity = v; }
 	virtual void setColor(Vector4 col)
 	{
@@ -65,7 +65,7 @@ public:
 protected:
 	// --- atributos
 	physx::PxTransform* pose = nullptr;			// transform
-	double size = 5;							// tamano
+	float size = 5;							// tamano
 	physx::PxShape* shape = nullptr;			// forma
 	Vector4 color = { 1,1,1,1 };				// color
 	RenderItem* renderItem = nullptr;			// renderItem
