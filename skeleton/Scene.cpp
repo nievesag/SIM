@@ -135,6 +135,7 @@ void Scene0::init()
 	magnets.push_back(magnetism2);
 
 	pSystems.push_back(sys);
+	pSystems.push_back(sysRb);
 }
 
 void Scene0::step(double t)
