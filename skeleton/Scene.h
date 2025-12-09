@@ -16,6 +16,7 @@ class Wall;
 class System;
 class ParticleSystem;
 class ChargedEntity;
+class ChargedRbGenerator;
 
 class Scene
 {
