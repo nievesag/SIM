@@ -24,10 +24,10 @@ void ChargedEntity::step(double t)
 
 	RigidBodyDynamic::step(t);
 
-	if (trailGenerator != nullptr)
-	{
-		trailGenerator->setFatherAlive(getAlive());
-	}
+	//if (trailGenerator != nullptr)
+	//{
+	//	trailGenerator->setFatherAlive(getAlive());
+	//}
 
 	if (getPosition().y < -200)
 	{
