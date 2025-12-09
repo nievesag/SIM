@@ -119,6 +119,7 @@ void Scene0::init()
 
 	ChargedEntity* bola = new ChargedEntity(this, { 0, 0,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
 	chargedGenerator->addEntity(bola);
+	gScene->addActor(*bola->getActor());
 
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);

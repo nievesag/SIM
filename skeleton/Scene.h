@@ -21,7 +21,7 @@ class ChargedRbGenerator;
 class Scene
 {
 public:
-	Scene() = default;
+	//Scene() = default;
 	Scene(PxPhysics* gPhysics = nullptr, PxScene* gScene = nullptr);
 	virtual ~Scene();
 
@@ -71,6 +71,7 @@ class Scene0 : public Scene
 {
 public:
 	Scene0() = default;
+	Scene0(PxPhysics* gphys, PxScene* gscn) : Scene(gphys, gscn) {}
 	void init() override;
 	void step(double t) override;
 	void load() override;
@@ -266,7 +267,7 @@ private:
 class Scene6 : public Scene
 {
 public:
-	Scene6(PxPhysics* gphys, PxScene* gscn): Scene(gphys, gscn) {};
+	Scene6(PxPhysics* gphys, PxScene* gscn): Scene(gphys, gscn) {}
 	void init() override;
 	void step(double t) override;
 	void load() override
