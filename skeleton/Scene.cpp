@@ -545,14 +545,12 @@ void Scene6::init()
 	RigidBodySystem* sys = new RigidBodySystem(this, gPhysics, gScene);
 
 	RigidBodyGenerator* rbGen = new RigidBodyGenerator(this, "Cascada", gPhysics, gScene);
-
-	RigidBodyDynamic* box1 = new RigidBodyDynamic(this, gPhysics, gScene);
-	box1->setPosition({0,100,0});
-	box1->setDensity(1);
-
-	rbGen->addEntity(box1);
-
 	sys->registerGenerator(rbGen);
+
+	RigidBodyDynamic* bola = new RigidBodyDynamic(this, gPhysics, gScene);
+	bola->setPosition({0,100,0});
+	bola->setDensity(1);
+	rbGen->addEntity(bola);
 
 	// Scene* scn, PxPhysics* gPhysics, PxScene* gScene, PxMaterial* mat, 
 	//bool kin, Vector3 pos, Vector3 vel, double siz, PxVec3 vol, Vector4 col, float m, float damp, float maxLT,

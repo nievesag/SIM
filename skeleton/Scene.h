@@ -283,7 +283,7 @@ public:
 	void readFile(std::string file) override {}
 
 private:
-	ForceGenerator* agua = nullptr;
+	//ForceGenerator* agua = nullptr;
 
-	ChargedEntity* bola = nullptr;
+	//ChargedEntity* bola = nullptr;
 };

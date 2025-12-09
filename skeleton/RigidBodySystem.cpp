@@ -23,7 +23,8 @@ void RigidBodySystem::step(double t)
 			}
 		}
 
-		if (g != nullptr) g->step(t); // genera rb
+		if (g != nullptr) g->
+			(t); // genera rb
 		applyForces(g->getRbs()); // aplica las fuerzas a todas las particulas en este instante
 	}
 }

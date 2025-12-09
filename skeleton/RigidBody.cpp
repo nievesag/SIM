@@ -61,7 +61,7 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, PxPhysics* gPhysics, PxScene* gSc
 		actor->setMass(mass);
 		actor->setMassSpaceInertiaTensor(vol);
 	}
-	else  PxRigidBodyExt::updateMassAndInertia(*actor, density);
+	else PxRigidBodyExt::updateMassAndInertia(*actor, density);
 
 	if (!kin)
 	{
