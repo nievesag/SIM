@@ -1,9 +1,6 @@
 #include "Scene.h"
 
-#include "ProjectileGenerator.h"
 #include "RenderUtils.hpp"
-#include "ParticleSystem.h"
-#include "ParticleGenerator.h"
 #include "RigidBodySystem.h"
 #include "Wall.h"
 class Pipe;
@@ -110,16 +107,17 @@ void Scene0::init()
 
 	// ----- System
 	sys = new ParticleSystem(this);
+	RigidBodySystem* sysRb = new RigidBodySystem(this, gPhysics, gScene);
 
 	// -- Particle generators
 	trailGenerator = new TrailGenerator(this, "Rastro");
 	sys->registerGenerator(trailGenerator);
 
-	chargedGenerator = new ChargedGenerator(this, "Carga");
-	sys->registerGenerator(chargedGenerator);
+	chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
+	sysRb->registerGenerator(chargedGenerator);
 
-	ChargedEntity* bola = new ChargedEntity(this, { 0, 0,0 }, 3, -0.1, trailGenerator);
-	chargedGenerator->addChargedEnitity(bola);
+	ChargedEntity* bola = new ChargedEntity(this, { 0, 0,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
+	chargedGenerator->addEntity(bola);
 
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);
@@ -249,6 +247,7 @@ void Scene0::newToy(Vector3 pos)
 	sys->registerGenerator(springGenerator);
 
 	// crea toy
+	/*
 	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1, trail);
 	toy->setVelocity({ 0,-50,0 });
 
@@ -267,6 +266,7 @@ void Scene0::newToy(Vector3 pos)
 	sys->registerForceGenerator(spring1);
 	SpringForceGenerator* spring2 = new SpringForceGenerator(500, 5, toy);
 	sys->registerForceGenerator(spring2);
+	*/
 
 }
 
@@ -434,8 +434,10 @@ void Scene3::init()
 	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
 	sys->registerGenerator(chargedGenerator);
 
+	/*
 	bola = new ChargedEntity(this, { 140, 200,0 }, 3, -0.1, trailGenerator);
 	chargedGenerator->addChargedEnitity(bola);
+*/
 
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);
@@ -472,6 +474,7 @@ void Scene4::init()
 	sys->registerGenerator(springGenerator);
 
 	// crea toy
+	/*
 	ChargedEntity* toy = new ChargedEntity(this, {0,0,0}, 3, -0.1, nullptr);
 	toy->setLifetime(-1);
 	toy->setVelocity({ 0,-50,0 });
@@ -491,6 +494,7 @@ void Scene4::init()
 	sys->registerForceGenerator(spring1);
 	SpringForceGenerator* spring2 = new SpringForceGenerator(1, 10, toy);
 	sys->registerForceGenerator(spring2);
+	*/
 
 	pSystems.push_back(sys);
 }
@@ -514,13 +518,14 @@ void Scene5::init()
 	//sys->registerGenerator(springGenerator);
 
 	// crea toy
+	/*
 	ChargedEntity* toy = new ChargedEntity(this, { 0,0,0 }, 3, -0.1, nullptr);
 	toy->setMass(1);
 	toy->setLifetime(-1);
-
+	
 	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
 	sys->registerGenerator(chargedGenerator);
-	chargedGenerator->addChargedEnitity(toy);
+	chargedGenerator->addChargedEnitity(toy);*/
 
 	// agua
 	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({ 0,0,0 }, 50, this, -10, 5, 1);

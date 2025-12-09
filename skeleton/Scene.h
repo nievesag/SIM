@@ -10,6 +10,7 @@
 #include "ChargedEntity.h"
 #include "Pipe.h"
 #include "ProjectileGenerator.h"
+#include "RigidBodyGenerator.h"
 class Wall;
 
 class System;
@@ -92,7 +93,7 @@ private:
 
 	MagnetismGenerator* selectedMagnet = nullptr;	// iman que tienes seleccionado
 
-	ChargedGenerator* chargedGenerator = nullptr;	// generador de particulas con carga
+	ChargedRbGenerator* chargedGenerator = nullptr;	// generador de particulas con carga
 	TrailGenerator* trailGenerator = nullptr;		// rastro que deja la particula
 	bool fatherPart = false;
 

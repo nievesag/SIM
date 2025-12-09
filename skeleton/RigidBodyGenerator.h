@@ -1,15 +1,7 @@
 #pragma once
 
 #include <PxPhysicsAPI.h>
-
 #include <vector>
-
-#include "core.hpp"
-#include "RenderUtils.hpp"
-#include "callbacks.hpp"
-
-#include <iostream>
-
 #include "RigidBody.h"
 
 using namespace physx;
@@ -61,4 +53,20 @@ protected:
 	int numParticles = 0; // particulas generadas por cada generador
 
 	bool isActive = true;
+};
+
+// ------- GENERADOR CON CARGA -------
+class ChargedRbGenerator : public RigidBodyGenerator
+{
+public:
+	ChargedRbGenerator(Scene* s, std::string model, PxPhysics* gphys, PxScene* gscn)
+		: RigidBodyGenerator(s, model, gphys, gscn)
+	{
+		maxParticles = 1;
+	}
+
+	~ChargedRbGenerator() override = default;
+
+private:
+	void generateRb() override {}
 };

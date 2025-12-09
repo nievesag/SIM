@@ -1,9 +1,9 @@
 #include "ChargedEntity.h"
-#include "ParticleGenerator.h"
-#include "Scene.h"
 
-ChargedEntity::ChargedEntity(Scene* scn, Vector3 pos, float size, float q, TrailGenerator* _trailGenerator)
-	: Particle(scn, pos, {0,0,0}, size), trailGenerator(_trailGenerator)
+ChargedEntity::ChargedEntity(Scene* scn, Vector3 pos, float size, float q, TrailGenerator* _trailGenerator, PxPhysics* gPhysics, PxScene* pxScn)
+	: RigidBodyDynamic(scn, gPhysics, pxScn, nullptr, false, pos, {0,0,0}, size,
+		{1,1,1}, { 0, 0.95f, 0.81f ,1}, 5, 0.8, -1, SPHERE, -1, 
+		{ 0, 0, 0 }, { 1, 1, 1 }), trailGenerator(_trailGenerator)
 {
 	setq(q);
 }
@@ -22,7 +22,7 @@ void ChargedEntity::step(double t)
 		trailGenerator->setFatherSize(getSize());
 	}
 
-	Particle::step(t);
+	RigidBodyDynamic::step(t);
 
 	if (trailGenerator != nullptr)
 	{

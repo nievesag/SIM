@@ -6,13 +6,8 @@
 #include <unordered_map>
 
 #include "core.hpp"
-#include "RenderUtils.hpp"
-#include "callbacks.hpp"
-
-#include <iostream>
 #include <random>
 
-#include "ChargedEntity.h"
 #include "Particle.h"
 
 class Scene;
@@ -152,10 +147,10 @@ public:
 	}
 
 	~ChargedGenerator() override = default;
-	void addChargedEnitity(ChargedEntity* p);
+	void addChargedEnitity(Entity* p);
 
 private:
-	void generateParticle() override {};
+	void generateParticle() override {}
 };
 
 // ------- GENERADOR CON MUELLE -------
