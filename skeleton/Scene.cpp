@@ -548,6 +548,9 @@ void Scene6::init()
 	sys->registerGenerator(rbGen);
 
 	RigidBodyDynamic* bola = new RigidBodyDynamic(this, gPhysics, gScene);
+	bola->setLinearVelocity({ 0,5,0 });
+	bola->setAngularVelocity({ 0,0,0 });
+
 	bola->setPosition({0,100,0});
 	bola->setDensity(1);
 	rbGen->addEntity(bola);
