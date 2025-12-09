@@ -12,7 +12,7 @@ class RigidBody : public Entity
 	// Para los sólidos estáticos no hara falta crear una clase, podremos crearlos directamente en el main al inicio de nuestra ejecucion
 public:
 	RigidBody(Scene* scn) : Entity(scn) {}
-	~RigidBody();
+	~RigidBody() override = default;
 
 	// set/get mass
 	// setMassSpaceInertiaTensor
@@ -85,6 +85,7 @@ public:
 		Vector4 col = { 1,1,1,1 }, float m = 10, float damp = 0.8, float maxLT = -1,
 		Shape sh = SPHERE, double density = -1,
 	                 physx::PxVec3 angVel = { 0, 0, 0 }, physx::PxVec3 tensor = { 1,1,1 });
+	~RigidBodyDynamic() override = default;
 
 	void step(double t) override;
 

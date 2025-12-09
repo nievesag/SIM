@@ -7,7 +7,7 @@
 #include "Projectile.h"
 #include "ForceGenerator.h"
 #include "ParticleGenerator.h"
-#include "ChargedEntity.h"
+
 #include "Pipe.h"
 #include "ProjectileGenerator.h"
 #include "RigidBodyGenerator.h"
@@ -15,6 +15,7 @@ class Wall;
 
 class System;
 class ParticleSystem;
+class ChargedEntity;
 
 class Scene
 {

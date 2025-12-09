@@ -147,7 +147,6 @@ public:
 	}
 
 	~ChargedGenerator() override = default;
-	void addChargedEnitity(Entity* p);
 
 private:
 	void generateParticle() override {}

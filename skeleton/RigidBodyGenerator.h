@@ -4,6 +4,8 @@
 #include <vector>
 #include "RigidBody.h"
 
+class RigidBodyDynamic;
+
 using namespace physx;
 
 class RigidBodyGenerator

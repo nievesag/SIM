@@ -2,7 +2,6 @@
 #include "core.hpp"
 #include "Scene.h"
 
-
 class RigidBodyDynamic;
 
 class TrailGenerator;

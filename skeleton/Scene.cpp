@@ -5,6 +5,7 @@
 #include "Wall.h"
 class Pipe;
 #include <fstream>
+#include "ChargedEntity.h"
 
 Scene::Scene(PxPhysics* gPhysics, PxScene* gScene)
 	: gPhysics(gPhysics), gScene(gScene)

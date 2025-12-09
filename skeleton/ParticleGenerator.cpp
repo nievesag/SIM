@@ -371,11 +371,7 @@ void RandomMassGenerator::generateParticle()
 }
 
 // ------- GENERADOR PARTICULAS CARGADAS -------
-void ChargedGenerator::addChargedEnitity(ChargedEntity* p)
-{
-	//generatedParticles.push_back(p);
-	scn->addEntity(p);
-}
+
 
 // ------- GENERADOR PARTICULAS MUELLEADAS -------
 void SpringParticleGenerator::addSpringEnitity(Particle* p)
