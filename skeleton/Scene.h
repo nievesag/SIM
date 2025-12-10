@@ -18,6 +18,7 @@ class System;
 class ParticleSystem;
 class ChargedEntity;
 class ChargedRbGenerator;
+class MagnetismGenerator;
 
 class Scene
 {

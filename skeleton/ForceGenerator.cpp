@@ -2,6 +2,7 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h> 
+#include "Magnet.h"
 
 ForceGenerator::ForceGenerator(Vector3 pos, float areaR, Scene* s)
     : areaPos(pos), areaRadius(areaR)
@@ -107,6 +108,12 @@ void MagnetismGenerator::setPos(Vector3 newPos)
 {
     areaPose->p = newPos;
     magnetPose->p = newPos;
+}
+
+void MagnetismGenerator::toggleMagnetVisibility()
+{
+    if (areaVisible) RegisterRenderItem(magnet->getRenderItem());
+    else DeregisterRenderItem(magnet->getRenderItem());
 }
 
 // ------- GENERADOR MUELLES -------

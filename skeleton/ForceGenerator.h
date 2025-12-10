@@ -12,7 +12,7 @@
 #include <iostream>
 
 #include "Particle.h"
-
+class Magnet;
 class Scene;
 using namespace physx;
 
@@ -115,11 +115,7 @@ public:
 	void move(Vector3 dir);
 	void setPos(Vector3 newPos);
 
-	void toggleMagnetVisibility()
-	{
-		if (areaVisible) RegisterRenderItem(magnet->getRenderItem());
-		else DeregisterRenderItem(magnet->getRenderItem());
-	}
+	void toggleMagnetVisibility();
 
 private:
 	float b = 0; // carga del campo magnetico
