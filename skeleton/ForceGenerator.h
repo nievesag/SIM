@@ -2,18 +2,11 @@
 
 #include <PxPhysicsAPI.h>
 
-#include <vector>
-#include <unordered_map>
-
 #include "core.hpp"
 #include "RenderUtils.hpp"
-#include "callbacks.hpp"
-
-#include <iostream>
 
 #include "Particle.h"
 class Magnet;
-class Scene;
 using namespace physx;
 
 class ForceGenerator

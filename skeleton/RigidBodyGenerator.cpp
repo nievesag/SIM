@@ -1,4 +1,5 @@
 #include "RigidBodyGenerator.h"
+#include "Scene.h"
 
 RigidBodyGenerator::RigidBodyGenerator(Scene* s, std::string mod, PxPhysics* gphys, PxScene* gscn)
 	: scn(s), model(mod), gphys(gphys), gscn(gscn) 

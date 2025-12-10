@@ -1,7 +1,18 @@
 #include "RigidBody.h"
+#include "Scene.h"
+#include <iostream>
+
+
+// --- BASE
+RigidBody::RigidBody(Scene* scn) 
+	: Entity(scn)
+{
+
+}
+
 
 // --- STATIC
-RigidBodyStatic::RigidBodyStatic(Scene* scn, PxPhysics* gPhysics, PxScene* gScene, Vector3 pos, float siz, Vector4 col)
+RigidBodyStatic::RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos, float siz, Vector4 col)
 	: RigidBody(scn)
 {
 	size = siz;
@@ -11,16 +22,16 @@ RigidBodyStatic::RigidBodyStatic(Scene* scn, PxPhysics* gPhysics, PxScene* gScen
 	color = col;
 	pose = new physx::PxTransform(pos);
 	actor = gPhysics->createRigidStatic(*pose);
-	shape = CreateShape(PxBoxGeometry(volume));
+	shape = CreateShape(physx::PxBoxGeometry(volume));
 	actor->attachShape(*shape);
 
 	renderItem = new RenderItem(shape, actor, color);
 }
 
 // --- DYNAMIC
-RigidBodyDynamic::RigidBodyDynamic(Scene* scn, PxPhysics* gPhysics, PxScene* gScene, PxMaterial* mat, 
-	bool kin, Vector3 pos, Vector3 vel, float siz, PxVec3 vol, Vector4 col, float m, float damp, float maxLT,
-	Shape sh, double d, PxVec3 angVel, PxVec3 tensor)
+RigidBodyDynamic::RigidBodyDynamic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, physx::PxMaterial* mat, 
+	bool kin, Vector3 pos, Vector3 vel, float siz, physx::PxVec3 vol, Vector4 col, float m, float damp, float maxLT,
+	Shape sh, double d, physx::PxVec3 angVel, physx::PxVec3 tensor)
 	: RigidBody(scn), gScene(gScene), maxLifetime(maxLT), sh(sh), gMaterial(mat), damping(damp)
 {
 	mass = m;
@@ -31,23 +42,23 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, PxPhysics* gPhysics, PxScene* gSc
 	switch (sh)
 	{
 	case BOX:
-		shape = CreateShape(PxBoxGeometry(vol), mat);
+		shape = CreateShape(physx::PxBoxGeometry(vol), mat);
 		volumen = vol.x * vol.y * vol.z;
 		break;
 
 	case SPHERE:
-		shape = CreateShape(PxSphereGeometry(vol.x), mat);
-		volumen = pow(vol.x, 3) * 4 / 3 * PxPi;
+		shape = CreateShape(physx::PxSphereGeometry(vol.x), mat);
+		volumen = pow(vol.x, 3) * 4 / 3 * physx::PxPi;
 		size = vol.x; // radio de la esfera
 		break;
 
 	case CAPSULE:
-		shape = CreateShape(PxCapsuleGeometry(vol.x, vol.y), mat);
+		shape = CreateShape(physx::PxCapsuleGeometry(vol.x, vol.y), mat);
 		volumen = vol.x * vol.y * vol.z;
 		break;
 	}
 
-	pose = new PxTransform(pos);
+	pose = new physx::PxTransform(pos);
 	actor = gPhysics->createRigidDynamic(*pose);
 	gScene->addActor(*actor);
 	actor->userData = static_cast<void*>(this);
@@ -57,12 +68,12 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, PxPhysics* gPhysics, PxScene* gSc
 	if (d <= 0) density = m / volumen;
 	else  density = d;
 
-	if (tensor != PxVec3(1))
+	if (tensor != physx::PxVec3(1))
 	{
 		actor->setMass(mass);
 		actor->setMassSpaceInertiaTensor(vol);
 	}
-	else PxRigidBodyExt::updateMassAndInertia(*actor, density);
+	else physx::PxRigidBodyExt::updateMassAndInertia(*actor, density);
 
 	if (!kin)
 	{
@@ -129,3 +140,4 @@ void RigidBodyDynamic::step(double t)
 	//std::cout << mass  << std::endl;
 	//std::cout << pose->p.x << " " << pose->p.y << " " << pose->p.z << " " << std::endl;
 }
+

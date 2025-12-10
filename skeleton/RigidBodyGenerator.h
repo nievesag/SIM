@@ -1,10 +1,13 @@
 #pragma once
 
 #include <PxPhysicsAPI.h>
+#include <random>
+#include <unordered_map>
 #include <vector>
 #include "RigidBody.h"
 
 class RigidBodyDynamic;
+class Scene;
 
 using namespace physx;
 

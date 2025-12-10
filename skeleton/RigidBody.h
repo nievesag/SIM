@@ -1,7 +1,7 @@
 #pragma once
 
 #include <PxPhysicsAPI.h>
-#include "Scene.h"
+class Scene;
 #include "Entity.h"
 
 enum Shape { BOX, SPHERE, CAPSULE };
@@ -9,7 +9,7 @@ enum Shape { BOX, SPHERE, CAPSULE };
 class RigidBody : public Entity
 {
 public:
-	RigidBody(Scene* scn) : Entity(scn) {}
+	RigidBody(Scene* scn);
 	~RigidBody() override = default;
 
 	// set/get mass
@@ -39,7 +39,10 @@ class RigidBodyStatic : public RigidBody
 public:
 	RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos, float siz, Vector4 col);
 
-	Vector3 getPosition() const override { return actor->getGlobalPose().p; }
+	Vector3 getPosition() const override
+	{
+		return actor->getGlobalPose().p;
+	}
 
 	void setPosition(Vector3 pos = { 0,0,0 }) override
 	{
@@ -65,7 +68,10 @@ public:
 		actor->setGlobalPose(*pose);
 	}
 
-	physx::PxRigidActor* getActor() override { return actor; }
+	physx::PxRigidActor* getActor() override
+	{
+		return actor;
+	}
 
 private:
 	physx::PxRigidStatic* actor = nullptr; // puntero al actor estatico
