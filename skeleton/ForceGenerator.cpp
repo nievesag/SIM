@@ -8,11 +8,11 @@ ForceGenerator::ForceGenerator(Vector3 pos, float areaR, Scene* s, bool visibleA
     : areaPos(pos), areaRadius(areaR)
 {
 	areaPose = new PxTransform(areaPos);
-	    area = new RenderItem(CreateShape(PxSphereGeometry(areaRadius)), areaPose, { 1,1,1,0.18f });
 
     if (visibleArea)
     {
 	    // construye area
+	    area = new RenderItem(CreateShape(PxSphereGeometry(areaRadius)), areaPose, { 1,1,1,0.18f });
     }
 }
 

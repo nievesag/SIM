@@ -356,15 +356,15 @@ void renderActors(PxRigidActor** actors, const PxU32 numActors, bool shadows, co
 				glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 			
 			// render object
-			glPushMatrix();						
+			glPushMatrix();
 			glMultMatrixf(reinterpret_cast<const float*>(&shapePose));
 			if(sleeping)
 			{
 				PxVec4 darkColor = color * 0.25f;
-				glColor4f(darkColor.x, darkColor.y, darkColor.z, 1.0f);
+				glColor4f(darkColor.x, darkColor.y, darkColor.z, darkColor.w);
 			}
 			else
-				glColor4f(color.x, color.y, color.z, 1.0f);
+				glColor4f(color.x, color.y, color.z, color.w);
 			renderGeometry(h, color.w < 0.999f);
 			glPopMatrix();
 

@@ -300,20 +300,18 @@ void Scene0::readFile(std::string file)
 		{
 			std::cout << j << " " << i << std::endl;
 
-			/*
 			// MURO
 			if (fila[j] == 'x')
 			{
-				Wall* wall = new Wall(this, 20, Vector3( j * 40, i * 40,0  ), false);
+				Wall* wall = new Wall(this, 20.0f, Vector3(j * 40, i * 40, 0), false, gPhysics, gScene);
 				line.push_back(wall);
 			}
 			// VACIO
 			else if (fila[j] == 'o')
 			{
-				Wall* empty = new Wall(this, 20, Vector3(j * 40, i * 40, 0), true);
+				Wall* empty = new Wall(this, 20.0f, Vector3(j * 40, i * 40, 0), true, gPhysics, gScene);
 				line.push_back(empty);
 			}
-			*/
 		}
 
 		map.push_back(line);
@@ -549,7 +547,7 @@ void Scene6::init()
 	Scene::init();
 
 	Wall* pared = new Wall(this, 5.0f, { 0,0,0 }, false, gPhysics, gScene);
-	gScene->addActor(*pared->getActor());
+	//gScene->addActor(*pared->getActor());
 	addEntity(pared);
 
 	RigidBodySystem* sys = new RigidBodySystem(this, gPhysics, gScene);
