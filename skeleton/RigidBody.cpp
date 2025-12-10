@@ -81,6 +81,8 @@ void RigidBodyDynamic::applyForce()
 		totalForc += f;
 	}
 
+	actor->addForce(totalForc);
+
 	resultingForce.clear();
 }
 
@@ -115,7 +117,9 @@ void RigidBodyDynamic::step(double t)
 {
 	// ---- Fuerzas ----
 	if (!resultingForce.empty())
+	{
 		applyForce();
+	}
 
 	// ---- Gestion escena ----
 	manageLife(t);

@@ -80,6 +80,8 @@ Vector3 MagnetismGenerator::generateForce(Entity& e)
 {
     if (inArea(e) && e.getq() != 0 && isActive) // si esta en el area y es una particula cargada
     {
+	    std::cout << "HOLAAAAAAAAA" << std::endl;
+
         // F = (u q1 * q2) / (4 pi r^2)
 
         // falta permeabilidad del medio!!!!!!!!!!!
