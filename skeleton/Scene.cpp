@@ -108,7 +108,7 @@ void Scene0::init()
 
 	// ----- System
 	sys = new ParticleSystem(this);
-	RigidBodySystem* sysRb = new RigidBodySystem(this, gPhysics, gScene);
+	sysRb = new RigidBodySystem(this, gPhysics, gScene);
 
 	// -- Particle generators
 	trailGenerator = new TrailGenerator(this, "Rastro");
@@ -119,7 +119,7 @@ void Scene0::init()
 
 	ChargedEntity* bola = new ChargedEntity(this, { 0, 0,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
 	chargedGenerator->addEntity(bola);
-	gScene->addActor(*bola->getActor());
+	//gScene->addActor(*bola->getActor());
 
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);
@@ -127,11 +127,13 @@ void Scene0::init()
 	pGen = new ProjectileGenerator(this);
 
 	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.01);
-	sys->registerForceGenerator(magnetism1);
+	//sys->registerForceGenerator(magnetism1);
+	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
 	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 0.2);
-	sys->registerForceGenerator(magnetism2);
+	//sys->registerForceGenerator(magnetism2);
+	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
 	pSystems.push_back(sys);
@@ -250,15 +252,14 @@ void Scene0::newToy(Vector3 pos)
 	sys->registerGenerator(springGenerator);
 
 	// crea toy
-	/*
-	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1, trail);
-	toy->setVelocity({ 0,-50,0 });
-
-	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
-	sys->registerGenerator(chargedGenerator);
-	chargedGenerator->addChargedEnitity(toy);
+	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1f, trailGenerator, gPhysics, gScene);
+	toy->setLinearVelocity({ 0,-50,0 });
+	ChargedRbGenerator* chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
+	sysRb->registerGenerator(chargedGenerator);
+	chargedGenerator->addEntity(toy);
 
 	// pie
+	/*
 	Particle* pie = new Particle(this, pos, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
 	addEntity(pie);
 	springGenerator->addSpringEnitity(toy);
@@ -270,7 +271,6 @@ void Scene0::newToy(Vector3 pos)
 	SpringForceGenerator* spring2 = new SpringForceGenerator(500, 5, toy);
 	sys->registerForceGenerator(spring2);
 	*/
-
 }
 
 void Scene0::readFile(std::string file)
@@ -558,9 +558,9 @@ void Scene6::init()
 
 	RigidBodyDynamic* bola = new RigidBodyDynamic(this, gPhysics, gScene);
 	bola->setMass(10);
-	bola->setLinearVelocity({ 0,5,0 });
+	//bola->setLinearVelocity({ 0,5,0 });
 	bola->setAngularVelocity({ 0,0,0 });
-	gScene->addActor(*bola->getActor());
+	//gScene->addActor(*bola->getActor());
 
 	bola->setPosition({0,100,0});
 	bola->setDensity(1);

@@ -11,6 +11,7 @@
 #include "Pipe.h"
 #include "ProjectileGenerator.h"
 #include "RigidBodyGenerator.h"
+class RigidBodySystem;
 class Wall;
 
 class System;
@@ -89,6 +90,7 @@ private:
 	std::vector<std::vector<Wall*>> map;
 
 	ParticleSystem* sys = nullptr; // sistema de particulas
+	RigidBodySystem* sysRb = nullptr;
 
 	std::vector<MagnetismGenerator*> magnets; // vector de todos los imanes
 	MagnetismGenerator* magnetism1 = nullptr; // iman 1

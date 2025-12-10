@@ -49,6 +49,7 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, PxPhysics* gPhysics, PxScene* gSc
 
 	pose = new PxTransform(pos);
 	actor = gPhysics->createRigidDynamic(*pose);
+	gScene->addActor(*actor);
 	actor->userData = static_cast<void*>(this);
 	actor->attachShape(*shape);
 	renderItem = new RenderItem(shape, actor, color);
@@ -68,7 +69,6 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, PxPhysics* gPhysics, PxScene* gSc
 		actor->setLinearVelocity(vel);
 		actor->setAngularVelocity(angVel);
 	}
-	actor->addForce(PxVec3(1000, 0, 0));
 }
 
 void RigidBodyDynamic::applyForce()
