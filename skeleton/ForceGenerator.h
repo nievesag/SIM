@@ -20,7 +20,7 @@ class ForceGenerator
 {
 public:
 	ForceGenerator(Vector3 pos, float areaR, Scene* s);
-	ForceGenerator() {};
+	ForceGenerator() {}
 	virtual ~ForceGenerator();
 
 	// en el update de cada particula llamas a generateForce
@@ -103,10 +103,12 @@ private:
 	float k = 1;
 };
 
+#include "Magnet.h"
+
 class MagnetismGenerator : public ForceGenerator 
 {
 public:
-	MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, float B);
+	MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, float B, PxPhysics* gPhysics, PxScene* pxScn);
 
 	Vector3 generateForce(Entity& e) override;
 
@@ -115,15 +117,15 @@ public:
 
 	void toggleMagnetVisibility()
 	{
-		if (areaVisible) RegisterRenderItem(magnet);
-		else DeregisterRenderItem(magnet);
+		if (areaVisible) RegisterRenderItem(magnet->getRenderItem());
+		else DeregisterRenderItem(magnet->getRenderItem());
 	}
 
 private:
 	float b = 0; // carga del campo magnetico
 
 	physx::PxTransform* magnetPose = nullptr;
-	RenderItem* magnet = nullptr;
+	Magnet* magnet = nullptr;
 };
 
 class SpringForceGenerator : public ForceGenerator 

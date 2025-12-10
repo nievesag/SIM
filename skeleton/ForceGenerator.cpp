@@ -61,7 +61,7 @@ Vector3 WhirlGenerator::generateForce(Entity& e)
 }
 
 // ------- GENERADOR MAGNETISMO -------
-MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, float B)
+MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, float B, PxPhysics* gPhysics, PxScene* pxScn)
     : ForceGenerator(pos, areaR, scn), b(B)
 {
     // construye el iman
@@ -72,7 +72,9 @@ MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, flo
     if (b < 0) color = { 1,0,0,1 }; // norte
     else if (b > 1) color = { 0,0,1,1 }; // sur
 
-    magnet = new RenderItem(shape, magnetPose, color);
+    magnet = new Magnet(scn, 10, pos, color, gPhysics, pxScn);
+
+    //magnet = new RenderItem(shape, magnetPose, color);
     //RegisterRenderItem(magnet);
 }
 
