@@ -8,8 +8,6 @@ enum Shape { BOX, SPHERE, CAPSULE };
 
 class RigidBody : public Entity
 {
-	// renderizado y el almacenamiento de atributos que sean relevantes para la gestion
-	// Para los sólidos estáticos no hara falta crear una clase, podremos crearlos directamente en el main al inicio de nuestra ejecucion
 public:
 	RigidBody(Scene* scn) : Entity(scn) {}
 	~RigidBody() override = default;

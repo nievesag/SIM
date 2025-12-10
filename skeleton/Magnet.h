@@ -1,7 +1,8 @@
 #pragma once
-#include "core.hpp"
 #include "RigidBody.h"
-#include "Scene.h"
+//#include "core.hpp"
+//#include "Scene.h"
+class RigidBodyStatic;
 
 class Magnet : public RigidBodyStatic
 {
