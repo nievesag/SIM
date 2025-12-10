@@ -12,7 +12,7 @@ using namespace physx;
 class ForceGenerator
 {
 public:
-	ForceGenerator(Vector3 pos, float areaR, Scene* s);
+	ForceGenerator(Vector3 pos, float areaR, Scene* s, bool visibleArea);
 	ForceGenerator() {}
 	virtual ~ForceGenerator();
 
@@ -51,7 +51,7 @@ class GravityGenerator : public ForceGenerator
 {
 public:
 	GravityGenerator(Vector3 pos, float areaR, Scene* scn, Vector3 _gravity)
-		: ForceGenerator(pos, areaR, scn), gravity(_gravity)
+		: ForceGenerator(pos, areaR, scn, false), gravity(_gravity)
 	{
 		areaRadius = 200;
 	}
@@ -66,7 +66,7 @@ class WindGenerator : public ForceGenerator
 {
 public:
 	WindGenerator(Vector3 pos, float areaR, Scene* scn, Vector3 _wind)
-		: ForceGenerator(pos, areaR, scn), wind(_wind)
+		: ForceGenerator(pos, areaR, scn, true), wind(_wind)
 	{
 		areaRadius = 200;
 	}

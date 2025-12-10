@@ -102,11 +102,35 @@ void renderCallback()
 
 	startRender(sCamera->getEye(), sCamera->getDir());
 
+	// renderizar objetos opacos
 	//fprintf(stderr, "Num Render Items: %d\n", static_cast<int>(gRenderItems.size()));
 	for (auto it = gRenderItems.begin(); it != gRenderItems.end(); ++it)
 	{
 		const RenderItem* obj = (*it);
 		auto objTransform = obj->transform;
+
+		if (obj->color.w != 1.0) continue; // si es trasparente pasa, PRIMERO LOS OPACOS
+
+		if (!objTransform)
+		{
+			auto actor = obj->actor;
+			if (actor)
+			{
+				renderShape(*obj->shape, actor->getGlobalPose(), obj->color);
+				continue;
+			}
+		}
+		renderShape(*obj->shape, objTransform ? *objTransform : physx::PxTransform(PxIdentity), obj->color);
+	}
+
+	// renderizar objetos transparentes
+	for (auto it = gRenderItems.begin(); it != gRenderItems.end(); ++it)
+	{
+		const RenderItem* obj = (*it);
+		auto objTransform = obj->transform;
+
+		if (obj->color.w == 1.0) continue; // si es opaco pasa, DESPUES LOS TRANSPARENTES
+
 		if (!objTransform)
 		{
 			auto actor = obj->actor;
@@ -142,8 +166,9 @@ void exitCallback(void)
 void renderLoop()
 {
 	StartCounter();
-	sCamera = new Camera(PxVec3(100.0f, 100.0f, 380.0f), 
-		PxVec3(0.0f,0.0f,-1.0f));
+	sCamera = new Camera(
+		PxVec3(100.0f, 100.0f, 380.0f),	// eye
+		PxVec3(0.0f,0.0f,-1.0f));		// dir
 
 	setupDefaultWindow("SIM");
 	setupDefaultRenderState();
@@ -170,6 +195,7 @@ void RegisterRenderItem(const RenderItem* _item)
 void DeregisterRenderItem(const RenderItem* _item)
 {
 	auto it = find(gRenderItems.begin(), gRenderItems.end(), _item);
+	if (it == gRenderItems.end()) return; // si no lo encuentra
 	gRenderItems.erase(it);
 }
 

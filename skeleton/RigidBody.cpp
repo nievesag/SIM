@@ -26,6 +26,7 @@ RigidBodyStatic::RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::
 	actor->attachShape(*shape);
 
 	renderItem = new RenderItem(shape, actor, color);
+	gScene->addActor(*actor);
 }
 
 // --- DYNAMIC

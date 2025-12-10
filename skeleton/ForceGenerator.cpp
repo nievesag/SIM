@@ -4,12 +4,16 @@
 #include <math.h> 
 #include "Magnet.h"
 
-ForceGenerator::ForceGenerator(Vector3 pos, float areaR, Scene* s)
+ForceGenerator::ForceGenerator(Vector3 pos, float areaR, Scene* s, bool visibleArea)
     : areaPos(pos), areaRadius(areaR)
 {
-    // construye area
-    areaPose = new PxTransform(areaPos);
-    area = new RenderItem(CreateShape(PxSphereGeometry(areaRadius)), areaPose, { 1,0,0,0.5 });
+	areaPose = new PxTransform(areaPos);
+	    area = new RenderItem(CreateShape(PxSphereGeometry(areaRadius)), areaPose, { 1,1,1,0.18f });
+
+    if (visibleArea)
+    {
+	    // construye area
+    }
 }
 
 ForceGenerator::~ForceGenerator()
@@ -63,7 +67,7 @@ Vector3 WhirlGenerator::generateForce(Entity& e)
 
 // ------- GENERADOR MAGNETISMO -------
 MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, float B, PxPhysics* gPhysics, PxScene* pxScn)
-    : ForceGenerator(pos, areaR, scn), b(B)
+    : ForceGenerator(pos, areaR, scn, false), b(B)
 {
     // construye el iman
     magnetPose = new PxTransform(pos);
@@ -83,8 +87,6 @@ Vector3 MagnetismGenerator::generateForce(Entity& e)
 {
     if (inArea(e) && e.getq() != 0 && isActive) // si esta en el area y es una particula cargada
     {
-	    std::cout << "HOLAAAAAAAAA" << std::endl;
-
         // F = (u q1 * q2) / (4 pi r^2)
 
         // falta permeabilidad del medio!!!!!!!!!!!
@@ -146,7 +148,7 @@ Vector3 SpringForceGenerator::generateForce(Entity& e)
 
 // ------- GENERADOR FLOTACION -------
 BuoyancyForceGenerator::BuoyancyForceGenerator(Vector3 pos, float areaR, Scene* s, float h, float V, float d)
-    : ForceGenerator(pos, areaR, s), height(h), volume(V), liquidDensity(d)
+    : ForceGenerator(pos, areaR, s, false), height(h), volume(V), liquidDensity(d)
 {
 
 }
