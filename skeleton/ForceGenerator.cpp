@@ -71,7 +71,6 @@ MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, flo
 {
     // construye el iman
     magnetPose = new PxTransform(pos);
-    physx::PxShape* shape = CreateShape(PxBoxGeometry(10, 10, 10));
 
     Vector4 color = { 1,1,1,1 };
     if (b < 0) color = { 1,0,0,1 }; // norte
