@@ -146,35 +146,42 @@ Vector3 SpringForceGenerator::generateForce(Entity& e)
 }
 
 // ------- GENERADOR FLOTACION -------
-BuoyancyForceGenerator::BuoyancyForceGenerator(Vector3 pos, float areaR, Scene* s, float h, float V, float d)
-    : ForceGenerator(pos, areaR, s, false), height(h), volume(V), liquidDensity(d)
+BuoyancyForceGenerator::BuoyancyForceGenerator(Vector3 pos, float areaR, Vector3 liquidXZ, Scene* s, float h, float V, float d)
+    : ForceGenerator(pos, areaR, s, false), height(h), volume(V), liquidDensity(d), liquidSize(liquidXZ)
 {
-
+   fluid = new RenderItem(CreateShape(PxBoxGeometry(liquidXZ.x,height,liquidXZ.z)), new physx::PxTransform(pos), { 0,0,1,0.3f });
 }
 
 Vector3 BuoyancyForceGenerator::generateForce(Entity& e)
 {
     Vector3 force = { 0,0,0 };
 
-    float h = e.getPosition().y; // centro del objeto que flota
-    float h0 = areaPos.y; // centro de la superficie liquida
-
-    float immersed;
-
-    if (h - h0 > height * 0.5f)
+    // esta en la zona del fluido
+    if (e.getPosition().x <= areaPos.x + liquidSize.x && 
+        e.getPosition().x >= areaPos.x - liquidSize.x &&
+        e.getPosition().z <= areaPos.z + liquidSize.z &&
+        e.getPosition().z >= areaPos.z - liquidSize.z)
     {
-        immersed = 0.0;
-    }
-    else if (h0 - h > height * 0.5f)
-    {
-        immersed = 1.0;
-    }
-    else
-    {
-        immersed = (h0 - h) / height + 0.5f; // profundidad normalizada
-    }
+        float h = e.getPosition().y; // centro del objeto que flota
+        float h0 = areaPos.y; // centro de la superficie liquida
 
-    force.y = liquidDensity * volume * immersed * 9.8f;
+        float immersed;
 
+        if (h - h0 > height * 0.5f)
+        {
+            immersed = 0.0;
+        }
+        else if (h0 - h > height * 0.5f)
+        {
+            immersed = 1.0;
+        }
+        else
+        {
+            immersed = (h0 - h) / height + 0.5f; // profundidad normalizada
+        }
+
+        force.y = liquidDensity * volume * immersed * 9.8f;
+    }
+    
     return force;
 }

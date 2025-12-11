@@ -512,28 +512,24 @@ void Scene5::init()
 	Scene::init();
 
 	ParticleSystem* sys = new ParticleSystem(this);
-
-	//TrailGenerator* trail = new TrailGenerator(this, "Rastro");
-	//sys->registerGenerator(trail);
-
-	//SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
-	//sys->registerGenerator(springGenerator);
+	RigidBodySystem* sysRb = new RigidBodySystem(this, gPhysics, gScene);
 
 	// crea toy
-	/*
-	ChargedEntity* toy = new ChargedEntity(this, { 0,0,0 }, 3, -0.1, nullptr);
-	toy->setMass(1);
-	toy->setLifetime(-1);
-	
-	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
-	sys->registerGenerator(chargedGenerator);
-	chargedGenerator->addChargedEnitity(toy);*/
+	ChargedRbGenerator* chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
+	sysRb->registerGenerator(chargedGenerator);
+
+	TrailGenerator* trailGenerator = new TrailGenerator(this, "Rastro");
+	sys->registerGenerator(trailGenerator);
+
+	ChargedEntity* bola = new ChargedEntity(this, { 0, 10,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
+	chargedGenerator->addEntity(bola);
 
 	// agua
-	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({ 0,0,0 }, 50, this, -10, 5, 1);
-	sys->registerForceGenerator(agua);
+	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({ 0,0,0 }, 50, {10,0,10}, this, 10, 5, 1);
+	sysRb->registerForceGenerator(agua);
 
 	pSystems.push_back(sys);
+	pSystems.push_back(sysRb);
 }
 
 void Scene5::step(double t)
