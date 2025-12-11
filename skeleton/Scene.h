@@ -215,6 +215,8 @@ class Scene4 : public Scene
 {
 public:
 	Scene4() = default;
+	Scene4(PxPhysics* gphys, PxScene* gscn) : Scene(gphys, gscn) {}
+
 	void init() override;
 	void step(double t) override;
 	void load() override

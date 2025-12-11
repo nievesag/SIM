@@ -120,7 +120,7 @@ private:
 class SpringForceGenerator : public ForceGenerator 
 {
 public:
-	SpringForceGenerator(double _k, double _restingLength, Particle* _other);
+	SpringForceGenerator(double _k, double _restingLength, Entity* _other);
 
 	Vector3 generateForce(Entity& e) override;
 
@@ -129,7 +129,7 @@ public:
 protected:
 	double k; // coeficiente de elasticidad
 	double restingLength; // longitud en reposo del muelle
-	Particle* other; // particula con la que genera la fuerza
+	Entity* other; // particula con la que genera la fuerza
 };
 
 class BuoyancyForceGenerator : public ForceGenerator 

@@ -118,7 +118,7 @@ void MagnetismGenerator::toggleMagnetVisibility()
 }
 
 // ------- GENERADOR MUELLES -------
-SpringForceGenerator::SpringForceGenerator(double _k, double _restingLength, Particle* _other)
+SpringForceGenerator::SpringForceGenerator(double _k, double _restingLength, Entity* _other)
     : k(_k), restingLength(_restingLength), other(_other)
 {
 

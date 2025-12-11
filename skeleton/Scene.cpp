@@ -468,37 +468,46 @@ void Scene4::init()
 	Scene::init();
 
 	ParticleSystem* sys = new ParticleSystem(this);
+	RigidBodySystem* sysRb = new RigidBodySystem(this, gPhysics, gScene);
 
-	//TrailGenerator* trail = new TrailGenerator(this, "Rastro");
-	//sys->registerGenerator(trail);
+	ChargedRbGenerator* chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
+	sysRb->registerGenerator(chargedGenerator);
 
-	SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
-	sys->registerGenerator(springGenerator);
+	TrailGenerator* trailGenerator = new TrailGenerator(this, "Rastro");
+	sys->registerGenerator(trailGenerator);
 
-	// crea toy
+	ChargedEntity* cuerpo = new ChargedEntity(this, { 0, 10,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
+	chargedGenerator->addEntity(cuerpo);
+
+	// cuerpo
+	RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { 0,15,0 }, { 0,0,0 }, 2,
+		{ 2,2,2 }, { 0, 0.95f, 0.81f ,1 }, 1, 0.8, -1, SPHERE, -1,
+		{ 0, 0, 0 }, { 1, 1, 1 });
+
+
 	/*
-	ChargedEntity* toy = new ChargedEntity(this, {0,0,0}, 3, -0.1, nullptr);
-	toy->setLifetime(-1);
-	toy->setVelocity({ 0,-50,0 });
+	Particle* pie1 = new Particle(this, {0,0,0}, {0,0,0}, 2, {0,0,1,1}, 1.5, 0.99, -1);
+	addEntity(pie1);
 
-	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
-	sys->registerGenerator(chargedGenerator);
-	chargedGenerator->addChargedEnitity(toy);
+	Particle* pie2 = new Particle(this, { 0,0,0 }, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
+	addEntity(pie2);
 
-	// pie
-	Particle* pie = new Particle(this, {0,0,0}, {0,0,0}, 2, {0,0,1,1}, 1.5, 0.99, -1);
-	addEntity(pie);
-	springGenerator->addSpringEnitity(toy);
-	springGenerator->addSpringEnitity(pie);
+	Particle* mano1 = new Particle(this, { 0,0,0 }, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
+	addEntity(mano1);
 
-	// muelles
-	SpringForceGenerator* spring1 = new SpringForceGenerator(1, 10, pie);
-	sys->registerForceGenerator(spring1);
-	SpringForceGenerator* spring2 = new SpringForceGenerator(1, 10, toy);
-	sys->registerForceGenerator(spring2);
+	Particle* mano2 = new Particle(this, { 0,0,0 }, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
+	addEntity(mano2);
 	*/
 
+	// muelles
+	SpringForceGenerator* spring1 = new SpringForceGenerator(1, 10, pie1);
+	sysRb->registerForceGenerator(spring1);
+
+	SpringForceGenerator* spring2 = new SpringForceGenerator(1, 10, cuerpo);
+	sysRb->registerForceGenerator(spring2);
+
 	pSystems.push_back(sys);
+	pSystems.push_back(sysRb);
 }
 
 void Scene4::step(double t)
