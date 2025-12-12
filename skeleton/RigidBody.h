@@ -6,6 +6,13 @@ class Scene;
 
 enum Shape { BOX, SPHERE, CAPSULE };
 
+enum Group
+{
+	CHARGED = (1 << 0),
+	BODYPARTS = (1 << 1),
+	ALL = (1 << 2)
+};
+
 class RigidBody : public Entity
 {
 public:
@@ -88,7 +95,7 @@ public:
 		Vector3 pos = { 0,0,0 }, Vector3 vel = { 0,0,0 }, float siz = 5, physx::PxVec3 vol = { 1,1,1 },
 		Vector4 col = { 1,1,1,1 }, float m = 10, float damp = 0.8, float maxLT = -1,
 		Shape sh = SPHERE, double density = -1,
-	                 physx::PxVec3 angVel = { 0, 0, 0 }, physx::PxVec3 tensor = { 1,1,1 });
+	                 physx::PxVec3 angVel = { 0, 0, 0 }, physx::PxVec3 tensor = { 1,1,1 }, physx::PxU32 group = CHARGED);
 	~RigidBodyDynamic() override = default;
 
 	void step(double t) override;
@@ -98,7 +105,7 @@ public:
 	void addForce(const Vector3& fc);
 	void applyForce();
 
-	virtual bool collisionCallback() { return false; }
+	virtual bool collisionCallback() { return false; }  
 
 	// -- setters
 	void setLinearVelocity(physx::PxVec3 vel = { 0, 0, 0 }) // velocidades
@@ -150,7 +157,6 @@ public:
 	void setMass(float mas) override // mass
 	{
 		actor->setMass(mas);
-		float cojones = actor->getMass();
 		Entity::setMass(mas);
 	}
 
@@ -160,7 +166,7 @@ public:
 		actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, k);
 	}
 
-	//void setGroup(PxU32 group, bool autoexcluding = true);
+	void setGroup(physx::PxU32 group, bool autoexcluding = false);
 
 	void setActorFlag(physx::PxActorFlag::Enum flag, bool value) // actor flag
 	{

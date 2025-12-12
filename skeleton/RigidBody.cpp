@@ -32,7 +32,7 @@ RigidBodyStatic::RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::
 // --- DYNAMIC
 RigidBodyDynamic::RigidBodyDynamic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, physx::PxMaterial* mat, 
 	bool kin, Vector3 pos, Vector3 vel, float siz, physx::PxVec3 vol, Vector4 col, float m, float damp, float maxLT,
-	Shape sh, double d, physx::PxVec3 angVel, physx::PxVec3 tensor)
+	Shape sh, double d, physx::PxVec3 angVel, physx::PxVec3 tensor, PxU32 group)
 	: RigidBody(scn), gScene(gScene), maxLifetime(maxLT), sh(sh), gMaterial(mat), damping(damp)
 {
 	mass = m;
@@ -61,10 +61,11 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, physx::PxPhysics* gPhysics, physx
 
 	pose = new physx::PxTransform(pos);
 	actor = gPhysics->createRigidDynamic(*pose);
-	gScene->addActor(*actor);
-	actor->userData = static_cast<void*>(this);
+	setGroup(group);
 	actor->attachShape(*shape);
+	actor->userData = static_cast<void*>(this);
 	renderItem = new RenderItem(shape, actor, color);
+	//gScene->addActor(*actor);
 
 	if (d <= 0) density = m / volumen;
 	else  density = d;
@@ -81,6 +82,7 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, physx::PxPhysics* gPhysics, physx
 		actor->setLinearVelocity(vel);
 		actor->setAngularVelocity(angVel);
 	}
+
 }
 
 void RigidBodyDynamic::applyForce()
@@ -96,6 +98,23 @@ void RigidBodyDynamic::applyForce()
 	actor->addForce(totalForc);
 
 	resultingForce.clear();
+}
+
+void RigidBodyDynamic::setGroup(physx::PxU32 group, bool autoexcluding)
+{
+	// mutex
+	gScene->lockWrite();
+
+	PxFilterData filterData;
+
+	filterData.word0 = group;
+	filterData.word1 = group;
+
+	if (autoexcluding)
+		filterData.word1 = ~group;
+
+	shape->setSimulationFilterData(filterData);
+	gScene->unlockWrite();
 }
 
 void RigidBodyDynamic::manageLife(double t)

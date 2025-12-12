@@ -479,12 +479,15 @@ void Scene4::init()
 
 	ChargedEntity* cuerpo = new ChargedEntity(this, { 0, 10,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
 	cuerpo->setLinearVelocity({ 50,0,0 });
+	gScene->addActor(*cuerpo->getActor());
 	chargedGenerator->addEntity(cuerpo);
 
 	// cuerpo
 	RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { 0,15,0 }, { 0,0,0 }, 2,
 		{ 1,1,1 }, { 0, 0.90f, 0.90f ,1 }, 0.5, 0.8, -1, SPHERE, -1,
-		{ 0, 0, 0 }, { 1, 1, 1 });
+		{ 0, 0, 0 }, { 1, 1, 1 },BODYPARTS);
+	gScene->addActor(*pie->getActor());
+	//pie->setGroup(BODYPARTS);
 	chargedGenerator->addEntity(pie);
 
 	/*
@@ -502,10 +505,10 @@ void Scene4::init()
 	*/
 
 	// muelles
-	SpringForceGenerator* spring1 = new SpringForceGenerator(100, 10, pie);
+	SpringForceGenerator* spring1 = new SpringForceGenerator(100, 2, pie);
 	sysRb->registerForceGenerator(spring1);
 
-	SpringForceGenerator* spring2 = new SpringForceGenerator(100, 10, cuerpo);
+	SpringForceGenerator* spring2 = new SpringForceGenerator(100, 2, cuerpo);
 	sysRb->registerForceGenerator(spring2);
 
 	pSystems.push_back(sys);
