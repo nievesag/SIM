@@ -8,13 +8,20 @@ physx::PxFilterFlags contactReportFilterShader(physx::PxFilterObjectAttributes a
 {
 	PX_UNUSED(attributes0);
 	PX_UNUSED(attributes1);
-	PX_UNUSED(filterData0);
-	PX_UNUSED(filterData1);
+	//PX_UNUSED(filterData0);
+	//PX_UNUSED(filterData1);
 	PX_UNUSED(constantBlockSize);
 	PX_UNUSED(constantBlock);
 
+	if ((filterData0.word0 & filterData1.word1) == 0 ||
+		(filterData1.word0 & filterData0.word1) == 0)
+	{
+		return physx::PxFilterFlag::eSUPPRESS;
+	}
+
 	// all initial and persisting reports for everything, with per-point data
-	pairFlags = physx::PxPairFlag::eSOLVE_CONTACT | physx::PxPairFlag::eDETECT_DISCRETE_CONTACT
+	pairFlags = physx::PxPairFlag::eSOLVE_CONTACT 
+		| physx::PxPairFlag::eDETECT_DISCRETE_CONTACT
 		| physx::PxPairFlag::eNOTIFY_TOUCH_FOUND
 		| physx::PxPairFlag::eNOTIFY_TOUCH_PERSISTS
 		| physx::PxPairFlag::eNOTIFY_CONTACT_POINTS;
