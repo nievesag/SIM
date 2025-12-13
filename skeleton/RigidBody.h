@@ -28,6 +28,7 @@ public:
 	// Attach Shape
 
 	virtual physx::PxActor* getActor() { return nullptr; }
+	virtual bool collisionCallback() { return false; }
 
 	//virtual void step(double dt) override;
 	/*void add_torque(physx::PxVec3 add_t);*/
@@ -104,8 +105,6 @@ public:
 	void addForce(float x, float y, float z);
 	void addForce(const Vector3& fc);
 	void applyForce();
-
-	virtual bool collisionCallback() { return false; }  
 
 	// -- setters
 	void setLinearVelocity(physx::PxVec3 vel = { 0, 0, 0 }) // velocidades

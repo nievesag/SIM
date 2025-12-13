@@ -1,5 +1,9 @@
 #include "callbacks.hpp"
 
+#include <iostream>
+
+#include "RigidBody.h"
+
 extern void onCollision(physx::PxActor* actor1, physx::PxActor* actor2);
 
 // A callback function that runs for every potential collision pair, deciding whether to generate a contact, 
@@ -42,7 +46,24 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 	physx::PxActor* actor1 = pairHeader.actors[0];
 	physx::PxActor* actor2 = pairHeader.actors[1];
 
-	// flags de colision
+	// callback de colision
+	auto rb1 = static_cast<RigidBodyDynamic*>(actor1->userData);
+	auto rb2 = static_cast<RigidBodyDynamic*>(actor2->userData);
+
+	if (rb1 != nullptr)
+	{
+		if (rb1->collisionCallback())
+		{
+			std::cout << "hola" << std::endl;
+		}
+	}
+	if (rb2 != nullptr)
+	{
+		if (rb2->collisionCallback())
+		{
+			std::cout << "hola" << std::endl;
+		}
+	}
 
 	onCollision(actor1, actor2);
 }
