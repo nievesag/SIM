@@ -6,7 +6,7 @@ Wall::Wall(Scene* scn, float size, Vector3 pos, bool empty, PxPhysics* gPhysics,
 {
 	if (isEmpty)
 	{
-		pxScn->removeActor(*this->getActor());
-		DeregisterRenderItem(renderItem);
+		//pxScn->removeActor(*this->getActor());
+		//DeregisterRenderItem(renderItem);
 	}
 }

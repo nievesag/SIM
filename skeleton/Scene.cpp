@@ -318,8 +318,8 @@ void Scene0::readFile(std::string file)
 			// VACIO
 			else if (fila[j] == 'o')
 			{
-				Wall* empty = new Wall(this, 20.0f, Vector3(j * 40, i * 40, 0), true, gPhysics, gScene);
-				line.push_back(empty);
+				//Wall* empty = new Wall(this, 20.0f, Vector3(j * 40, i * 40, 0), true, gPhysics, gScene);
+				//line.push_back(empty);
 			}
 		}
 
