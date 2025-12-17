@@ -38,8 +38,17 @@ void RigidBodyGenerator::deleteEntities()
 
 			if (it != generatedRb.end())
 			{
+				gscn->removeActor(*(*it)->getActor());
 				generatedRb.erase(it);
 			}
 		}
+	}
+}
+
+void RigidBodyGenerator::unloadGenerator()
+{
+	for (auto p : generatedRb)
+	{
+		gscn->removeActor(*p->getActor());
 	}
 }

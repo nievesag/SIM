@@ -8,5 +8,4 @@ Entity::Entity(Scene* scn)
 void Entity::step(double t)
 {
 	toggleVisibility();
-	//if (!alive) scene->deleteEntity(this);
 }

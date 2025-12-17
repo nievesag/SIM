@@ -29,11 +29,13 @@ public:
 	//std::normal_distribution<double> g(0, 1); => llamar a g(m,t)
 
 	// genera la particula
-	virtual void generateRb() {};
+	virtual void generateRb() {}
 
 	void addEntity(RigidBodyDynamic* p);
 
 	void deleteEntities();
+
+	void unloadGenerator();
 
 	void toggleGeneration() { isActive = !isActive; }
 

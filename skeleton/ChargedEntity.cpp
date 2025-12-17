@@ -6,7 +6,6 @@ ChargedEntity::ChargedEntity(Scene* scn, Vector3 pos, float size, float q, Trail
 		{ 0, 0, 0 }, { 1, 1, 1 }, ALL), trailGenerator(_trailGenerator)
 {
 	setq(q);
-	//actor->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_LINEAR_Z, true);
 	setActorFlag();
 }
 
@@ -26,14 +25,8 @@ void ChargedEntity::step(double t)
 
 	RigidBodyDynamic::step(t);
 
-	//if (trailGenerator != nullptr)
-	//{
-	//	trailGenerator->setFatherAlive(getAlive());
-	//}
-
 	if (getPosition().y < -200)
 	{
-		//std::cout << "hola" << std::endl;
 		getScene()->splash(getPosition());
 	}
 }

@@ -2,13 +2,9 @@
 #include "Scene.h"
 #include <iostream>
 
-
 // --- BASE
 RigidBody::RigidBody(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Shape s)
-	: Entity(scn), gScene(gScene), sh(s)
-{
-
-}
+	: Entity(scn), gScene(gScene), sh(s) {}
 
 // --- STATIC
 RigidBodyStatic::RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos, float siz, Vector4 col, Shape s)

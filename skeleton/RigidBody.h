@@ -19,22 +19,9 @@ public:
 	RigidBody(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Shape s);
 	~RigidBody() override = default;
 
-	// set/get mass
-	// setMassSpaceInertiaTensor
-	// set/getLinearVelocity
-	// set/getAngularVelocity
-	// addForce()
-	// addTorque()
-	// Attach Shape
-
 	virtual physx::PxActor* getActor() { return nullptr; }
 	virtual bool collisionCallback() { return false; }
 	virtual void setGroup(physx::PxU32 group, bool autoexcluding = false) {}
-
-	//virtual void step(double dt) override;
-	/*void add_torque(physx::PxVec3 add_t);*/
-	//virtual void translate(physx::PxVec3) override;
-	//virtual void translate_to(physx::PxVec3) override;
 	
 protected:
 	physx::PxScene* gScene = nullptr;
@@ -69,7 +56,6 @@ public:
 	void setVisible(bool v = true) override
 	{
 		Entity::setVisible(v);
-		//scene->setActorVisible(actor, v);
 	}
 
 	void setRotation(physx::PxQuat rot) override
@@ -137,7 +123,6 @@ public:
 	void setVisible(bool vis = true) override // visible
 	{
 		Entity::setVisible(vis);
-		//scene->setActorVisible(actor, vis);
 	}
 
 	void setDensity(float d) // density
@@ -183,14 +168,11 @@ public:
 	}
 
 	// getters
-	physx::PxRigidActor* getActor() override { return actor; }
+	physx::PxActor* getActor() override { return actor; }
 	Vector3 getPosition() const override { return actor->getGlobalPose().p; }
 	physx::PxQuat getRotation() const override { return actor->getGlobalPose().q; }
 	Vector3 getVelocity() const override { return actor->getLinearVelocity(); }
 	double getMass() const override { return actor->getMass(); }
-	//RigidBodyGenerator* getGenerator() const { return generator; }
-
-	//updateMassAndInertia
 
 private:
 	physx::PxRigidDynamic* actor = nullptr; // puntero al actor dinamico
@@ -198,7 +180,6 @@ private:
 	physx::PxMaterial* gMaterial = nullptr;
 	double density = 1;
 	double angle = 0;
-
 
 	std::vector<Vector3> resultingForce; // fuerza resultante
 
@@ -212,9 +193,5 @@ private:
 	float lifetime;
 	float maxLifetime = -1;
 
-	//virtual void integrate(double t);
-
 	void manageLife(double t);
-
-	//RigidBodyGenerator* generator = nullptr;
 };

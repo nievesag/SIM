@@ -174,6 +174,18 @@ void Scene0::unload()
 	magnetism1->toggleMagnetVisibility();
 	magnetism2->toggleMagnetVisibility();
 
+	chargedGenerator->unloadGenerator();
+
+	for (auto i : map)
+	{
+		for (auto j : i)
+		{
+			j->setVisible(false);
+			j->toggleVisibility();
+			gScene->removeActor(*j->getActor());
+		}
+	}
+	 
 	//DeregisterRenderItem(pipe->getRenderItem());
 }
 
@@ -478,17 +490,17 @@ void Scene4::init()
 	chargedGenerator->addEntity(cuerpo);
 
 	// cuerpo
-	RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { 0,15,0 }, { 0,0,0 }, 2,
-		{ 1,1,1 }, { 0, 0.90f, 0.90f ,1 }, 0.5, 0.8, -1, SPHERE, -1,
-		{ 0, 0, 0 }, { 1, 1, 1 },BODYPARTS);
+	RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { 0,15,0 }, 
+		{ 0,0,0 }, 3, { 3,3,3 }, { 0, 0.90f, 0.90f ,1 }, 0.5, 0.8, 
+		-1, SPHERE, -1, { 0, 0, 0 }, { 1, 1, 1 },BODYPARTS);
 	pie->setColor({ 1,0,0,1 });
 	chargedGenerator->addEntity(pie);
 
 	// muelles
-	SpringForceGenerator* spring1 = new SpringForceGenerator(100, 1, pie);
+	SpringForceGenerator* spring1 = new SpringForceGenerator(10, 0.1, pie);
 	sysRb->registerForceGenerator(spring1);
 
-	SpringForceGenerator* spring2 = new SpringForceGenerator(100, 1, cuerpo);
+	SpringForceGenerator* spring2 = new SpringForceGenerator(10, 0.1, cuerpo);
 	sysRb->registerForceGenerator(spring2);
 
 	pSystems.push_back(sys);
