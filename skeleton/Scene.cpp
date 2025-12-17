@@ -119,7 +119,6 @@ void Scene0::init()
 
 	ChargedEntity* bola = new ChargedEntity(this, { 0, 0,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
 	chargedGenerator->addEntity(bola);
-	//gScene->addActor(*bola->getActor());
 
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);
@@ -127,12 +126,10 @@ void Scene0::init()
 	pGen = new ProjectileGenerator(this);
 
 	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.01, gPhysics, gScene);
-	//sys->registerForceGenerator(magnetism1);
 	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
 	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 0.2, gPhysics, gScene);
-	//sys->registerForceGenerator(magnetism2);
 	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 

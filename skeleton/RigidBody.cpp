@@ -4,16 +4,15 @@
 
 
 // --- BASE
-RigidBody::RigidBody(Scene* scn) 
-	: Entity(scn)
+RigidBody::RigidBody(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Shape s)
+	: Entity(scn), gScene(gScene), sh(s)
 {
 
 }
 
-
 // --- STATIC
-RigidBodyStatic::RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos, float siz, Vector4 col)
-	: RigidBody(scn)
+RigidBodyStatic::RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos, float siz, Vector4 col, Shape s)
+	: RigidBody(scn, gPhysics, gScene, s)
 {
 	size = siz;
 
@@ -23,17 +22,37 @@ RigidBodyStatic::RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::
 	pose = new physx::PxTransform(pos);
 	actor = gPhysics->createRigidStatic(*pose);
 	shape = CreateShape(physx::PxBoxGeometry(volume));
+
+	setGroup(ALL);
+
 	actor->attachShape(*shape);
 
 	renderItem = new RenderItem(shape, actor, color);
 	gScene->addActor(*actor);
 }
 
+void RigidBodyStatic::setGroup(physx::PxU32 group, bool autoexcluding)
+{
+	// mutex
+	gScene->lockWrite();
+
+	PxFilterData filterData;
+
+	filterData.word0 = group;
+	filterData.word1 = group;
+
+	if (autoexcluding)
+		filterData.word1 = ~group;
+
+	shape->setSimulationFilterData(filterData);
+	gScene->unlockWrite();
+}
+
 // --- DYNAMIC
 RigidBodyDynamic::RigidBodyDynamic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, physx::PxMaterial* mat, 
 	bool kin, Vector3 pos, Vector3 vel, float siz, physx::PxVec3 vol, Vector4 col, float m, float damp, float maxLT,
-	Shape sh, double d, physx::PxVec3 angVel, physx::PxVec3 tensor, PxU32 group)
-	: RigidBody(scn), gScene(gScene), maxLifetime(maxLT), sh(sh), gMaterial(mat), damping(damp)
+	Shape s, double d, physx::PxVec3 angVel, physx::PxVec3 tensor, PxU32 group)
+	: RigidBody(scn, gPhysics, gScene, s), maxLifetime(maxLT), gMaterial(mat), damping(damp)
 {
 	mass = m;
 	size = siz;
@@ -82,7 +101,6 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, physx::PxPhysics* gPhysics, physx
 		actor->setLinearVelocity(vel);
 		actor->setAngularVelocity(angVel);
 	}
-
 }
 
 void RigidBodyDynamic::applyForce()

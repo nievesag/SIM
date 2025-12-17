@@ -16,7 +16,7 @@ enum Group
 class RigidBody : public Entity
 {
 public:
-	RigidBody(Scene* scn);
+	RigidBody(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Shape s);
 	~RigidBody() override = default;
 
 	// set/get mass
@@ -29,6 +29,7 @@ public:
 
 	virtual physx::PxActor* getActor() { return nullptr; }
 	virtual bool collisionCallback() { return false; }
+	virtual void setGroup(physx::PxU32 group, bool autoexcluding = false) {}
 
 	//virtual void step(double dt) override;
 	/*void add_torque(physx::PxVec3 add_t);*/
@@ -36,7 +37,8 @@ public:
 	//virtual void translate_to(physx::PxVec3) override;
 	
 protected:
-	//virtual void integrate(double t);
+	physx::PxScene* gScene = nullptr;
+	Shape sh;
 };
 
 // --- STATIC ---
@@ -45,7 +47,7 @@ protected:
 class RigidBodyStatic : public RigidBody
 {
 public:
-	RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos, float siz, Vector4 col);
+	RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos, float siz, Vector4 col, Shape s);
 
 	Vector3 getPosition() const override
 	{
@@ -81,6 +83,8 @@ public:
 		return actor;
 	}
 
+	void setGroup(physx::PxU32 group, bool autoexcluding = false) override;
+
 private:
 	physx::PxRigidStatic* actor = nullptr; // puntero al actor estatico
 };
@@ -95,7 +99,7 @@ public:
 	                 physx::PxPhysics* gPhysics = nullptr, physx::PxScene* gScene = nullptr, physx::PxMaterial* mat = nullptr, bool kin = false,
 		Vector3 pos = { 0,0,0 }, Vector3 vel = { 0,0,0 }, float siz = 5, physx::PxVec3 vol = { 1,1,1 },
 		Vector4 col = { 1,1,1,1 }, float m = 10, float damp = 0.8, float maxLT = -1,
-		Shape sh = SPHERE, double density = -1,
+		Shape s = SPHERE, double density = -1,
 	                 physx::PxVec3 angVel = { 0, 0, 0 }, physx::PxVec3 tensor = { 1,1,1 }, physx::PxU32 group = CHARGED);
 	~RigidBodyDynamic() override = default;
 
@@ -165,7 +169,7 @@ public:
 		actor->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, k);
 	}
 
-	void setGroup(physx::PxU32 group, bool autoexcluding = false);
+	void setGroup(physx::PxU32 group, bool autoexcluding = false) override;
 
 	void setActorFlag(physx::PxActorFlag::Enum flag, bool value) // actor flag
 	{
@@ -191,12 +195,10 @@ public:
 private:
 	physx::PxRigidDynamic* actor = nullptr; // puntero al actor dinamico
 
-	physx::PxScene* gScene = nullptr;
 	physx::PxMaterial* gMaterial = nullptr;
 	double density = 1;
 	double angle = 0;
 
-	Shape sh;
 
 	std::vector<Vector3> resultingForce; // fuerza resultante
 

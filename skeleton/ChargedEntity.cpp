@@ -3,10 +3,9 @@
 ChargedEntity::ChargedEntity(Scene* scn, Vector3 pos, float size, float q, TrailGenerator* _trailGenerator, PxPhysics* gPhysics, PxScene* pxScn)
 	: RigidBodyDynamic(scn, gPhysics, pxScn, nullptr, false, pos, {0,0,0}, size,
 		{3,3,3}, { 0, 0.95f, 0.81f ,1}, 3, 0.8, -1, SPHERE, -1, 
-		{ 0, 0, 0 }, { 1, 1, 1 }, CHARGED), trailGenerator(_trailGenerator)
+		{ 0, 0, 0 }, { 1, 1, 1 }, ALL), trailGenerator(_trailGenerator)
 {
 	setq(q);
-	//setGroup(BODYPARTS);
 }
 
 ChargedEntity::~ChargedEntity()
