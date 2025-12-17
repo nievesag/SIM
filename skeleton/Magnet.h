@@ -7,8 +7,10 @@
 class Magnet : public RigidBodyStatic
 {
 public:
-	Magnet(Scene* scn, float size, Vector3 pos, Vector4 col, physx::PxPhysics* gPhysics, physx::PxScene* pxScn);
+	Magnet(Scene* scn, float size, Vector3 pos, Vector4 col, physx::PxPhysics* gPhysics, physx::PxScene* pxScn, float magneticFieldR);
+	void updateMagneticField(Vector3 pos);
 
 private:
-	RenderItem* magneticField = nullptr;
+	Entity* magneticField = nullptr;
+	//RenderItem* magneticField = nullptr;
 };

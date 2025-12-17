@@ -65,6 +65,15 @@ public:
 	}
 	virtual void setq(float newq) { q = newq; }
 
+	virtual void setRenderItem(RenderItem* ri)
+	{
+		renderItem = ri;
+	}
+	virtual void setPose(physx::PxTransform* p)
+	{
+		pose = p;
+	}
+
 protected:
 	// --- atributos
 	physx::PxTransform* pose = nullptr;			// transform

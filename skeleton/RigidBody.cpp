@@ -65,7 +65,7 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, physx::PxPhysics* gPhysics, physx
 	actor->attachShape(*shape);
 	actor->userData = static_cast<void*>(this);
 	renderItem = new RenderItem(shape, actor, color);
-	//gScene->addActor(*actor);
+	gScene->addActor(*actor);
 
 	if (d <= 0) density = m / volumen;
 	else  density = d;
@@ -127,7 +127,6 @@ void RigidBodyDynamic::manageLife(double t)
 		|| actor->getGlobalPose().p.z <= -scene->getActionThreshold().z	// o se sale por delante o detras
 		|| actor->getGlobalPose().p.z >= scene->getActionThreshold().z)
 	{
-		std::cout << "muere" << std::endl;
 		setAlive(false);
 	}
 
@@ -154,10 +153,4 @@ void RigidBodyDynamic::step(double t)
 
 	// ---- Gestion escena ----
 	manageLife(t);
-
-	//std::cout << actor->getGlobalPose().p.y  << std::endl;
-	//std::cout << actor->getMass()  << std::endl;
-	//std::cout << mass  << std::endl;
-	//std::cout << pose->p.x << " " << pose->p.y << " " << pose->p.z << " " << std::endl;
 }
-

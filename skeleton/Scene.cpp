@@ -118,7 +118,6 @@ void Scene0::init()
 	sysRb->registerGenerator(chargedGenerator);
 
 	ChargedEntity* bola = new ChargedEntity(this, { 0, 0,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
-
 	chargedGenerator->addEntity(bola);
 	//gScene->addActor(*bola->getActor());
 
@@ -478,38 +477,21 @@ void Scene4::init()
 	sys->registerGenerator(trailGenerator);
 
 	ChargedEntity* cuerpo = new ChargedEntity(this, { 0, 10,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
-	cuerpo->setLinearVelocity({ 50,0,0 });
-	gScene->addActor(*cuerpo->getActor());
+	cuerpo->setLinearVelocity({ 10,0,0 });
 	chargedGenerator->addEntity(cuerpo);
 
 	// cuerpo
 	RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { 0,15,0 }, { 0,0,0 }, 2,
-		{ 1,1,1 }, { 0, 0.90f, 0.90f ,1 }, 1, 0.8, -1, SPHERE, -1,
+		{ 1,1,1 }, { 0, 0.90f, 0.90f ,1 }, 0.5, 0.8, -1, SPHERE, -1,
 		{ 0, 0, 0 }, { 1, 1, 1 },BODYPARTS);
-	gScene->addActor(*pie->getActor());
 	pie->setColor({ 1,0,0,1 });
-	//pie->setGroup(BODYPARTS);
 	chargedGenerator->addEntity(pie);
 
-	/*
-	Particle* pie1 = new Particle(this, {0,0,0}, {0,0,0}, 2, {0,0,1,1}, 1.5, 0.99, -1);
-	addEntity(pie1);
-
-	Particle* pie2 = new Particle(this, { 0,0,0 }, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
-	addEntity(pie2);
-
-	Particle* mano1 = new Particle(this, { 0,0,0 }, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
-	addEntity(mano1);
-
-	Particle* mano2 = new Particle(this, { 0,0,0 }, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
-	addEntity(mano2);
-	*/
-
 	// muelles
-	SpringForceGenerator* spring1 = new SpringForceGenerator(5000, 2, pie);
+	SpringForceGenerator* spring1 = new SpringForceGenerator(100, 1, pie);
 	sysRb->registerForceGenerator(spring1);
 
-	SpringForceGenerator* spring2 = new SpringForceGenerator(5000, 2, cuerpo);
+	SpringForceGenerator* spring2 = new SpringForceGenerator(100, 1, cuerpo);
 	sysRb->registerForceGenerator(spring2);
 
 	pSystems.push_back(sys);

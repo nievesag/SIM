@@ -50,6 +50,7 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 	auto rb1 = static_cast<RigidBodyDynamic*>(actor1->userData);
 	auto rb2 = static_cast<RigidBodyDynamic*>(actor2->userData);
 
+	/*
 	if (rb1 != nullptr)
 	{
 		if (rb1->collisionCallback())
@@ -64,6 +65,7 @@ void ContactReportCallback::onContact(const physx::PxContactPairHeader& pairHead
 			std::cout << "hola" << std::endl;
 		}
 	}
+	*/
 
 	onCollision(actor1, actor2);
 }

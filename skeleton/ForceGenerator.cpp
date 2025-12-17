@@ -76,10 +76,7 @@ MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, flo
     if (b < 0) color = { 1,0,0,1 }; // norte
     else if (b > 1) color = { 0,0,1,1 }; // sur
 
-    magnet = new Magnet(scn, 10, pos, color, gPhysics, pxScn);
-
-    //magnet = new RenderItem(shape, magnetPose, color);
-    //RegisterRenderItem(magnet);
+    magnet = new Magnet(scn, 10, pos, color, gPhysics, pxScn, areaR);
 }
 
 Vector3 MagnetismGenerator::generateForce(Entity& e)
@@ -103,6 +100,9 @@ void MagnetismGenerator::move(Vector3 dir)
 {
     areaPose->p += dir * 5;
     magnetPose->p += dir * 5;
+    areaPos = areaPose->p;
+    magnet->setPosition(magnet->getPosition() += dir * 5);
+    magnet->updateMagneticField(magnet->getPosition());
 }
 
 void MagnetismGenerator::setPos(Vector3 newPos)
