@@ -178,12 +178,9 @@ void Scene0::unload()
 
 	for (auto i : map)
 	{
-		for (auto j : i)
-		{
-			j->setVisible(false);
-			j->toggleVisibility();
-			gScene->removeActor(*j->getActor());
-		}
+		i->setVisible(false);
+		i->toggleVisibility();
+		gScene->removeActor(*i->getActor());
 	}
 	 
 	//DeregisterRenderItem(pipe->getRenderItem());
@@ -313,7 +310,7 @@ void Scene0::readFile(std::string file)
 			if (fila[j] == 'x')
 			{
 				Wall* wall = new Wall(this, 20.0f, Vector3(j * 40, i * 40, 0), false, gPhysics, gScene);
-				line.push_back(wall);
+				map.push_back(wall);
 			}
 			// VACIO
 			else if (fila[j] == 'o')
@@ -322,8 +319,6 @@ void Scene0::readFile(std::string file)
 				//line.push_back(empty);
 			}
 		}
-
-		map.push_back(line);
 	}
 }
 

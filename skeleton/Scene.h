@@ -88,7 +88,7 @@ public:
 
 private:
 	int width = 0, height = 0; // tamaño del mapa
-	std::vector<std::vector<Wall*>> map;
+	std::vector<Wall*> map;
 
 	ParticleSystem* sys = nullptr; // sistema de particulas
 	RigidBodySystem* sysRb = nullptr;
