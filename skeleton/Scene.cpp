@@ -527,7 +527,8 @@ void Scene5::init()
 	TrailGenerator* trailGenerator = new TrailGenerator(this, "Rastro");
 	sys->registerGenerator(trailGenerator);
 
-	ChargedEntity* bola = new ChargedEntity(this, { 0, 10,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
+	ChargedEntity* bola = new ChargedEntity(this, { 0, 100,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
+	bola->setColor({ 1,0,0,1 });
 	chargedGenerator->addEntity(bola);
 
 	// agua

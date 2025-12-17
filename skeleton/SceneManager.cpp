@@ -22,7 +22,7 @@ SceneManager::~SceneManager()
 
 void SceneManager::addScene(Scene* scn)
 {
-	if (scn != nullptr) 
+	if (scn != nullptr)
 	{
 		vScenes.push_back(scn);
 		scn->init();
@@ -66,24 +66,6 @@ void SceneManager::keyPressed(unsigned char key, const physx::PxTransform& camer
 	{
 		for (auto e : vScenes) e->keyPressed(key, camera);
 	}
-
-	/*
-	switch (toupper(key))
-	{
-	case '0':
-		changeScene(0);
-		cout << "[SCENE] Escena 1" << ".\n";
-		break;
-	case'1':
-		cout << "[SCENE] Escena 2" << ".\n";
-		changeScene(1);
-		break;
-
-	default:
-		for (auto e : vScenes) e->keyPressed(key, camera);
-		break;
-	}
-	*/
 }
 
 void SceneManager::specialKeyPressed(int key, const physx::PxTransform& camera)
