@@ -171,9 +171,9 @@ public:
 
 	void setGroup(physx::PxU32 group, bool autoexcluding = false) override;
 
-	void setActorFlag(physx::PxActorFlag::Enum flag, bool value) // actor flag
+	void setActorFlag() // actor flag
 	{
-		actor->setActorFlag(flag, value);
+		actor->setRigidDynamicLockFlag(physx::PxRigidDynamicLockFlag::eLOCK_LINEAR_Z, true);
 	}
 
 	void setDamping(float damping) // damping

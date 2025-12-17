@@ -4,7 +4,7 @@
 //#include "Scene.h"
 //class RigidBodyStatic;
 
-class Magnet : public RigidBodyStatic
+class Magnet : public RigidBodyDynamic
 {
 public:
 	Magnet(Scene* scn, float size, Vector3 pos, Vector4 col, physx::PxPhysics* gPhysics, physx::PxScene* pxScn, float magneticFieldR);

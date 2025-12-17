@@ -84,7 +84,6 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, physx::PxPhysics* gPhysics, physx
 	actor->attachShape(*shape);
 	actor->userData = static_cast<void*>(this);
 	renderItem = new RenderItem(shape, actor, color);
-	gScene->addActor(*actor);
 
 	if (d <= 0) density = m / volumen;
 	else  density = d;
@@ -101,6 +100,12 @@ RigidBodyDynamic::RigidBodyDynamic(Scene* scn, physx::PxPhysics* gPhysics, physx
 		actor->setLinearVelocity(vel);
 		actor->setAngularVelocity(angVel);
 	}
+	else
+	{
+		setKinematic(actor);
+	}
+
+	gScene->addActor(*actor);
 }
 
 void RigidBodyDynamic::applyForce()

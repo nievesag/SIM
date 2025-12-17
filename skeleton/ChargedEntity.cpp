@@ -6,6 +6,8 @@ ChargedEntity::ChargedEntity(Scene* scn, Vector3 pos, float size, float q, Trail
 		{ 0, 0, 0 }, { 1, 1, 1 }, ALL), trailGenerator(_trailGenerator)
 {
 	setq(q);
+	//actor->setRigidDynamicLockFlag(PxRigidDynamicLockFlag::eLOCK_LINEAR_Z, true);
+	setActorFlag();
 }
 
 ChargedEntity::~ChargedEntity()
