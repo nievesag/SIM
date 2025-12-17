@@ -49,7 +49,7 @@ public:
 	Vector3 getActionThreshold() { return actionThreshold; }
 
 	virtual void newToy(Vector3 pos) = 0;
-	virtual void readFile(std::string file) = 0;
+	virtual void readFile(std::string file);
 	virtual void splash(Vector3 pos) = 0;
 
 	// px
@@ -60,10 +60,14 @@ protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
 	std::vector<System*> pSystems; // sistemas de particulas
 
-	Vector3 actionThreshold = {200, 200,200}; // limites de la escena a partir de los cuales se eliminan las particulas
+	Vector3 actionThreshold = {400, 200,200}; // limites de la escena a partir de los cuales se eliminan las particulas
 	
 	PxPhysics* gPhysics = nullptr;
 	PxScene* gScene = nullptr;
+
+	// nivel
+	int width = 0, height = 0; // tamaño del mapa
+	std::vector<Wall*> map;
 };
 
 // --- ESCENAS HIJAS ---
@@ -87,9 +91,6 @@ public:
 	void splash(Vector3 pos) override;
 
 private:
-	int width = 0, height = 0; // tamaño del mapa
-	std::vector<Wall*> map;
-
 	ParticleSystem* sys = nullptr; // sistema de particulas
 	RigidBodySystem* sysRb = nullptr;
 
@@ -118,6 +119,7 @@ class Scene1 : public Scene
 {
 public:
 	Scene1() = default;
+	Scene1(PxPhysics* gphys, PxScene* gscn) : Scene(gphys, gscn) {}
 	void init() override;
 	void step(double t) override;
 	void load() override;
@@ -128,11 +130,31 @@ public:
 	void newToy(Vector3 pos) override;
 
 	void readFile(std::string file) override;
-
-	void splash(Vector3 pos) override {}
+	void splash(Vector3 pos) override;
 
 private:
+	ParticleSystem* sys = nullptr; // sistema de particulas
+	RigidBodySystem* sysRb = nullptr;
+
+	std::vector<MagnetismGenerator*> magnets; // vector de todos los imanes
+	MagnetismGenerator* magnetism1 = nullptr; // iman 1
+	MagnetismGenerator* magnetism2 = nullptr; // iman 2
+
+	MagnetismGenerator* selectedMagnet = nullptr;	// iman que tienes seleccionado
+
+	ChargedRbGenerator* chargedGenerator = nullptr;	// generador de particulas con carga
+	TrailGenerator* trailGenerator = nullptr;		// rastro que deja la particula
+	bool fatherPart = false;
+
+	Pipe* pipe = nullptr; // tuberia que suelta la particula
+
 	ForceGenerator* viento = nullptr;
+	//ForceGenerator* torbellino = nullptr;
+	//ParticleGenerator* randomMass = nullptr;
+
+	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
+
+	SplashGenerator* sGenerator = nullptr;
 };
 
 class Scene2 : public Scene

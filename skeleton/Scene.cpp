@@ -94,9 +94,50 @@ void Scene::specialKeyPressed(int key, const physx::PxTransform& camera)
 
 }
 
-// ------------------------ ESCENAS HIJAS ------------------------
+void Scene::readFile(std::string file)
+{
+	std::ifstream entrada(file);
 
-// -------- ESCENA 0 -> main
+	if (!entrada.is_open())
+	{
+		std::cout << "Error abriendo archivo\n";
+		return;
+	}
+
+	// para poder hacer cin para leer el archivo
+	auto cinbuf = std::cin.rdbuf(entrada.rdbuf());
+
+	std::cin >> height >> width;  // mapa
+
+	std::string fila;
+	std::vector<Wall*> line;
+
+	for (int i = 0; i < height; i++)
+	{
+		std::cin >> fila;
+
+		for (int j = 0; j < width; j++)
+		{
+			std::cout << j << " " << i << std::endl;
+
+			// MURO
+			if (fila[j] == 'x')
+			{
+				Wall* wall = new Wall(this, 20.0f, Vector3(j * 40, i * 40, 0), false, gPhysics, gScene);
+				map.push_back(wall);
+			}
+			// VACIO
+			else if (fila[j] == 'o')
+			{
+				//Wall* empty = new Wall(this, 20.0f, Vector3(j * 40, i * 40, 0), true, gPhysics, gScene);
+				//line.push_back(empty);
+			}
+		}
+	}
+}
+
+// ------------------------ ESCENAS HIJAS ------------------------
+// -------- ESCENA 0 -> NIVEL 1
 void Scene0::init()
 {
 	Scene::init();
@@ -116,9 +157,6 @@ void Scene0::init()
 
 	chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
 	sysRb->registerGenerator(chargedGenerator);
-
-	ChargedEntity* bola = new ChargedEntity(this, { 0, 0,0 }, 3, -0.1f, trailGenerator, gPhysics, gScene);
-	chargedGenerator->addEntity(bola);
 
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);
@@ -182,26 +220,24 @@ void Scene0::unload()
 		i->toggleVisibility();
 		gScene->removeActor(*i->getActor());
 	}
-	 
+	map.clear();
+
 	//DeregisterRenderItem(pipe->getRenderItem());
 }
 
 void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 {
-	//int modifiers = glutGetModifiers();
-
-	//bool ctrl = false;
-	//if (modifiers & GLUT_ACTIVE_CTRL) // pulsas el control
-	//{
-	//	ctrl = true;
-	//}
-
 	int modifiers = glutGetModifiers();
 
 	if (modifiers & GLUT_ACTIVE_CTRL && key == 17) // pulsar control && q
 	{
-		selectedMagnet = magnets[1];
+		selectedMagnet = magnets[0];
 		std::cout << "iman " << 0 << " seleccionado" << std::endl;
+	}
+	if (modifiers & GLUT_ACTIVE_CTRL && key == 18) // pulsar control && r
+	{
+		selectedMagnet = magnets[1];
+		std::cout << "iman " << 1 << " seleccionado" << std::endl;
 	}
 
 	switch(toupper(key))
@@ -258,7 +294,6 @@ void Scene0::newToy(Vector3 pos)
 	sys->registerGenerator(springGenerator);
 
 	// crea toy
-
 	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1f, trailGenerator, gPhysics, gScene);
 	toy->setLinearVelocity({ 0,-50,0 });
 	ChargedRbGenerator* chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
@@ -282,44 +317,7 @@ void Scene0::newToy(Vector3 pos)
 
 void Scene0::readFile(std::string file)
 {
-	std::ifstream entrada(file);
-
-	if (!entrada.is_open())
-	{
-		std::cout << "Error abriendo archivo\n";
-		return;
-	}
-
-	// para poder hacer cin para leer el archivo
-	auto cinbuf = std::cin.rdbuf(entrada.rdbuf());
-
-	std::cin >> height >> width;  // mapa
-
-	std::string fila;
-	std::vector<Wall*> line;
-
-	for (int i = 0; i < height; i++)
-	{
-		std::cin >> fila;
-
-		for (int j = 0; j < width; j++)
-		{
-			std::cout << j << " " << i << std::endl;
-
-			// MURO
-			if (fila[j] == 'x')
-			{
-				Wall* wall = new Wall(this, 20.0f, Vector3(j * 40, i * 40, 0), false, gPhysics, gScene);
-				map.push_back(wall);
-			}
-			// VACIO
-			else if (fila[j] == 'o')
-			{
-				//Wall* empty = new Wall(this, 20.0f, Vector3(j * 40, i * 40, 0), true, gPhysics, gScene);
-				//line.push_back(empty);
-			}
-		}
-	}
+	Scene::readFile(file);
 }
 
 void Scene0::splash(Vector3 pos)
@@ -333,20 +331,62 @@ void Scene1::init()
 {
 	Scene::init();
 
-	ParticleSystem* sys = new ParticleSystem(this);
+	readFile("mapa2.txt");
 
-	ParticleGenerator* randomMass = new RandomMassGenerator(this, "Cascada");
+	// ----- System
+	sys = new ParticleSystem(this);
+	sysRb = new RigidBodySystem(this, gPhysics, gScene);
+
+	pipe = new Pipe(this, { 200,240,0 });
+	addEntity(pipe);
+
+	// -- Particle generators
+	ParticleGenerator* randomMass = new RandomMassGenerator(this, "Niebla");
+	static_cast<RandomMassGenerator*>(randomMass)->setOrigin({220, 160, 0});
 	sys->registerGenerator(randomMass);
 
-	viento = new WindGenerator({ 0,0,0 }, 50, this, { 40, 0, 0 });
-	sys->registerForceGenerator(viento);
+	trailGenerator = new TrailGenerator(this, "Rastro");
+	sys->registerGenerator(trailGenerator);
+
+	chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
+	sysRb->registerGenerator(chargedGenerator);
+
+	sGenerator = new SplashGenerator(this, "Splash");
+	sys->registerGenerator(sGenerator);
+
+	ParticleGenerator* wGenerator = new WaterfallGenerator(this, "Cascada");
+	static_cast<WaterfallGenerator*>(wGenerator)->setOrigin({ -105, -150, 0 });
+	sys->registerGenerator(wGenerator);
+
+	pGen = new ProjectileGenerator(this);
+
+	// -- Force generators
+	viento = new WindGenerator({ 220, 160, 0 }, 30, this, { -10, 0, 0 });
+	sysRb->registerForceGenerator(viento);
+
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.01, gPhysics, gScene);
+	sysRb->registerForceGenerator(magnetism1);
+	magnets.push_back(magnetism1);
+
+	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 0.2, gPhysics, gScene);
+	sysRb->registerForceGenerator(magnetism2);
+	magnets.push_back(magnetism2);
+
+	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({ 160,140,0 }, 50, { 60,0,5 }, this, 20, 5, 1);
+	sysRb->registerForceGenerator(agua);
 
 	pSystems.push_back(sys);
+	pSystems.push_back(sysRb);
 }
 
 void Scene1::step(double t)
 {
 	Scene::step(t);
+
+	if (!fatherPart)
+	{
+		fatherPart = true;
+	}
 }
 
 void Scene1::load()
@@ -355,11 +395,43 @@ void Scene1::load()
 
 	viento->setAreaVisibility(true);
 	viento->toggleAreaVisibility();
+
+	magnetism1->setAreaVisibility(true);
+	magnetism2->setAreaVisibility(true);
+	magnetism1->toggleAreaVisibility();
+	magnetism2->toggleAreaVisibility();
+	magnetism1->toggleMagnetVisibility();
+	magnetism2->toggleMagnetVisibility();
+
+	//RegisterRenderItem(pipe->getRenderItem());
 }
 
 void Scene1::unload()
 {
 	Scene::unload();
+
+	Scene::unload();
+
+	magnetism1->setAreaVisibility(false);
+	magnetism2->setAreaVisibility(false);
+
+	magnetism1->toggleAreaVisibility();
+	magnetism2->toggleAreaVisibility();
+
+	magnetism1->toggleMagnetVisibility();
+	magnetism2->toggleMagnetVisibility();
+
+	chargedGenerator->unloadGenerator();
+
+	for (auto i : map)
+	{
+		i->setVisible(false);
+		i->toggleVisibility();
+		gScene->removeActor(*i->getActor());
+	}
+	map.clear();
+
+	//DeregisterRenderItem(pipe->getRenderItem());
 
 	viento->setAreaVisibility(false);
 	viento->toggleAreaVisibility();
@@ -367,8 +439,40 @@ void Scene1::unload()
 
 void Scene1::keyPressed(unsigned char key, const physx::PxTransform& camera)
 {
+	int modifiers = glutGetModifiers();
+
+	if (modifiers & GLUT_ACTIVE_CTRL && key == 17) // pulsar control && q
+	{
+		selectedMagnet = magnets[0];
+		std::cout << "iman " << 0 << " seleccionado" << std::endl;
+	}
+	if (modifiers & GLUT_ACTIVE_CTRL && key == 18) // pulsar control && r
+	{
+		selectedMagnet = magnets[1];
+		std::cout << "iman " << 1 << " seleccionado" << std::endl;
+	}
+
 	switch (toupper(key))
 	{
+	case 'Z':
+	{
+		if (selectedMagnet != nullptr) selectedMagnet->toggleForce();
+		break;
+	}
+	case 'N':
+	{
+		pipe->eject();
+		break;
+	}
+	case 'I':
+	{
+		std::cout << "disparo desde la camara" << std::endl;
+		if (pGen != nullptr)
+		{
+			pGen->shoot("Cannon");
+		}
+		break;
+	}
 	case 'R':
 	{
 		if (viento != nullptr) viento->toggleForce();
@@ -381,14 +485,62 @@ void Scene1::keyPressed(unsigned char key, const physx::PxTransform& camera)
 
 void Scene1::specialKeyPressed(int key, const physx::PxTransform& camera)
 {
+	switch (key)
+	{
+	case GLUT_KEY_UP:
+		if (selectedMagnet != nullptr) selectedMagnet->move({ 0,1.0f,0 });
+		break;
+	case GLUT_KEY_DOWN:
+		if (selectedMagnet != nullptr) selectedMagnet->move({ 0,-1.0f,0 });
+		break;
+	case GLUT_KEY_LEFT:
+		if (selectedMagnet != nullptr) selectedMagnet->move({ -1.0f,0,0 });
+		break;
+	case GLUT_KEY_RIGHT:
+		if (selectedMagnet != nullptr) selectedMagnet->move({ 1.0f,0,0 });
+		break;
+	}
 }
 
 void Scene1::newToy(Vector3 pos)
 {
+	TrailGenerator* trail = new TrailGenerator(this, "Rastro");
+	sys->registerGenerator(trail);
+
+	SpringParticleGenerator* springGenerator = new SpringParticleGenerator(this, "Carga");
+	sys->registerGenerator(springGenerator);
+
+	// crea toy
+	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1f, trailGenerator, gPhysics, gScene);
+	toy->setLinearVelocity({ 0,-50,0 });
+	ChargedRbGenerator* chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
+	sysRb->registerGenerator(chargedGenerator);
+	chargedGenerator->addEntity(toy);
+
+	// pie
+	/*
+	Particle* pie = new Particle(this, pos, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
+	addEntity(pie);
+	springGenerator->addSpringEnitity(toy);
+	springGenerator->addSpringEnitity(pie);
+
+	// muelles
+	SpringForceGenerator* spring1 = new SpringForceGenerator(500, 5, pie);
+	sys->registerForceGenerator(spring1);
+	SpringForceGenerator* spring2 = new SpringForceGenerator(500, 5, toy);
+	sys->registerForceGenerator(spring2);
+	*/
 }
 
 void Scene1::readFile(std::string file)
 {
+	Scene::readFile(file);
+}
+
+void Scene1::splash(Vector3 pos)
+{
+	sGenerator->setSplasPos(pos);
+	sGenerator->setSplash(true);
 }
 
 // -------- ESCENA 2 -> torbellino
@@ -443,7 +595,7 @@ void Scene3::init()
 	/*
 	bola = new ChargedEntity(this, { 140, 200,0 }, 3, -0.1, trailGenerator);
 	chargedGenerator->addChargedEnitity(bola);
-*/
+	*/
 
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);

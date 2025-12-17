@@ -66,9 +66,11 @@ public:
 		: ParticleGenerator(s, model) {}
 
 	~WaterfallGenerator() override = default;
+	void setOrigin(Vector3 ori) { origin = ori; }
 
 private:
 	void generateParticle() override;
+	Vector3 origin = {0,0,0};
 };
 
 // ------- GENERADOR NIEBLA -------
@@ -129,10 +131,12 @@ public:
 	~RandomMassGenerator() override = default;
 
 	void setXpos(float x) { xPos = x; }
+	void setOrigin(Vector3 ori) { origin = ori; }
 
 private:
 	void generateParticle() override;
 
+	Vector3 origin{ 0,0,0 };
 	float xPos = 0;
 };
 

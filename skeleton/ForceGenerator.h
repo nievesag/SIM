@@ -66,7 +66,7 @@ class WindGenerator : public ForceGenerator
 {
 public:
 	WindGenerator(Vector3 pos, float areaR, Scene* scn, Vector3 _wind)
-		: ForceGenerator(pos, areaR, scn, true), wind(_wind)
+		: ForceGenerator(pos, areaR, scn, false), wind(_wind)
 	{
 		areaRadius = 200;
 	}

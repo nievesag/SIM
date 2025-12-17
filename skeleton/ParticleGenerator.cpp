@@ -22,12 +22,12 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 	Particle* modeloWaterfall = new Particle(
 		scn,							// escena (la misma que el generador)
 		Vector3(0, 0, 0),	// origen inicial
-		{0, 0, 0},	// velocidad inicial
-		5,								// tamaño
-		{0.4,0.7,1,1},	// color  
+		{-2, 0, 0},			// velocidad inicial
+		3,								// tamaño
+		{ 0.2,0.2,1,0.3f },	// color  
 		3,								// masa
 		0.99,							// damping
-		-1);						// tiempo de vida max
+		10);						// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Cascada"), modeloWaterfall));
 	DeregisterRenderItem(modeloWaterfall->getRenderItem());
 
@@ -36,8 +36,8 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		scn,								// escena (la misma que el generador)
 		Vector3(0, 0, 0),		// origen inicial
 		{ 0, 0, 0 },				// velocidad inicial
-		15,									// tamaño
-		{ 0.5,0.6,0.7,1 },	// color
+		2,									// tamaño
+		{ 0.5,0.6,0.7,0.3 },	// color
 		0.01,								// masa
 		0.99,								// damping
 		3);							// tiempo de vida max
@@ -136,7 +136,8 @@ void WaterfallGenerator::generateParticle()
 		std::uniform_int_distribution<> particlesToGenerateDistr(1, 10); 
 		std::normal_distribution<> velYDistr(5, 2.0);	// normal(media,desviacion tipica)
 		std::normal_distribution<> velZDistr(5, 2.0);
-		std::normal_distribution<> posXDistr(0, 10.0);
+
+		std::normal_distribution<> posZDistr(origin.z, 10.0);
 
 		int particlesToGenerate = particlesToGenerateDistr(generator); // particulas que se generaran en este tick
 
@@ -146,11 +147,11 @@ void WaterfallGenerator::generateParticle()
 			Vector3 newVel;	// velocidad con la que se genera
 
 			// org
-			newOrg.x = posXDistr(generator); // solo en la x, efecto cascada
-			newOrg.y = it->second->getPosition().y;
-			newOrg.z = it->second->getPosition().z;
+			newOrg.x = origin.x; // solo en la x, efecto cascada
+			newOrg.y = origin.y;
+			newOrg.z = posZDistr(generator);
 			// vel
-			newVel.x = 0;
+			newVel.x = it->second->getVelocity().x;
 			newVel.y = velZDistr(generator);
 			newVel.z = velYDistr(generator);
 
@@ -161,6 +162,8 @@ void WaterfallGenerator::generateParticle()
 			p->setVelocity(newVel);
 
 			p->setq(it->second->getq());
+
+			p->setMaxLifetime(it->second->getMaxLifetime());
 
 			generatedParticles.push_back(p);
 			scn->addEntity(p);
@@ -326,11 +329,11 @@ void RandomMassGenerator::generateParticle()
 		if (isActive)
 		{
 			std::uniform_int_distribution<> particlesToGenerateDistr(1, 3);
-			std::normal_distribution<> posYZDistr(0, 10);
+			std::normal_distribution<> posZDistr(origin.z, 10);
+			std::normal_distribution<> posYDistr(origin.y, 10);
 			std::uniform_real_distribution<> lifetimeDistr(1, 3);
 			std::uniform_real_distribution<> sizeDistr(2, 5);
 			std::uniform_real_distribution<> massDistr(2, 5);
-			//std::normal_distribution<> massDistr(20, 10);
 
 			int particlesToGenerate = particlesToGenerateDistr(generator);
 
@@ -341,9 +344,9 @@ void RandomMassGenerator::generateParticle()
 				float size = sizeDistr(generator);
 				float mass = massDistr(generator);
 
-				newOrg.x = xPos;
-				newOrg.y = posYZDistr(generator);
-				newOrg.z = posYZDistr(generator);
+				newOrg.x = origin.x;
+				newOrg.y = posYDistr(generator);
+				newOrg.z = posZDistr(generator);
 
 				newVel.x = 0;
 				newVel.y = 0;

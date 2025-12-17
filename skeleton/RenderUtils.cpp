@@ -123,8 +123,8 @@ void renderCallback()
 		renderShape(*obj->shape, objTransform ? *objTransform : physx::PxTransform(PxIdentity), obj->color);
 	}
 
-	// renderizar objetos transparentes
-	for (auto it = gRenderItems.begin(); it != gRenderItems.end(); ++it)
+	// renderizar objetos transparentes -> recorrer el vecto de atras en adelante para no tapar las particulas
+	for (std::vector<const RenderItem*>::reverse_iterator it = gRenderItems.rbegin(); it != gRenderItems.rend(); ++it)
 	{
 		const RenderItem* obj = (*it);
 		auto objTransform = obj->transform;
