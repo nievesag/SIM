@@ -210,21 +210,30 @@ Vector3 ExplosionForceGenerator::generateForce(Entity& e)
     {
         counter += t;
 
-        if (counter >= duration) 
+        if (counter >= duration)
         {
             toggleForce();
             counter = 0;
         }
 
         // distancia a la explosion
-        physx::PxVec3 distance = (e.getPosition() - areaPos);
-        double r = sqrt(pow(distance.x, 2) + pow(distance.y, 2) + pow(distance.z, 2));
+        float distance = (e.getPosition() - areaPos).magnitude();
+        Vector3 r = e.getPosition() - areaPos;
 
-        if (r < areaRadius && r > 0)
+        if (inArea(e) && distance > 0)
         {
-            force = (k / pow(r, 2)) * distance * exp(-counter / t);
+            force = (k / pow(distance, 2)) * r * exp(-counter / t);
+            //force *= (k / pow(distance, 2));
+            //force *= distance * pow(exp(1.0), -(counter / t));
+
+            //force = (k / pow(distance, 2)) * r * pow(M_E, -(counter / t));
+
             std::cout << force.x << " " << force.y << " " << force.z << std::endl;
         }
+    }
+    else
+    {
+        counter = 0;
     }
 
     return force;

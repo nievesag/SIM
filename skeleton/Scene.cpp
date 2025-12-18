@@ -73,6 +73,7 @@ void Scene::unload()
 		e->setVisible(false);
 		e->toggleVisibility();
 	}
+	gObjects.clear();
 }
 
 void Scene::addEntity(Entity* ent)
@@ -579,6 +580,9 @@ void Scene2::init()
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);
 
+	eGenerator = new FireworkGenerator(this, "Splash");
+	sys->registerGenerator(eGenerator);
+
 	pGen = new ProjectileGenerator(this);
 
 	// -- Force generators
@@ -586,7 +590,7 @@ void Scene2::init()
 	sys->registerForceGenerator(torbellino);
 	sysRb->registerForceGenerator(torbellino);*/
 
-	torbellino = new ExplosionForceGenerator({ 150,80,0 }, 60, this, true,2000, 0.0001);
+	torbellino = new ExplosionForceGenerator({ 150,80,0 }, 60, this, true,200, 0.1);
 	sys->registerForceGenerator(torbellino);
 	sysRb->registerForceGenerator(torbellino);
 
@@ -631,8 +635,10 @@ void Scene2::load()
 
 	magnetism1->setAreaVisibility(true);
 	magnetism2->setAreaVisibility(true);
+
 	magnetism1->toggleAreaVisibility();
 	magnetism2->toggleAreaVisibility();
+
 	magnetism1->toggleMagnetVisibility();
 	magnetism2->toggleMagnetVisibility();
 
@@ -775,6 +781,12 @@ void Scene2::splash(Vector3 pos)
 	sGenerator->setSplash(true);
 }
 
+void Scene2::explosion(Vector3 pos)
+{
+	eGenerator->setExplosionPos(pos);
+	eGenerator->setExplode(true);
+}
+
 // -------- ESCENA 3 -> splash
 void Scene3::init()
 {
@@ -813,6 +825,10 @@ void Scene3::splash(Vector3 pos)
 {
 	sGenerator->setSplasPos(pos);
 	sGenerator->setSplash(true);
+}
+
+void Scene3::explosion(Vector3 pos)
+{
 }
 
 // -------- ESCENA 4 -> muelles

@@ -22,7 +22,7 @@ ProjectileGenerator::ProjectileGenerator(Scene* s)
 		{ 1,0,0,1 },		// color  
 		simAtributes.first,				// masa
 		0.99,							// damping
-		-1);						// tiempo de vida max
+		2);						// tiempo de vida max
 	modeloCannon->setGravity(simAtributes.second);
 	modeloCannon->setAcc({ modeloCannon->getGravity() });
 
