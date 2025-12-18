@@ -630,8 +630,8 @@ void Scene2::load()
 {
 	Scene::load();
 
-	torbellino->setAreaVisibility(true);
-	torbellino->toggleAreaVisibility();
+	//torbellino->setAreaVisibility(true);
+	//torbellino->toggleAreaVisibility();
 
 	magnetism1->setAreaVisibility(true);
 	magnetism2->setAreaVisibility(true);
