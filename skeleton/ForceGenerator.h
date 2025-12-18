@@ -53,7 +53,7 @@ public:
 	GravityGenerator(Vector3 pos, float areaR, Scene* scn, Vector3 _gravity)
 		: ForceGenerator(pos, areaR, scn, false), gravity(_gravity)
 	{
-		areaRadius = 200;
+		
 	}
 
 	Vector3 generateForce(Entity& e) override;
@@ -81,10 +81,25 @@ private:
 class WhirlGenerator : public WindGenerator
 {
 public:
-	WhirlGenerator(Vector3 pos, float areaR, Scene* scn, Vector3 _wind)
+	WhirlGenerator(Vector3 pos, float areaR, Scene* scn, Vector3 _wind, float _k)
+		: WindGenerator(pos, areaR, scn, _wind), k(_k)
+	{
+		
+	}
+
+	Vector3 generateForce(Entity& e) override;
+
+private:
+	float k = 1;
+};
+
+class HorizontalWhirlGenerator : public WindGenerator
+{
+public:
+	HorizontalWhirlGenerator(Vector3 pos, float areaR, Scene* scn, Vector3 _wind)
 		: WindGenerator(pos, areaR, scn, _wind)
 	{
-		areaRadius = 200;
+		
 	}
 
 	Vector3 generateForce(Entity& e) override;

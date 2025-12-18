@@ -40,7 +40,7 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		{ 0.5,0.6,0.7,0.3 },	// color
 		0.01,								// masa
 		0.99,								// damping
-		3);							// tiempo de vida max
+		10);							// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Niebla"), modeloMist));
 	DeregisterRenderItem(modeloMist->getRenderItem());
 
@@ -185,9 +185,9 @@ void MistGenerator::generateParticle()
 	{
 		// distribuciones
 		std::uniform_int_distribution<> particlesToGenerateDistr(1, 2);
-		std::normal_distribution<> posXDistr(-10.0, 10.0);
-		std::normal_distribution<> posYDistr(0, 20.0);
-		std::normal_distribution<> posZDistr(-10.0, 10.0);
+		std::normal_distribution<> posXDistr(origin.x, 5.0);
+		std::normal_distribution<> posYDistr(origin.y, 10.0);
+		std::normal_distribution<> posZDistr(origin.z, 5.0);
 
 		int particlesToGenerate = particlesToGenerateDistr(generator); // particulas que se generaran en este tick
 

@@ -197,6 +197,9 @@ private:
 	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
 
 	SplashGenerator* sGenerator = nullptr;
+
+	float timer = 0;
+	float torbellinoTime = 10;
 };
 
 // 

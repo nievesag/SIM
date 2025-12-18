@@ -65,6 +65,15 @@ Vector3 WhirlGenerator::generateForce(Entity& e)
     return { 0,0,0 };
 }
 
+Vector3 HorizontalWhirlGenerator::generateForce(Entity& e)
+{
+    if (inArea(e) && isActive)
+    {
+        return k * Vector3(-(e.getPosition().z - areaPos.z), 50 - (e.getPosition().y - areaPos.y), e.getPosition().x - areaPos.x);
+    }
+    return { 0,0,0 };
+}
+
 // ------- GENERADOR MAGNETISMO -------
 MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, float B, PxPhysics* gPhysics, PxScene* pxScn)
     : ForceGenerator(pos, areaR, scn, false), b(B)
@@ -90,6 +99,8 @@ Vector3 MagnetismGenerator::generateForce(Entity& e)
     	double F = b * e.getq() / 4 * M_PI * std::pow((e.getPosition() - areaPose->p).magnitude(), 2);
 
         Vector3 action = (e.getPosition() - areaPose->p);
+
+        std::cout << "hola" << std::endl;
 
         return F * action;
     }
@@ -185,3 +196,4 @@ Vector3 BuoyancyForceGenerator::generateForce(Entity& e)
     
     return force;
 }
+

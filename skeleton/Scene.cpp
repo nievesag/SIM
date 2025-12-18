@@ -560,7 +560,8 @@ void Scene2::init()
 	pipe = new Pipe(this, { 40,240,0 });
 	addEntity(pipe);
 
-	ParticleGenerator* wGenerator = new WaterfallGenerator(this, "Cascada");
+	ParticleGenerator* wGenerator = new MistGenerator(this, "Niebla");
+	static_cast<MistGenerator*>(wGenerator)->setOrigin({ 150, 80, 0 });
 	sys->registerGenerator(wGenerator);
 
 	trailGenerator = new TrailGenerator(this, "Rastro");
@@ -575,12 +576,13 @@ void Scene2::init()
 	pGen = new ProjectileGenerator(this);
 
 	// -- Force generators
-	torbellino = new WhirlGenerator({ 0,0,0 }, 100, this, { 0, -50, 50 });
+	torbellino = new WhirlGenerator({ 150,80,0 }, 60, this, { 0, -10, 10 }, 0.03);
 	sys->registerForceGenerator(torbellino);
+	sysRb->registerForceGenerator(torbellino);
 
 	pSystems.push_back(sys);
 
-	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.01, gPhysics, gScene);
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.02, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
@@ -600,6 +602,14 @@ void Scene2::step(double t)
 	{
 		fatherPart = true;
 	}
+
+	if (timer >= torbellinoTime)
+	{
+		timer = 0;
+		torbellino->toggleForce();
+	}
+
+	timer += t;
 }
 
 void Scene2::load()
@@ -644,8 +654,8 @@ void Scene2::unload()
 
 	//DeregisterRenderItem(pipe->getRenderItem());
 
-	viento->setAreaVisibility(false);
-	viento->toggleAreaVisibility();
+	//viento->setAreaVisibility(false);
+	//viento->toggleAreaVisibility();
 }
 
 void Scene2::keyPressed(unsigned char key, const physx::PxTransform& camera)
@@ -723,7 +733,7 @@ void Scene2::newToy(Vector3 pos)
 
 	// crea toy
 	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1f, trailGenerator, gPhysics, gScene);
-	toy->setLinearVelocity({ 0,-1,0 });
+	toy->setLinearVelocity({ 0,-30,0 });
 	ChargedRbGenerator* chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
 	sysRb->registerGenerator(chargedGenerator);
 	chargedGenerator->addEntity(toy);

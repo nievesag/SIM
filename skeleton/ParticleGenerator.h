@@ -84,9 +84,11 @@ public:
 	}
 
 	~MistGenerator() override = default;
+	void setOrigin(Vector3 ori) { origin = ori; }
 
 private:
 	void generateParticle() override;
+	Vector3 origin = { 0,0,0 };
 };
 
 // ------- GENERADOR FUEGOS -------
