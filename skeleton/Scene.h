@@ -59,6 +59,8 @@ public:
 	void endLevel() { _endLevel = true; }
 	bool getEndLevel() { return _endLevel; }
 
+	virtual void explosion(Vector3 pos) {}
+
 protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
 	std::vector<System*> pSystems; // sistemas de particulas
@@ -94,6 +96,8 @@ public:
 
 	void readFile(std::string file) override;
 	void splash(Vector3 pos) override;
+
+	void explosion(Vector3 pos) override {}
 
 private:
 	ParticleSystem* sys = nullptr; // sistema de particulas
@@ -132,6 +136,8 @@ public:
 
 	void readFile(std::string file) override;
 	void splash(Vector3 pos) override;
+
+	void explosion(Vector3 pos) override {}
 
 private:
 	ParticleSystem* sys = nullptr; // sistema de particulas
@@ -175,6 +181,8 @@ public:
 	void readFile(std::string file) override;
 	void splash(Vector3 pos) override;
 
+	void explosion(Vector3 pos) override;
+
 private:
 	ParticleSystem* sys = nullptr; // sistema de particulas
 	RigidBodySystem* sysRb = nullptr;
@@ -198,6 +206,7 @@ private:
 	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
 
 	SplashGenerator* sGenerator = nullptr;
+	FireworkGenerator* eGenerator = nullptr;
 
 	float timer = 0;
 	float torbellinoTime = 10;
@@ -237,6 +246,8 @@ public:
 	void splash(Vector3 pos) override;
 
 	void readFile(std::string file) override {}
+
+	void explosion(Vector3 pos) override;
 
 private:
 	ForceGenerator* fuegos = nullptr;

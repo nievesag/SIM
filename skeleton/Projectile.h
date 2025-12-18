@@ -10,4 +10,6 @@ public:
 
 private:
 	virtual void step(double t) override;
+
+	void manageLife(double t) override;
 };

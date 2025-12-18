@@ -100,7 +100,12 @@ public:
 
 	~FireworkGenerator() override = default;
 
+	void setExplosionPos(Vector3 s) { explosionPos = s; }
+	void setExplode(bool e) { explode = e; }
+
 private:
+	bool explode = false;
+	Vector3 explosionPos = { 0,0,0 };
 	void generateParticle() override;
 };
 

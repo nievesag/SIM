@@ -66,5 +66,5 @@ protected:
 
 	virtual void integrate(double t);
 
-	void manageLife(double t);
+	virtual void manageLife(double t);
 };

@@ -10,7 +10,10 @@ class Entity
 {
 public:
 	Entity(Scene* scn);
-	virtual ~Entity()  { DeregisterRenderItem(renderItem); }
+	virtual ~Entity()
+	{
+		DeregisterRenderItem(renderItem);
+	}
 
 	virtual void step(double t); // update
 

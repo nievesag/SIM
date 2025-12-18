@@ -181,7 +181,7 @@ private:
 	float t; // constante de tiempo de la explosion
 	// a partir de 4t la explosion casi se ha desvanecido
 
-	float duration = 1000;
+	float duration = 100;
 
 	float counter = 0;
 };

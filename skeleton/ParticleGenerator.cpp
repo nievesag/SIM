@@ -229,36 +229,41 @@ void FireworkGenerator::generateParticle()
 
 	if (it != particles.end()) // si existe ese modelo...
 	{
-		// distribuciones
-		std::uniform_int_distribution<> particlesToGenerateDistr(1, 10);
-		std::normal_distribution<> velXDistr(0, 10.0);
-		std::normal_distribution<> velYDistr(0, 10.0);
-		std::normal_distribution<> velZDistr(0, 10.0);
-
-		int particlesToGenerate = particlesToGenerateDistr(generator); // particulas que se generaran en este tick
-
-		for (int i = 0; i < particlesToGenerate; i++)
+		if (explode)
 		{
-			Vector3 newOrg;	// posicion en la que se genera
-			Vector3 newVel;	// velocidad con la que se genera
+			// distribuciones
+			std::uniform_int_distribution<> particlesToGenerateDistr(20, 30);
+			std::normal_distribution<> velXDistr(0, 10.0);
+			std::normal_distribution<> velYDistr(0, 10.0);
+			std::normal_distribution<> velZDistr(0, 10.0);
 
-			// org
-			newOrg.x = 0;
-			newOrg.y = 0;
-			newOrg.z = 0;
-			// vel
-			newVel.x = velXDistr(generator);
-			newVel.y = velYDistr(generator);
-			newVel.z = 0; // 2D
+			int particlesToGenerate = particlesToGenerateDistr(generator); // particulas que se generaran en este tick
 
-			// creamos la nueva particula
-			Particle* p = new Particle(*it->second);
+			for (int i = 0; i < particlesToGenerate; i++)
+			{
+				Vector3 newOrg;	// posicion en la que se genera
+				Vector3 newVel;	// velocidad con la que se genera
 
-			p->setPosition(newOrg);
-			p->setVelocity(newVel);
+				// org
+				newOrg.x = explosionPos.x;
+				newOrg.y = explosionPos.y;
+				newOrg.z = explosionPos.z;
+				// vel
+				newVel.x = velXDistr(generator);
+				newVel.y = velYDistr(generator);
+				newVel.z = velXDistr(generator);
 
-			generatedParticles.push_back(p);
-			scn->addEntity(p);
+				// creamos la nueva particula
+				Particle* p = new Particle(*it->second);
+
+				p->setPosition(newOrg);
+				//p->setVelocity(newVel);
+
+				generatedParticles.push_back(p);
+				scn->addEntity(p);
+			}
+
+			explode = false;
 		}
 	}
 	else
