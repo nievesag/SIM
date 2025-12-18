@@ -8,6 +8,8 @@ Necesitaréis además descomprimir el archivo que se indica a continuación en l
 Carpetas bin y common https://ucomplutense-my.sharepoint.com/:f:/g/personal/liagar05_ucm_es/ElNxHPmZVj9Ni9-8FKTKp7cBJHAarnL3vvEvG50z0QMrzg
 
 ---------------
+Prácticas, Proyecto Intermedio y Proyecto Final. Curso 2025-2026. Nieves Alonso Gilsanz.
+
 ## Descripción:
 El proyecto se basa en los principios físicos básicos de los imanes (atracción y repelencia de elementos con carga) para hacer un pequeño juego en el que se desplazará una bola cargada a lo largo de un mapa.
 
