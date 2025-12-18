@@ -181,7 +181,7 @@ public:
 	void readFile(std::string file) override;
 	void splash(Vector3 pos) override;
 
-	void explosion(Vector3 pos) override;
+	void explosion(Vector3 pos) override {};
 
 private:
 	ParticleSystem* sys = nullptr; // sistema de particulas
@@ -214,49 +214,34 @@ private:
 	float torbellinoTime = 10;
 };
 
-// 
+// FINAL
 class Scene3 : public Scene
 {
 public:
 	Scene3() = default;
+	Scene3(PxPhysics* gphys, PxScene* gscn) : Scene(gphys, gscn) {}
 	void init() override;
 	void step(double t) override;
-	void load() override
-	{
-		Scene::load();
-
-		if (fuegos != nullptr)
-		{
-			fuegos->setAreaVisibility(true);
-			fuegos->toggleAreaVisibility();
-		}
-	}
-	void unload() override
-	{
-		Scene::unload();
-
-		if (fuegos != nullptr)
-		{
-			fuegos->setAreaVisibility(false);
-			fuegos->toggleAreaVisibility();
-		}
-	}
+	void load() override;
+	void unload() override;
 	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
 	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
 
 	void newToy(Vector3 pos) override {}
-	void splash(Vector3 pos) override;
 
 	void readFile(std::string file) override {}
+	void splash(Vector3 pos) override {}
 
 	void explosion(Vector3 pos) override;
 
 private:
-	ForceGenerator* fuegos = nullptr;
+	ParticleSystem* sysB = nullptr; // sistema de particulas
 
-	ChargedEntity* bola = nullptr;
+	ForceGenerator* firework = nullptr;
 
-	SplashGenerator* sGenerator = nullptr;
+	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
+
+	FireworkGenerator* eGenerator = nullptr;
 };
 
 // muelles

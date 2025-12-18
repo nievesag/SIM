@@ -6,6 +6,7 @@
 #include "RenderUtils.hpp"
 
 #include "Particle.h"
+//#include "ParticleSystem.h"
 class Magnet;
 using namespace physx;
 
@@ -37,7 +38,6 @@ public:
 	{
 		areaPos = pos;
 		areaPose = new PxTransform(pos);
-		area = new RenderItem(CreateShape(PxSphereGeometry(areaRadius)), areaPose, { 1,1,1,0.18f });
 	}
 
 protected:
@@ -190,6 +190,4 @@ private:
 	// a partir de 4t la explosion casi se ha desvanecido
 
 	float duration = 100;
-
-	float counter = 0;
 };

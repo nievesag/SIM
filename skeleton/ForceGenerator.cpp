@@ -94,7 +94,6 @@ Vector3 MagnetismGenerator::generateForce(Entity& e)
     {
         // F = (u q1 * q2) / (4 pi r^2)
 
-        // falta permeabilidad del medio!!!!!!!!!!!
         double u = 0.7; // 4 * pi * 10^-7
     	double F = b * e.getq() / 4 * M_PI * std::pow((e.getPosition() - areaPose->p).magnitude(), 2);
 
@@ -216,12 +215,11 @@ Vector3 ExplosionForceGenerator::generateForce(Entity& e)
 
     if (isActive)
     {
-        counter += t;
+        float lf = static_cast<Particle&>(e).getLifetime();
 
-        if (counter >= duration)
+        if (lf >= duration)
         {
             toggleForce();
-            counter = 0;
         }
 
         // distancia a la explosion
@@ -230,18 +228,8 @@ Vector3 ExplosionForceGenerator::generateForce(Entity& e)
 
         if (inArea(e))
         {
-            force = (k / pow(distance, 2)) * r * (exp(-counter / t));
-            //force *= (k / pow(distance, 2));
-            //force *= distance * pow(exp(1.0), -(counter / t));
-
-            //force = (k / pow(distance, 2)) * r * pow(M_E, -(counter / t));
-
-            std::cout << force.x << " " << force.y << " " << force.z << std::endl;
+            force = (k / pow(distance, 2)) * r * (exp(-lf / t));
         }
-    }
-    else
-    {
-        counter = 0;
     }
 
     return force;

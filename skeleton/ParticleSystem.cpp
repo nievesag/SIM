@@ -13,6 +13,8 @@ ParticleSystem::~ParticleSystem()
 
 void ParticleSystem::step(double t)
 {
+	counter += t;
+
 	for (auto g : particleGenerators)
 	{
 		for (auto p : g->getParticles())

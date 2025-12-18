@@ -49,4 +49,6 @@ protected:
 	// el update de la particula sera fuerzaParticula = fuerza que recibe en ese instante del update
 
 	void applyForces(std::vector<Particle*>& generatedParticles);
+
+	float counter = 0;
 };

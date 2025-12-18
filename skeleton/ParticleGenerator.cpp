@@ -51,7 +51,7 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		{ 0, 0, 0 },			// velocidad inicial
 		5,								// tamaño
 		{ 0,1,0,1 },		// color
-		6,								// masa
+		1,								// masa
 		0.99,							// damping
 		-1);						// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Fuegos"), modeloFirework));

@@ -591,7 +591,7 @@ void Scene2::init()
 	sys->registerForceGenerator(torbellino);
 	sysRb->registerForceGenerator(torbellino);
 
-	firework = new ExplosionForceGenerator({ 150,80,0 }, 60, this, true,200, 0.1);
+	firework = new ExplosionForceGenerator({ 150,80,0 }, 60, this, true,40000, 0.1);
 	sysB->registerForceGenerator(firework);
 
 	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.02, gPhysics, gScene);
@@ -640,8 +640,6 @@ void Scene2::load()
 
 	magnetism1->toggleMagnetVisibility();
 	magnetism2->toggleMagnetVisibility();
-
-	//RegisterRenderItem(pipe->getRenderItem());
 }
 
 void Scene2::unload()
@@ -669,9 +667,6 @@ void Scene2::unload()
 	map.clear();
 
 	DeregisterRenderItem(pipe->getRenderItem());
-
-	//viento->setAreaVisibility(false);
-	//viento->toggleAreaVisibility();
 }
 
 void Scene2::keyPressed(unsigned char key, const physx::PxTransform& camera)
@@ -780,37 +775,23 @@ void Scene2::splash(Vector3 pos)
 	sGenerator->setSplash(true);
 }
 
-void Scene2::explosion(Vector3 pos)
-{
-	firework->setAreaPos(pos);
-	firework->setActive(true);
-	eGenerator->setExplosionPos(pos);
-	eGenerator->setExplode(true);
-}
-
-// -------- ESCENA 3 -> splash
+// -------- ESCENA 3
 void Scene3::init()
 {
 	Scene::init();
 
-	ParticleSystem* sys = new ParticleSystem(this);
+	// ----- System
+	sysB = new ParticleSystem(this);
 
-	// -- Particle generators
-	TrailGenerator* trailGenerator = new TrailGenerator(this, "Rastro");
-	sys->registerGenerator(trailGenerator);
+	eGenerator = new FireworkGenerator(this, "Fuegos");
+	sysB->registerGenerator(eGenerator);
 
-	ChargedGenerator* chargedGenerator = new ChargedGenerator(this, "Carga");
-	sys->registerGenerator(chargedGenerator);
+	pGen = new ProjectileGenerator(this);
 
-	/*
-	bola = new ChargedEntity(this, { 140, 200,0 }, 3, -0.1, trailGenerator);
-	chargedGenerator->addChargedEnitity(bola);
-	*/
+	firework = new ExplosionForceGenerator({ 150,80,0 }, 60, this, false, 40000, 0.1);
+	sysB->registerForceGenerator(firework);
 
-	sGenerator = new SplashGenerator(this, "Splash");
-	sys->registerGenerator(sGenerator);
-
-	pSystems.push_back(sys);
+	pSystems.push_back(sysB);
 }
 
 void Scene3::step(double t)
@@ -818,18 +799,39 @@ void Scene3::step(double t)
 	Scene::step(t);
 }
 
-void Scene3::keyPressed(unsigned char key, const physx::PxTransform& camera)
+void Scene3::load()
 {
+	Scene::load();
 }
 
-void Scene3::splash(Vector3 pos)
+void Scene3::unload()
 {
-	sGenerator->setSplasPos(pos);
-	sGenerator->setSplash(true);
+	Scene::unload();
+}
+
+void Scene3::keyPressed(unsigned char key, const physx::PxTransform& camera)
+{
+	switch (toupper(key))
+	{
+	case 'I':
+	{
+		if (pGen != nullptr)
+		{
+			pGen->shoot("Cannon");
+		}
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void Scene3::explosion(Vector3 pos)
 {
+	firework->setAreaPos(pos);
+	firework->setActive(true);
+	eGenerator->setExplosionPos(pos);
+	eGenerator->setExplode(true);
 }
 
 // -------- ESCENA 4 -> muelles
