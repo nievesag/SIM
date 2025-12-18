@@ -162,3 +162,20 @@ protected:
 	Vector3 liquidSize;
 	RenderItem* fluid = nullptr;
 };
+
+class ExplosionForceGenerator : public ForceGenerator
+{
+public:
+	ExplosionForceGenerator(Vector3 pos, float areaR, Scene* s, bool visibleArea, float _k, float _t);
+
+	Vector3 generateForce(Entity& e) override;
+
+private:
+	float k; // intensidad de la explosion
+	float t; // constante de tiempo de la explosion
+	// a partir de 4t la explosion casi se ha desvanecido
+
+	float duration = 1000;
+
+	float counter = 0;
+};

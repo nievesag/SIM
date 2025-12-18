@@ -576,7 +576,11 @@ void Scene2::init()
 	pGen = new ProjectileGenerator(this);
 
 	// -- Force generators
-	torbellino = new WhirlGenerator({ 150,80,0 }, 60, this, { 0, -10, 10 }, 0.03);
+	/*torbellino = new WhirlGenerator({ 150,80,0 }, 60, this, { 0, -10, 10 }, 0.03);
+	sys->registerForceGenerator(torbellino);
+	sysRb->registerForceGenerator(torbellino);*/
+
+	torbellino = new ExplosionForceGenerator({ 150,80,0 }, 60, this, true,2000, 0.0001);
 	sys->registerForceGenerator(torbellino);
 	sysRb->registerForceGenerator(torbellino);
 
@@ -605,8 +609,8 @@ void Scene2::step(double t)
 
 	if (timer >= torbellinoTime)
 	{
-		timer = 0;
-		torbellino->toggleForce();
+		//timer = 0;
+		//torbellino->toggleForce();
 	}
 
 	timer += t;

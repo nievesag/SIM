@@ -100,8 +100,6 @@ Vector3 MagnetismGenerator::generateForce(Entity& e)
 
         Vector3 action = (e.getPosition() - areaPose->p);
 
-        std::cout << "hola" << std::endl;
-
         return F * action;
     }
     return { 0,0,0 };
@@ -197,3 +195,37 @@ Vector3 BuoyancyForceGenerator::generateForce(Entity& e)
     return force;
 }
 
+// ------- GENERADOR EXPLOSION -------
+ExplosionForceGenerator::ExplosionForceGenerator(Vector3 pos, float areaR, Scene* s, bool visibleArea, float _k, float _t)
+	: k(_k), t(_t), ForceGenerator(pos, areaR, s, visibleArea)
+{
+    isActive = false;
+}
+
+Vector3 ExplosionForceGenerator::generateForce(Entity& e)
+{
+    Vector3 force = { 0,0,0 };
+
+    if (isActive)
+    {
+        counter += t;
+
+        if (counter >= duration) 
+        {
+            toggleForce();
+            counter = 0;
+        }
+
+        // distancia a la explosion
+        physx::PxVec3 distance = (e.getPosition() - areaPos);
+        double r = sqrt(pow(distance.x, 2) + pow(distance.y, 2) + pow(distance.z, 2));
+
+        if (r < areaRadius && r > 0)
+        {
+            force = (k / pow(r, 2)) * distance * exp(-counter / t);
+            std::cout << force.x << " " << force.y << " " << force.z << std::endl;
+        }
+    }
+
+    return force;
+}
