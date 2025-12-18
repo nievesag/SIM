@@ -361,8 +361,6 @@ void Scene1::init()
 	static_cast<WaterfallGenerator*>(wGenerator)->setOrigin({ -105, -150, 0 });
 	sysB->registerGenerator(wGenerator);
 
-	pGen = new ProjectileGenerator(this);
-
 	// -- Force generators
 	viento = new WindGenerator({ 220, 160, 0 }, 26, this, { -10, 0, 0 });
 	sysRb->registerForceGenerator(viento);
@@ -472,15 +470,6 @@ void Scene1::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	case 'N':
 	{
 		pipe->eject();
-		break;
-	}
-	case 'I':
-	{
-		std::cout << "disparo desde la camara" << std::endl;
-		if (pGen != nullptr)
-		{
-			pGen->shoot("Cannon");
-		}
 		break;
 	}
 	case 'R':

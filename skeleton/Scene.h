@@ -159,8 +159,6 @@ private:
 
 	ForceGenerator* viento = nullptr;
 
-	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
-
 	SplashGenerator* sGenerator = nullptr;
 };
 

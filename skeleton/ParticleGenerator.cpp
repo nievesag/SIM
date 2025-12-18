@@ -40,7 +40,7 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		{ 0.5,0.6,0.7,0.3 },	// color
 		0.01,								// masa
 		0.99,								// damping
-		10);							// tiempo de vida max
+		1.5);							// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Niebla"), modeloMist));
 	DeregisterRenderItem(modeloMist->getRenderItem());
 
@@ -236,9 +236,14 @@ void FireworkGenerator::generateParticle()
 			std::normal_distribution<> posXDistr(explosionPos.x, 10.0);
 			std::normal_distribution<> posYDistr(explosionPos.y, 10.0);
 			std::normal_distribution<> posZDistr(explosionPos.z, 10.0);
-			std::normal_distribution<> velXDistr(0, 10.0);
-			std::normal_distribution<> velYDistr(0, 10.0);
-			std::normal_distribution<> velZDistr(0, 10.0);
+
+			// colores
+			std::normal_distribution<> rDistr(0.5f, 0.4f);
+			std::normal_distribution<> gDistr(0.5f, 0.4f);
+			std::normal_distribution<> bDistr(0.5f, 0.4f);
+
+			// masa
+			std::normal_distribution<> massDistr(1.0f, 2.0f);
 
 			int particlesToGenerate = particlesToGenerateDistr(generator); // particulas que se generaran en este tick
 
@@ -251,16 +256,19 @@ void FireworkGenerator::generateParticle()
 				newOrg.x = posXDistr(generator);
 				newOrg.y = posYDistr(generator);
 				newOrg.z = posZDistr(generator);
-				// vel
-				newVel.x = velXDistr(generator);
-				newVel.y = velYDistr(generator);
-				newVel.z = velXDistr(generator);
+
+				// color
+				float r = rDistr(generator);
+				float g = gDistr(generator);
+				float b = bDistr(generator);
+				Vector4 color = { r, g, b, 1.0 };
 
 				// creamos la nueva particula
 				Particle* p = new Particle(*it->second);
 
+				p->setColor(color);
 				p->setPosition(newOrg);
-				//p->setVelocity(newVel);
+				p->setMass(massDistr(generator));
 
 				generatedParticles.push_back(p);
 				scn->addEntity(p);

@@ -6,13 +6,13 @@
 SceneManager::SceneManager(PxPhysics* px_physics, PxScene* px_scene) :
 	gPhysics(px_physics), gScene(px_scene)
 {
-	Scene0* s = new Scene0(gPhysics, gScene);
+	Scene3* s = new Scene3(gPhysics, gScene);
 	addScene(s);
 	s->init(); // escena inicial
 
 	addScene(new Scene1(gPhysics, gScene));
-	addScene(new Scene2(gPhysics, gScene));
-	addScene(new Scene3(gPhysics, gScene));
+	//addScene(new Scene2(gPhysics, gScene));
+	//addScene(new Scene3(gPhysics, gScene));
 }
 
 SceneManager::~SceneManager()
