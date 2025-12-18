@@ -620,7 +620,10 @@ void Scene2::init()
 	sys->registerForceGenerator(torbellino);
 	sysRb->registerForceGenerator(torbellino);
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 	int radius = 70;
 	magnetism1 = new MagnetismGenerator({ 92,38,0 }, radius, this, -1.5, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
