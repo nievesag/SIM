@@ -163,11 +163,13 @@ void Scene0::init()
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);
 
-	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.2, gPhysics, gScene);
+	int radius = 80;
+
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, radius, this, -1, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
-	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 1, gPhysics, gScene);
+	magnetism2 = new MagnetismGenerator({ 95,140,0 }, radius, this, 1, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
@@ -287,6 +289,7 @@ void Scene0::newToy(Vector3 pos)
 	// crea toy
 	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1f, trailGenerator, gPhysics, gScene);
 	toy->setLinearVelocity({ 0,-50,0 });
+	toy->setMass(5);
 	ChargedRbGenerator* chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
 	sysRb->registerGenerator(chargedGenerator);
 	chargedGenerator->addEntity(toy);
@@ -499,18 +502,18 @@ void Scene1::newToy(Vector3 pos)
 	sysRb->registerGenerator(chargedGenerator);
 	chargedGenerator->addEntity(toy);
 
-	RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { pos.x,pos.y + 15,pos.z },
-		{ 0,0,0 }, 3, { 3,3,3 }, { 0, 0.90f, 0.90f ,1 }, 0.5, 0.8,
-		-1, SPHERE, -1, { 0, 0, 0 }, { 1, 1, 1 }, BODYPARTS);
-	pie->setColor({ 1,0,0,1 });
-	chargedGenerator->addEntity(pie);
+	//RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { pos.x,pos.y + 15,pos.z },
+	//	{ 0,0,0 }, 3, { 3,3,3 }, { 0, 0.90f, 0.90f ,1 }, 0.5, 0.8,
+	//	-1, SPHERE, -1, { 0, 0, 0 }, { 1, 1, 1 }, BODYPARTS);
+	//pie->setColor({ 1,0,0,1 });
+	//chargedGenerator->addEntity(pie);
 
 	// muelles
-	SpringForceGenerator* spring1 = new SpringForceGenerator(100, 0.1, pie);
-	sysRb->registerForceGenerator(spring1);
+	//SpringForceGenerator* spring1 = new SpringForceGenerator(100, 0.1, pie);
+	//sysRb->registerForceGenerator(spring1);
 
-	SpringForceGenerator* spring2 = new SpringForceGenerator(100, 0.1, toy);
-	sysRb->registerForceGenerator(spring2);
+	//SpringForceGenerator* spring2 = new SpringForceGenerator(100, 0.1, toy);
+	//sysRb->registerForceGenerator(spring2);
 }
 
 void Scene1::readFile(std::string file)
