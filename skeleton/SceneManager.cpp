@@ -6,11 +6,12 @@
 SceneManager::SceneManager(PxPhysics* px_physics, PxScene* px_scene) :
 	gPhysics(px_physics), gScene(px_scene)
 {
-	Scene1* s = new Scene1(gPhysics, gScene);
+	Scene2* s = new Scene2(gPhysics, gScene);
 	addScene(s);
 	s->init(); // escena inicial
 
-	//addScene(new Scene1());
+	addScene(new Scene1(gPhysics, gScene));
+
 	//addScene(new Scene2());
 	//addScene(new Scene3());
 	//addScene(new Scene4(gPhysics, gScene));
@@ -55,27 +56,23 @@ void SceneManager::changeScene(size_t scnId)
 void SceneManager::step(double t)
 {
 	vScenes[currentScene]->step(t);
+
+	if (vScenes[currentScene]->getEndLevel())
+	{
+		changeScene(currentScene+1);
+	}
 }
 
 void SceneManager::keyPressed(unsigned char key, const physx::PxTransform& camera)
 {
 	PX_UNUSED(camera);
 
-	/*
-	if (key >= '0' && key <= '9')
-	{
-		//changeScene(key - '0');
-	}
-	else
-	{
-	*/
-		for (auto e : vScenes) e->keyPressed(key, camera);
-	//}
+	vScenes[currentScene]->keyPressed(key, camera);
 }
 
 void SceneManager::specialKeyPressed(int key, const physx::PxTransform& camera)
 {
 	PX_UNUSED(camera);
 
-	for (auto e : vScenes) e->specialKeyPressed(key, camera);
+	vScenes[currentScene]->specialKeyPressed(key, camera);
 }

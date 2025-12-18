@@ -28,4 +28,3 @@ public:
 	void keyPressed(unsigned char key, const physx::PxTransform& camera); // input
 	void specialKeyPressed(int key, const physx::PxTransform& camera); // input
 };
-

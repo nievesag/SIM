@@ -57,6 +57,7 @@ public:
 	PxScene* getPxScene() const { return gScene; }
 
 	void endLevel() { _endLevel = true; }
+	bool getEndLevel() { return _endLevel; }
 
 protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
@@ -110,10 +111,6 @@ private:
 
 	Pipe* pipe = nullptr; // tuberia que suelta la particula
 
-	ForceGenerator* viento = nullptr;
-	ForceGenerator* torbellino = nullptr;
-	ParticleGenerator* randomMass = nullptr;
-
 	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
 
 	SplashGenerator* sGenerator = nullptr;
@@ -154,8 +151,6 @@ private:
 	Pipe* pipe = nullptr; // tuberia que suelta la particula
 
 	ForceGenerator* viento = nullptr;
-	//ForceGenerator* torbellino = nullptr;
-	//ParticleGenerator* randomMass = nullptr;
 
 	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
 
@@ -166,32 +161,42 @@ class Scene2 : public Scene
 {
 public:
 	Scene2() = default;
+	Scene2(PxPhysics* gphys, PxScene* gscn) : Scene(gphys, gscn) {}
 	void init() override;
 	void step(double t) override;
-	void load() override
-	{ 
-		Scene::load();
-
-		torbellino->setAreaVisibility(true);
-		torbellino->toggleAreaVisibility();
-	}
-	void unload() override
-	{
-		Scene::unload();
-
-		torbellino->setAreaVisibility(false);
-		torbellino->toggleAreaVisibility();
-	}
+	void load() override;
+	void unload() override;
 	void keyPressed(unsigned char key, const physx::PxTransform& camera) override;
-	void specialKeyPressed(int key, const physx::PxTransform& camera) override {}
+	void specialKeyPressed(int key, const physx::PxTransform& camera) override;
 
-	void newToy(Vector3 pos) override {}
-	void splash(Vector3 pos) override {}
+	void newToy(Vector3 pos) override;
 
-	void readFile(std::string file) override {}
+	void readFile(std::string file) override;
+	void splash(Vector3 pos) override;
 
 private:
+	ParticleSystem* sys = nullptr; // sistema de particulas
+	RigidBodySystem* sysRb = nullptr;
+
+	std::vector<MagnetismGenerator*> magnets; // vector de todos los imanes
+	MagnetismGenerator* magnetism1 = nullptr; // iman 1
+	MagnetismGenerator* magnetism2 = nullptr; // iman 2
+
+	MagnetismGenerator* selectedMagnet = nullptr;	// iman que tienes seleccionado
+
+	ChargedRbGenerator* chargedGenerator = nullptr;	// generador de particulas con carga
+	TrailGenerator* trailGenerator = nullptr;		// rastro que deja la particula
+	bool fatherPart = false;
+
+	Pipe* pipe = nullptr; // tuberia que suelta la particula
+
+	ForceGenerator* viento = nullptr;
 	ForceGenerator* torbellino = nullptr;
+	ParticleGenerator* randomMass = nullptr;
+
+	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
+
+	SplashGenerator* sGenerator = nullptr;
 };
 
 // 

@@ -141,7 +141,7 @@ void RigidBodyDynamic::setGroup(physx::PxU32 g, bool autoexcluding)
 
 void RigidBodyDynamic::collisionCallback()
 {
-	scene->
+	scene->endLevel();
 }
 
 void RigidBodyDynamic::manageLife(double t)
