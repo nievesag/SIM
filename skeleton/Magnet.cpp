@@ -13,6 +13,13 @@ Magnet::Magnet(Scene* scn, float size, Vector3 pos, Vector4 col, physx::PxPhysic
 	magneticField->setRenderItem(new RenderItem(CreateShape(physx::PxSphereGeometry(magneticFieldR)), p, { 1,1,1,0.18f }));
 }
 
+Magnet::~Magnet()
+{
+	RigidBodyDynamic::~RigidBodyDynamic();
+
+	DeregisterRenderItem(magneticField->getRenderItem());
+}
+
 void Magnet::updateMagneticField(Vector3 pos)
 {
 	magneticField->setPosition(pos);
