@@ -350,11 +350,11 @@ void Scene1::init()
 	sysB->registerGenerator(wGenerator);
 
 	// -- Force generators
-	viento = new WindGenerator({ 220, 160, 0 }, 26, this, { -10, 0, 0 });
+	viento = new WindGenerator({ 220, 160, 0 }, 26, this, { -50, 0, 0 });
 	sysRb->registerForceGenerator(viento);
 	sys->registerForceGenerator(viento);
 
-	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.01, gPhysics, gScene);
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.4, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
