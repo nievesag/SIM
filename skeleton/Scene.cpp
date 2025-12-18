@@ -375,8 +375,8 @@ void Scene1::init()
 	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
-	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({ 160,140,0 }, 50, { 60,0,5 }, this, 20, 10, 3);
-	sysRb->registerForceGenerator(agua);
+	water = new BuoyancyForceGenerator({ 160,140,0 }, 50, { 60,0,5 }, this, 20, 10, 3);
+	sysRb->registerForceGenerator(water);
 
 	pSystems.push_back(sys);
 	pSystems.push_back(sysB);
@@ -407,6 +407,8 @@ void Scene1::load()
 	magnetism1->toggleMagnetVisibility();
 	magnetism2->toggleMagnetVisibility();
 
+	water->setAreaVisibility(true);
+	water->toggleAreaVisibility();
 	//RegisterRenderItem(pipe->getRenderItem());
 }
 
@@ -423,6 +425,9 @@ void Scene1::unload()
 	magnetism1->toggleMagnetVisibility();
 	magnetism2->toggleMagnetVisibility();
 
+	water->setAreaVisibility(false);
+	water->toggleAreaVisibility();
+
 	chargedGenerator->unloadGenerator();
 
 	for (auto i : map)
@@ -433,7 +438,7 @@ void Scene1::unload()
 	}
 	map.clear();
 
-	//DeregisterRenderItem(pipe->getRenderItem());
+	DeregisterRenderItem(pipe->getRenderItem());
 
 	viento->setAreaVisibility(false);
 	viento->toggleAreaVisibility();
@@ -653,10 +658,11 @@ void Scene2::unload()
 		i->setVisible(false);
 		i->toggleVisibility();
 		gScene->removeActor(*i->getActor());
+		DeregisterRenderItem(i->getRenderItem());
 	}
 	map.clear();
 
-	//DeregisterRenderItem(pipe->getRenderItem());
+	DeregisterRenderItem(pipe->getRenderItem());
 
 	//viento->setAreaVisibility(false);
 	//viento->toggleAreaVisibility();

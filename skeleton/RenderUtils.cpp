@@ -107,6 +107,7 @@ void renderCallback()
 	for (auto it = gRenderItems.begin(); it != gRenderItems.end(); ++it)
 	{
 		const RenderItem* obj = (*it);
+		if (obj == nullptr) break;
 		auto objTransform = obj->transform;
 
 		if (obj->color.w != 1.0) continue; // si es trasparente pasa, PRIMERO LOS OPACOS
@@ -127,6 +128,7 @@ void renderCallback()
 	for (std::vector<const RenderItem*>::reverse_iterator it = gRenderItems.rbegin(); it != gRenderItems.rend(); ++it)
 	{
 		const RenderItem* obj = (*it);
+		if (obj == nullptr) continue;
 		auto objTransform = obj->transform;
 
 		if (obj->color.w == 1.0) continue; // si es opaco pasa, DESPUES LOS TRANSPARENTES

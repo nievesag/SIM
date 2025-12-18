@@ -25,7 +25,7 @@ public:
 
 	void setAreaVisibility(bool v) { areaVisible = v; }
 
-	void toggleAreaVisibility()
+	virtual void toggleAreaVisibility()
 	{
 		if (areaVisible) RegisterRenderItem(area);
 		else DeregisterRenderItem(area);
@@ -151,8 +151,14 @@ public:
 	// v -> volumen del liquido
 	// d -> densidad del liquido
 	BuoyancyForceGenerator(Vector3 pos, float areaR, Vector3 liquidXZ, Scene* s, float h, float V, float d);
-
 	Vector3 generateForce(Entity& e) override;
+	void toggleAreaVisibility() override
+	{
+		ForceGenerator::toggleAreaVisibility();
+
+		if (areaVisible) RegisterRenderItem(fluid);
+		else DeregisterRenderItem(fluid);
+	}
 
 protected:
 	float height;

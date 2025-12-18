@@ -37,6 +37,7 @@ class RigidBodyStatic : public RigidBody
 {
 public:
 	RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::PxScene* gScene, Vector3 pos, float siz, Vector4 col, Shape s);
+	~RigidBodyStatic() override = default;
 
 	Vector3 getPosition() const override
 	{

@@ -141,6 +141,7 @@ private:
 	std::vector<MagnetismGenerator*> magnets; // vector de todos los imanes
 	MagnetismGenerator* magnetism1 = nullptr; // iman 1
 	MagnetismGenerator* magnetism2 = nullptr; // iman 2
+	BuoyancyForceGenerator* water = nullptr; // iman 2
 
 	MagnetismGenerator* selectedMagnet = nullptr;	// iman que tienes seleccionado
 
