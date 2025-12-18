@@ -233,6 +233,9 @@ void FireworkGenerator::generateParticle()
 		{
 			// distribuciones
 			std::uniform_int_distribution<> particlesToGenerateDistr(20, 30);
+			std::normal_distribution<> posXDistr(explosionPos.x, 10.0);
+			std::normal_distribution<> posYDistr(explosionPos.y, 10.0);
+			std::normal_distribution<> posZDistr(explosionPos.z, 10.0);
 			std::normal_distribution<> velXDistr(0, 10.0);
 			std::normal_distribution<> velYDistr(0, 10.0);
 			std::normal_distribution<> velZDistr(0, 10.0);
@@ -245,9 +248,9 @@ void FireworkGenerator::generateParticle()
 				Vector3 newVel;	// velocidad con la que se genera
 
 				// org
-				newOrg.x = explosionPos.x;
-				newOrg.y = explosionPos.y;
-				newOrg.z = explosionPos.z;
+				newOrg.x = posXDistr(generator);
+				newOrg.y = posYDistr(generator);
+				newOrg.z = posZDistr(generator);
 				// vel
 				newVel.x = velXDistr(generator);
 				newVel.y = velYDistr(generator);

@@ -230,7 +230,7 @@ Vector3 ExplosionForceGenerator::generateForce(Entity& e)
 
         if (inArea(e))
         {
-            force = (k / pow(distance, 2)) * r * exp(-counter / t);
+            force = (k / pow(distance, 2)) * r * (exp(-counter / t));
             //force *= (k / pow(distance, 2));
             //force *= distance * pow(exp(1.0), -(counter / t));
 
