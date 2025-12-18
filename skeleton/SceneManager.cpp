@@ -41,6 +41,8 @@ void SceneManager::changeScene(size_t scnId)
 			currentScene = scnId;
 			vScenes[currentScene]->init();
 			vScenes[currentScene]->load(); // poner escena nueva
+
+			if (currentScene == 3) endGame = true;
 			cout << "[SCENE] Escena " << std::to_string(scnId) << ".\n";
 		}
 	}
@@ -64,14 +66,17 @@ void SceneManager::keyPressed(unsigned char key, const physx::PxTransform& camer
 {
 	PX_UNUSED(camera);
 
+	/*
 	if (key >= '0' && key <= '9')
 	{
 		changeScene(key - '0');
 	}
 	else
 	{
-		vScenes[currentScene]->keyPressed(key, camera);
 	}
+	*/
+
+	vScenes[currentScene]->keyPressed(key, camera);
 }
 
 void SceneManager::specialKeyPressed(int key, const physx::PxTransform& camera)

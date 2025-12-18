@@ -48,6 +48,11 @@
 #include <string>
 
 extern std::string display_text;
+extern std::string controles_1;
+extern std::string controles_2;
+extern std::string controles_3;
+extern std::string controles_4;
+extern std::string controles_5;
 
 namespace Snippets
 {

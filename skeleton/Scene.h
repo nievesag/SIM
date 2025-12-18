@@ -115,8 +115,6 @@ private:
 
 	Pipe* pipe = nullptr; // tuberia que suelta la particula
 
-	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
-
 	SplashGenerator* sGenerator = nullptr;
 };
 

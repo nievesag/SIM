@@ -16,7 +16,13 @@
 
 #include "SceneManager.h"
 
-std::string display_text = "Juego de imanes";
+std::string display_text = "---- Juego de imanes ----";
+
+std::string controles_1 = "CTRL + R: Seleccionar iman de carga positiva";
+std::string controles_2 = "CTRL + Q: Seleccionar iman de carga negativa";
+std::string controles_3 = "FLECHAS: Mover el iman seleccionado";
+std::string controles_4 = "Z: Desactivar el iman seleccionado";
+std::string controles_5 = "";
 
 using namespace physx;
 
@@ -37,8 +43,6 @@ ContactReportCallback gContactReportCallback;
 // ---- scene manager
 SceneManager* sceneManager = nullptr;
 
-Particle* p = nullptr;
-
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -54,16 +58,7 @@ void initPhysics(bool interactive)
 
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
-	// pinta una esfera en el 0,0,0 ; de normal el transform deberia ser atributo de la clase particula por ej
-	
-	//const PxTransform* t = new PxTransform( 0, 0, 0 );
-	//RenderItem* bola = new RenderItem(CreateShape(PxSphereGeometry(5)), t, { 1,1,1,1 });
-
-	// para eliminarlo de la escena:
-	//DeregisterRenderItem(bola);
-	//delete bola;
-
-	axis* ax = new axis();
+	//axis* ax = new axis(); // pinta un eje de coordenadas
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
@@ -90,6 +85,15 @@ void stepPhysics(bool interactive, double t)
 	if (sceneManager != nullptr)
 	{
 		sceneManager->step(t);
+
+		if (sceneManager->getEndGame())
+		{
+			std::string controles_1 = "";
+			std::string controles_2 = "";
+			std::string controles_3 = "";
+			std::string controles_4 = "";
+			std::string controles_5 = "Apunta y dispara con la I para celebrar tu victoria";
+		}
 	}
 }
 

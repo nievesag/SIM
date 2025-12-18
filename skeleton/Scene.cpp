@@ -163,13 +163,11 @@ void Scene0::init()
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);
 
-	pGen = new ProjectileGenerator(this);
-
-	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.01, gPhysics, gScene);
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.2, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
-	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 0.2, gPhysics, gScene);
+	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 1, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
@@ -252,15 +250,6 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 	case 'N':
 	{
 		pipe->eject();
-		break;
-	}
-	case 'I':
-	{
-		std::cout << "disparo desde la camara" << std::endl;
-		if (pGen != nullptr)
-		{
-			pGen->shoot("Cannon");
-		}
 		break;
 	}
 	default:
@@ -404,12 +393,7 @@ void Scene1::load()
 	magnetism1->toggleMagnetVisibility();
 	magnetism2->toggleMagnetVisibility();
 
-	//viento->setAreaVisibility(true);
-	//water->setAreaVisibility(true);
-	//water->toggleAreaVisibility();
-	//viento->showArea();
 	water->showWater();
-	//RegisterRenderItem(pipe->getRenderItem());
 }
 
 void Scene1::unload()

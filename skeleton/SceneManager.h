@@ -16,6 +16,8 @@ private:
 	PxPhysics* gPhysics = nullptr;
 	PxScene* gScene = nullptr;
 
+	bool endGame = false;
+
 public:
 	SceneManager(PxPhysics* px_physics, PxScene* px_scene);
 	~SceneManager();
@@ -27,4 +29,6 @@ public:
 	void step(double t); // update
 	void keyPressed(unsigned char key, const physx::PxTransform& camera); // input
 	void specialKeyPressed(int key, const physx::PxTransform& camera); // input
+
+	bool getEndGame() { return endGame; };
 };
