@@ -29,3 +29,8 @@ void Magnet::hideField()
 {
 	DeregisterRenderItem(magneticField->getRenderItem());
 }
+
+void Magnet::showField()
+{
+	RegisterRenderItem(magneticField->getRenderItem());
+}

@@ -11,6 +11,7 @@ public:
 	~Magnet();
 	void updateMagneticField(Vector3 pos);
 	void hideField();
+	void showField();
 private:
 	Entity* magneticField = nullptr;
 	//RenderItem* magneticField = nullptr;

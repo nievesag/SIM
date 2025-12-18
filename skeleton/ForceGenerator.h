@@ -22,7 +22,7 @@ public:
 
 	PxTransform* getAreaPose() const { return areaPose; }
 
-	void toggleForce() { isActive = !isActive; }
+	virtual void toggleForce() { isActive = !isActive; }
 
 	void setAreaVisibility(bool v) { areaVisible = v; }
 
@@ -137,7 +137,7 @@ public:
 
 	void move(Vector3 dir);
 	void setPos(Vector3 newPos);
-
+	void toggleForce() override;
 	void toggleMagnetVisibility();
 	void toggleAreaVisibility() override;
 private:

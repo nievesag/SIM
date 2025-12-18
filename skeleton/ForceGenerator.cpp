@@ -114,6 +114,13 @@ void MagnetismGenerator::setPos(Vector3 newPos)
     magnetPose->p = newPos;
 }
 
+void MagnetismGenerator::toggleForce()
+{
+    ForceGenerator::toggleForce();
+    
+    isActive ? magnet->showField() : magnet->hideField();
+}
+
 void MagnetismGenerator::toggleMagnetVisibility()
 {
     if (areaVisible) RegisterRenderItem(magnet->getRenderItem());

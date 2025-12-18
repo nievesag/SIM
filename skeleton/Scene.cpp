@@ -562,18 +562,19 @@ void Scene2::init()
 	pGen = new ProjectileGenerator(this);
 
 	// -- Force generators
-	torbellino = new WhirlGenerator({ 150,80,0 }, 60, this, { 0, -10, 10 }, 0.03);
+	torbellino = new WhirlGenerator({ 150,80,0 }, 60, this, { 0, -100, 100 }, 0.03);
 	sys->registerForceGenerator(torbellino);
 	sysRb->registerForceGenerator(torbellino);
 
 	firework = new ExplosionForceGenerator({ 150,80,0 }, 60, this, true,40000, 0.1);
 	sysB->registerForceGenerator(firework);
 
-	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.02, gPhysics, gScene);
+	int radius = 70;
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, radius, this, -0.5, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
-	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 0.2, gPhysics, gScene);
+	magnetism2 = new MagnetismGenerator({ 95,140,0 }, radius, this, 0.5, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
