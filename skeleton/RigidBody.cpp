@@ -33,14 +33,13 @@ void RigidBodyStatic::setGroup(physx::PxU32 g, bool autoexcluding)
 	gScene->lockWrite();
 
 	PxFilterData filterData;
-
-	filterData.word0 = group;
-	filterData.word1 = group;
-
-	if (autoexcluding)
-		filterData.word1 = ~group;
+	filterData.word0 = g;                 // a qué grupo pertenezco
+	filterData.word1 = autoexcluding
+		? ~g                              // colisiono con todo menos conmigo
+		: ALL;                      // colisiono con todo
 
 	shape->setSimulationFilterData(filterData);
+
 	gScene->unlockWrite();
 	group = g;
 }
@@ -126,17 +125,20 @@ void RigidBodyDynamic::setGroup(physx::PxU32 g, bool autoexcluding)
 	gScene->lockWrite();
 
 	PxFilterData filterData;
-
-	filterData.word0 = group;
-	filterData.word1 = group;
-
-	if (autoexcluding)
-		filterData.word1 = ~group;
+	filterData.word0 = g;                 // a qué grupo pertenezco
+	filterData.word1 = autoexcluding
+		? ~g                              // colisiono con todo menos conmigo
+		: ALL;                      // colisiono con todo
 
 	shape->setSimulationFilterData(filterData);
-	gScene->unlockWrite();
 
+	gScene->unlockWrite();
 	group = g;
+}
+
+void RigidBodyDynamic::setNoGroup()
+{
+	setGroup(NONE);
 }
 
 void RigidBodyDynamic::collisionCallback()

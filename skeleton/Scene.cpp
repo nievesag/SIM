@@ -296,15 +296,17 @@ void Scene0::newToy(Vector3 pos)
 
 	RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { pos.x,pos.y + 15,pos.z },
 		{ 0,0,0 }, 2, { 2,2,2 }, { 0, 0.90f, 0.90f ,1 }, 0.5, 0.8,
-		-1, SPHERE, -1, { 0, 0, 0 }, { 1, 1, 1 }, BODYPARTS);
+		-1, SPHERE, -1, { 0, 0, 0 }, { 1, 1, 1 }, NONE);
 	pie->setColor({ 1,0,0,1 });
 	chargedGenerator->addEntity(pie);
 
 	// muelles
-	SpringForceGenerator* spring1 = new SpringForceGenerator(100, 0.1, pie);
+	int k = 5;
+	int length = 1;
+	SpringForceGenerator* spring1 = new SpringForceGenerator(k, length, pie);
 	sysRb->registerForceGenerator(spring1);
 
-	SpringForceGenerator* spring2 = new SpringForceGenerator(100, 0.1, toy);
+	SpringForceGenerator* spring2 = new SpringForceGenerator(k, length, toy);
 	sysRb->registerForceGenerator(spring2);
 }
 

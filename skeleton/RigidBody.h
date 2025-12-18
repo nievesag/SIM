@@ -6,12 +6,30 @@ class Scene;
 
 enum Shape { BOX, SPHERE, CAPSULE };
 
+//enum Group
+//{
+//	WIN = (1 << 0),
+//	BODYPARTS = (1 << 1),
+//	ALL = (1 << 2)
+//};
+
 enum Group
 {
 	WIN = (1 << 0),
 	BODYPARTS = (1 << 1),
-	ALL = (1 << 2)
+
+	NONE = (0),
+	ALL = (0xFFFFFFFF)
 };
+
+//enum Group : PxU32
+//{
+//	WIN = 1 << 0,
+//	BODYPARTS = 1 << 1,
+//
+//	NONE = 0,
+//	ALL = 0xFFFFFFFF
+//};
 
 class RigidBody : public Entity
 {
@@ -171,7 +189,7 @@ public:
 	}
 
 	void collisionCallback() override;
-
+	void setNoGroup();
 	// getters
 	physx::PxActor* getActor() override { return actor; }
 	Vector3 getPosition() const override { return actor->getGlobalPose().p; }
