@@ -580,7 +580,7 @@ void Scene2::init()
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);
 
-	eGenerator = new FireworkGenerator(this, "Splash");
+	eGenerator = new FireworkGenerator(this, "Fuegos");
 	sys->registerGenerator(eGenerator);
 
 	pGen = new ProjectileGenerator(this);
@@ -783,6 +783,7 @@ void Scene2::splash(Vector3 pos)
 
 void Scene2::explosion(Vector3 pos)
 {
+	torbellino->setAreaPos(pos);
 	eGenerator->setExplosionPos(pos);
 	eGenerator->setExplode(true);
 }

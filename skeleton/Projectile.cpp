@@ -21,11 +21,8 @@ Projectile::Projectile(const Projectile& model)
 
 void Projectile::step(double t)
 {
-	//Particle::step(t);
 	integrate(t);
 	manageLife(t);
-
-	std::cout << maxLifetime << " " << lifetime << std::endl;
 }
 
 void Projectile::manageLife(double t)
