@@ -586,13 +586,13 @@ void Scene2::init()
 	pGen = new ProjectileGenerator(this);
 
 	// -- Force generators
-	/*torbellino = new WhirlGenerator({ 150,80,0 }, 60, this, { 0, -10, 10 }, 0.03);
-	sys->registerForceGenerator(torbellino);
-	sysRb->registerForceGenerator(torbellino);*/
-
-	torbellino = new ExplosionForceGenerator({ 150,80,0 }, 60, this, true,200, 0.1);
+	torbellino = new WhirlGenerator({ 150,80,0 }, 60, this, { 0, -10, 10 }, 0.03);
 	sys->registerForceGenerator(torbellino);
 	sysRb->registerForceGenerator(torbellino);
+
+	firework = new ExplosionForceGenerator({ 150,80,0 }, 60, this, true,200, 0.1);
+	sys->registerForceGenerator(firework);
+	sysRb->registerForceGenerator(firework);
 
 	pSystems.push_back(sys);
 
@@ -619,8 +619,8 @@ void Scene2::step(double t)
 
 	if (timer >= torbellinoTime)
 	{
-		//timer = 0;
-		//torbellino->toggleForce();
+		timer = 0;
+		torbellino->toggleForce();
 	}
 
 	timer += t;
@@ -783,7 +783,8 @@ void Scene2::splash(Vector3 pos)
 
 void Scene2::explosion(Vector3 pos)
 {
-	torbellino->setAreaPos(pos);
+	firework->setAreaPos(pos);
+	firework->setActive(true);
 	eGenerator->setExplosionPos(pos);
 	eGenerator->setExplode(true);
 }

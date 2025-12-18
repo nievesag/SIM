@@ -201,6 +201,7 @@ private:
 
 	ForceGenerator* viento = nullptr;
 	ForceGenerator* torbellino = nullptr;
+	ForceGenerator* firework = nullptr;
 	ParticleGenerator* randomMass = nullptr;
 
 	ProjectileGenerator* pGen = nullptr;			// generador desde la camara
