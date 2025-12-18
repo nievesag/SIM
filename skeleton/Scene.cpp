@@ -568,15 +568,15 @@ void Scene2::init()
 	sys->registerForceGenerator(torbellino);
 	sysRb->registerForceGenerator(torbellino);
 
-	firework = new ExplosionForceGenerator({ 150,80,0 }, 60, this, true,40000, 0.1);
+	firework = new ExplosionForceGenerator({ -500,500,0 }, 60, this, true,40000, 0.1);
 	sysB->registerForceGenerator(firework);
 
 	int radius = 70;
-	magnetism1 = new MagnetismGenerator({ 92,38,0 }, radius, this, -0.5, gPhysics, gScene);
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, radius, this, -1.5, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
-	magnetism2 = new MagnetismGenerator({ 95,140,0 }, radius, this, 0.5, gPhysics, gScene);
+	magnetism2 = new MagnetismGenerator({ 95,140,0 }, radius, this, 1.5, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
