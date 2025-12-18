@@ -561,6 +561,7 @@ void Scene2::init()
 
 	// ----- System
 	sys = new ParticleSystem(this);
+	sysB = new ParticleSystem(this);
 	sysRb = new RigidBodySystem(this, gPhysics, gScene);
 
 	// -- Particle generators
@@ -581,7 +582,7 @@ void Scene2::init()
 	sys->registerGenerator(sGenerator);
 
 	eGenerator = new FireworkGenerator(this, "Fuegos");
-	sys->registerGenerator(eGenerator);
+	sysB->registerGenerator(eGenerator);
 
 	pGen = new ProjectileGenerator(this);
 
@@ -591,10 +592,7 @@ void Scene2::init()
 	sysRb->registerForceGenerator(torbellino);
 
 	firework = new ExplosionForceGenerator({ 150,80,0 }, 60, this, true,200, 0.1);
-	sys->registerForceGenerator(firework);
-	sysRb->registerForceGenerator(firework);
-
-	pSystems.push_back(sys);
+	sysB->registerForceGenerator(firework);
 
 	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.02, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
@@ -605,6 +603,7 @@ void Scene2::init()
 	magnets.push_back(magnetism2);
 
 	pSystems.push_back(sys);
+	pSystems.push_back(sysB);
 	pSystems.push_back(sysRb);
 }
 

@@ -228,7 +228,7 @@ Vector3 ExplosionForceGenerator::generateForce(Entity& e)
         float distance = (e.getPosition() - areaPos).magnitude();
         Vector3 r = e.getPosition() - areaPos;
 
-        if (inArea(e) && distance > 0)
+        if (inArea(e))
         {
             force = (k / pow(distance, 2)) * r * exp(-counter / t);
             //force *= (k / pow(distance, 2));

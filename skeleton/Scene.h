@@ -185,6 +185,7 @@ public:
 
 private:
 	ParticleSystem* sys = nullptr; // sistema de particulas
+	ParticleSystem* sysB = nullptr; // sistema de particulas
 	RigidBodySystem* sysRb = nullptr;
 
 	std::vector<MagnetismGenerator*> magnets; // vector de todos los imanes
