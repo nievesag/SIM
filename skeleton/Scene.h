@@ -65,7 +65,7 @@ protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
 	std::vector<System*> pSystems; // sistemas de particulas
 
-	Vector3 actionThreshold = {400, 200,200}; // limites de la escena a partir de los cuales se eliminan las particulas
+	Vector3 actionThreshold = {10000, 10000,10000 }; // limites de la escena a partir de los cuales se eliminan las particulas
 	
 	PxPhysics* gPhysics = nullptr;
 	PxScene* gScene = nullptr;

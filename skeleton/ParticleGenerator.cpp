@@ -257,7 +257,7 @@ void FireworkGenerator::generateParticle()
 				Particle* p = new Particle(*it->second);
 
 				p->setPosition(newOrg);
-				p->setVelocity(newVel);
+				//p->setVelocity(newVel);
 
 				generatedParticles.push_back(p);
 				scn->addEntity(p);
