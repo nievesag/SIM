@@ -398,8 +398,6 @@ void Scene1::load()
 {
 	Scene::load();
 
-	viento->setAreaVisibility(true);
-	viento->toggleAreaVisibility();
 
 	magnetism1->setAreaVisibility(true);
 	magnetism2->setAreaVisibility(true);
@@ -408,8 +406,11 @@ void Scene1::load()
 	magnetism1->toggleMagnetVisibility();
 	magnetism2->toggleMagnetVisibility();
 
-	water->setAreaVisibility(true);
-	water->toggleAreaVisibility();
+	//viento->setAreaVisibility(true);
+	//water->setAreaVisibility(true);
+	//water->toggleAreaVisibility();
+	//viento->showArea();
+	water->showWater();
 	//RegisterRenderItem(pipe->getRenderItem());
 }
 

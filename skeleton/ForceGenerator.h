@@ -32,6 +32,18 @@ public:
 		else DeregisterRenderItem(area);
 	}
 
+	void showArea(bool value) {
+		value ? RegisterRenderItem(area) : DeregisterRenderItem(area);
+	}
+
+	void showArea() {
+		RegisterRenderItem(area);
+	}
+
+	void hideArea() {
+		DeregisterRenderItem(area);
+	}
+
 	void setActive(bool a) { isActive = a; }
 
 	void setAreaPos(Vector3 pos)
@@ -41,7 +53,6 @@ public:
 	}
 
 protected:
-	bool showArea();
 	bool inArea(Entity& e);
 
 	float areaRadius; // radio de area de actuacion
@@ -167,6 +178,7 @@ public:
 		else DeregisterRenderItem(fluid);
 	}
 	void hideWater() { DeregisterRenderItem(fluid); }
+	void showWater() { RegisterRenderItem(fluid); }
 
 protected:
 	float height;

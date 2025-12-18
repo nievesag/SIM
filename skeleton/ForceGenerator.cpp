@@ -23,11 +23,6 @@ ForceGenerator::~ForceGenerator()
     delete area;
 }
 
-bool ForceGenerator::showArea()
-{
-    return false;
-}
-
 bool ForceGenerator::inArea(Entity& e)
 {
     return ((e.getPosition() - areaPos).magnitude() <= areaRadius);
