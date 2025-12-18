@@ -33,6 +33,13 @@ public:
 
 	void setActive(bool a) { isActive = a; }
 
+	void setAreaPos(Vector3 pos)
+	{
+		areaPos = pos;
+		areaPose = new PxTransform(pos);
+		area = new RenderItem(CreateShape(PxSphereGeometry(areaRadius)), areaPose, { 1,1,1,0.18f });
+	}
+
 protected:
 	bool showArea();
 	bool inArea(Entity& e);
