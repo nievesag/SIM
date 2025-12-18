@@ -53,6 +53,7 @@ extern std::string controles_2;
 extern std::string controles_3;
 extern std::string controles_4;
 extern std::string controles_5;
+extern std::string controles_6;
 
 namespace Snippets
 {

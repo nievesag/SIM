@@ -140,6 +140,9 @@ public:
 	void toggleForce() override;
 	void toggleMagnetVisibility();
 	void toggleAreaVisibility() override;
+	Magnet* getMagnet() { return magnet; }
+	float getB() { return b; }
+
 private:
 	float b = 0; // carga del campo magnetico
 
