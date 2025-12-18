@@ -181,7 +181,7 @@ public:
 	void readFile(std::string file) override;
 	void splash(Vector3 pos) override;
 
-	void explosion(Vector3 pos) override {};
+	void explosion(Vector3 pos) override {}
 
 private:
 	ParticleSystem* sys = nullptr; // sistema de particulas
