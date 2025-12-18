@@ -3,6 +3,7 @@
 #include "RenderUtils.hpp"
 #include "RigidBodySystem.h"
 #include "Wall.h"
+#include "Win.h"
 class Pipe;
 #include <fstream>
 #include "ChargedEntity.h"
@@ -127,10 +128,10 @@ void Scene::readFile(std::string file)
 				map.push_back(wall);
 			}
 			// VACIO
-			else if (fila[j] == 'o')
+			else if (fila[j] == 'w')
 			{
-				//Wall* empty = new Wall(this, 20.0f, Vector3(j * 40, i * 40, 0), true, gPhysics, gScene);
-				//line.push_back(empty);
+				Win* win = new Win(this, 20.0f, Vector3(j * 40, i * 40, 0), gPhysics, gScene);
+				map.push_back(win);
 			}
 		}
 	}
@@ -335,6 +336,7 @@ void Scene1::init()
 
 	// ----- System
 	sys = new ParticleSystem(this);
+	sysB = new ParticleSystem(this);
 	sysRb = new RigidBodySystem(this, gPhysics, gScene);
 
 	pipe = new Pipe(this, { 200,240,0 });
@@ -356,13 +358,14 @@ void Scene1::init()
 
 	ParticleGenerator* wGenerator = new WaterfallGenerator(this, "Cascada");
 	static_cast<WaterfallGenerator*>(wGenerator)->setOrigin({ -105, -150, 0 });
-	sys->registerGenerator(wGenerator);
+	sysB->registerGenerator(wGenerator);
 
 	pGen = new ProjectileGenerator(this);
 
 	// -- Force generators
-	viento = new WindGenerator({ 220, 160, 0 }, 30, this, { -10, 0, 0 });
+	viento = new WindGenerator({ 220, 160, 0 }, 26, this, { -10, 0, 0 });
 	sysRb->registerForceGenerator(viento);
+	sys->registerForceGenerator(viento);
 
 	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.01, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
@@ -372,10 +375,11 @@ void Scene1::init()
 	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
-	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({ 160,140,0 }, 50, { 60,0,5 }, this, 20, 5, 1);
+	BuoyancyForceGenerator* agua = new BuoyancyForceGenerator({ 160,140,0 }, 50, { 60,0,5 }, this, 20, 10, 3);
 	sysRb->registerForceGenerator(agua);
 
 	pSystems.push_back(sys);
+	pSystems.push_back(sysB);
 	pSystems.push_back(sysRb);
 }
 
@@ -512,7 +516,7 @@ void Scene1::newToy(Vector3 pos)
 
 	// crea toy
 	ChargedEntity* toy = new ChargedEntity(this, pos, 3, -0.1f, trailGenerator, gPhysics, gScene);
-	toy->setLinearVelocity({ 0,-50,0 });
+	toy->setLinearVelocity({ 0,-1,0 });
 	ChargedRbGenerator* chargedGenerator = new ChargedRbGenerator(this, "Carga", gPhysics, gScene);
 	sysRb->registerGenerator(chargedGenerator);
 	chargedGenerator->addEntity(toy);
@@ -715,10 +719,6 @@ void Scene6::init()
 	bola->setDensity(1);
 	//rbGen->addEntity(bola);
 	addEntity(bola);
-
-	// Scene* scn, PxPhysics* gPhysics, PxScene* gScene, PxMaterial* mat, 
-	//bool kin, Vector3 pos, Vector3 vel, double siz, PxVec3 vol, Vector4 col, float m, float damp, float maxLT,
-	//	Shape sh, double d, PxVec3 angVel, PxVec3 tensor
 
 	pSystems.push_back(sys);
 }

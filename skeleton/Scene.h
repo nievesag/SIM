@@ -56,6 +56,8 @@ public:
 	PxPhysics* getPxPhysics() const	{ return gPhysics; }
 	PxScene* getPxScene() const { return gScene; }
 
+	void endLevel() { _endLevel = true; }
+
 protected:
 	std::vector<Entity*> gObjects;		// Entidades de la escena
 	std::vector<System*> pSystems; // sistemas de particulas
@@ -67,7 +69,9 @@ protected:
 
 	// nivel
 	int width = 0, height = 0; // tamaño del mapa
-	std::vector<Wall*> map;
+	std::vector<RigidBody*> map;
+
+	bool _endLevel = false;
 };
 
 // --- ESCENAS HIJAS ---
@@ -134,6 +138,7 @@ public:
 
 private:
 	ParticleSystem* sys = nullptr; // sistema de particulas
+	ParticleSystem* sysB = nullptr; // para el agua (visual)
 	RigidBodySystem* sysRb = nullptr;
 
 	std::vector<MagnetismGenerator*> magnets; // vector de todos los imanes

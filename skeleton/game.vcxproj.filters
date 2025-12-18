@@ -43,6 +43,7 @@
     <ClCompile Include="System.cpp" />
     <ClCompile Include="RigidBodyGenerator.cpp" />
     <ClCompile Include="Magnet.cpp" />
+    <ClCompile Include="Win.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="System.h" />
     <ClInclude Include="RigidBodyGenerator.h" />
     <ClInclude Include="Magnet.h" />
+    <ClInclude Include="Win.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

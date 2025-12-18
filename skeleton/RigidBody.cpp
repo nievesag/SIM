@@ -27,7 +27,7 @@ RigidBodyStatic::RigidBodyStatic(Scene* scn, physx::PxPhysics* gPhysics, physx::
 	gScene->addActor(*actor);
 }
 
-void RigidBodyStatic::setGroup(physx::PxU32 group, bool autoexcluding)
+void RigidBodyStatic::setGroup(physx::PxU32 g, bool autoexcluding)
 {
 	// mutex
 	gScene->lockWrite();
@@ -42,6 +42,7 @@ void RigidBodyStatic::setGroup(physx::PxU32 group, bool autoexcluding)
 
 	shape->setSimulationFilterData(filterData);
 	gScene->unlockWrite();
+	group = g;
 }
 
 // --- DYNAMIC
@@ -119,7 +120,7 @@ void RigidBodyDynamic::applyForce()
 	resultingForce.clear();
 }
 
-void RigidBodyDynamic::setGroup(physx::PxU32 group, bool autoexcluding)
+void RigidBodyDynamic::setGroup(physx::PxU32 g, bool autoexcluding)
 {
 	// mutex
 	gScene->lockWrite();
@@ -134,6 +135,13 @@ void RigidBodyDynamic::setGroup(physx::PxU32 group, bool autoexcluding)
 
 	shape->setSimulationFilterData(filterData);
 	gScene->unlockWrite();
+
+	group = g;
+}
+
+void RigidBodyDynamic::collisionCallback()
+{
+	scene->
 }
 
 void RigidBodyDynamic::manageLife(double t)

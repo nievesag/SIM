@@ -8,7 +8,7 @@ enum Shape { BOX, SPHERE, CAPSULE };
 
 enum Group
 {
-	CHARGED = (1 << 0),
+	WIN = (1 << 0),
 	BODYPARTS = (1 << 1),
 	ALL = (1 << 2)
 };
@@ -20,12 +20,14 @@ public:
 	~RigidBody() override = default;
 
 	virtual physx::PxActor* getActor() { return nullptr; }
-	virtual bool collisionCallback() { return false; }
+	virtual void collisionCallback() { }
 	virtual void setGroup(physx::PxU32 group, bool autoexcluding = false) {}
+	physx::PxU32 getGroup() { return group; }
 	
 protected:
 	physx::PxScene* gScene = nullptr;
 	Shape sh;
+	physx::PxU32 group;
 };
 
 // --- STATIC ---
@@ -86,7 +88,7 @@ public:
 		Vector3 pos = { 0,0,0 }, Vector3 vel = { 0,0,0 }, float siz = 5, physx::PxVec3 vol = { 1,1,1 },
 		Vector4 col = { 1,1,1,1 }, float m = 10, float damp = 0.8, float maxLT = -1,
 		Shape s = SPHERE, double density = -1,
-	                 physx::PxVec3 angVel = { 0, 0, 0 }, physx::PxVec3 tensor = { 1,1,1 }, physx::PxU32 group = CHARGED);
+	                 physx::PxVec3 angVel = { 0, 0, 0 }, physx::PxVec3 tensor = { 1,1,1 }, physx::PxU32 group = ALL);
 	~RigidBodyDynamic() override = default;
 
 	void step(double t) override;
@@ -166,6 +168,8 @@ public:
 		actor->setLinearDamping(damping);
 		actor->setAngularDamping(damping);
 	}
+
+	void collisionCallback() override;
 
 	// getters
 	physx::PxActor* getActor() override { return actor; }
