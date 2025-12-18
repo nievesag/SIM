@@ -22,7 +22,8 @@ std::string controles_1 = "CTRL + R: Seleccionar iman de carga positiva";
 std::string controles_2 = "CTRL + Q: Seleccionar iman de carga negativa";
 std::string controles_3 = "FLECHAS: Mover el iman seleccionado";
 std::string controles_4 = "Z: Desactivar el iman seleccionado";
-std::string controles_5 = "";
+std::string controles_5 = "N: Lanzar nueva particula cargada";
+std::string controles_6 = "";
 
 using namespace physx;
 
@@ -92,7 +93,8 @@ void stepPhysics(bool interactive, double t)
 			std::string controles_2 = "";
 			std::string controles_3 = "";
 			std::string controles_4 = "";
-			std::string controles_5 = "Apunta y dispara con la I para celebrar tu victoria";
+			std::string controles_5 = "";
+			std::string controles_6 = "Apunta y dispara con la I para celebrar tu victoria";
 		}
 	}
 }
