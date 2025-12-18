@@ -598,7 +598,7 @@ void Scene2::init()
 	addEntity(pipe);
 
 	ParticleGenerator* wGenerator = new MistGenerator(this, "Niebla");
-	static_cast<MistGenerator*>(wGenerator)->setOrigin({ 150, 75, 0 });
+	static_cast<MistGenerator*>(wGenerator)->setOrigin({ 150, 50, 0 });
 	sys->registerGenerator(wGenerator);
 
 	trailGenerator = new TrailGenerator(this, "Rastro");
@@ -616,7 +616,7 @@ void Scene2::init()
 	pGen = new ProjectileGenerator(this);
 
 	// -- Force generators
-	torbellino = new WhirlGenerator({ 150,100,0 }, 60, this, { 0, -10, 10 }, 0.05);
+	torbellino = new WhirlGenerator({ 150,80,0 }, 60, this, { 0, -10, 10 }, 0.05);
 	sys->registerForceGenerator(torbellino);
 	sysRb->registerForceGenerator(torbellino);
 
