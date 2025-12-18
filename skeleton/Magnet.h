@@ -10,7 +10,7 @@ public:
 	Magnet(Scene* scn, float size, Vector3 pos, Vector4 col, physx::PxPhysics* gPhysics, physx::PxScene* pxScn, float magneticFieldR);
 	~Magnet();
 	void updateMagneticField(Vector3 pos);
-
+	void hideField();
 private:
 	Entity* magneticField = nullptr;
 	//RenderItem* magneticField = nullptr;

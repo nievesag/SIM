@@ -123,7 +123,11 @@ void MagnetismGenerator::setPos(Vector3 newPos)
 void MagnetismGenerator::toggleMagnetVisibility()
 {
     if (areaVisible) RegisterRenderItem(magnet->getRenderItem());
-    else DeregisterRenderItem(magnet->getRenderItem());
+    else {
+        magnet->hideField();
+        DeregisterRenderItem(magnet->getRenderItem());
+    }
+
 }
 
 // ------- GENERADOR MUELLES -------

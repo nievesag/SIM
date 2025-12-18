@@ -24,3 +24,8 @@ void Magnet::updateMagneticField(Vector3 pos)
 {
 	magneticField->setPosition(pos);
 }
+
+void Magnet::hideField()
+{
+	DeregisterRenderItem(magneticField->getRenderItem());
+}
