@@ -145,6 +145,7 @@ private:
 
 	physx::PxTransform* magnetPose = nullptr;
 	Magnet* magnet = nullptr;
+	PxScene* s = nullptr;
 };
 
 class SpringForceGenerator : public ForceGenerator 

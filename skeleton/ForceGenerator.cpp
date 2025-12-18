@@ -71,7 +71,7 @@ Vector3 HorizontalWhirlGenerator::generateForce(Entity& e)
 
 // ------- GENERADOR MAGNETISMO -------
 MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, float B, PxPhysics* gPhysics, PxScene* pxScn)
-    : ForceGenerator(pos, areaR, scn, false), b(B)
+    : ForceGenerator(pos, areaR, scn, false), b(B), s(pxScn)
 {
     // construye el iman
     magnetPose = new PxTransform(pos);
@@ -117,11 +117,12 @@ void MagnetismGenerator::setPos(Vector3 newPos)
 void MagnetismGenerator::toggleMagnetVisibility()
 {
     if (areaVisible) RegisterRenderItem(magnet->getRenderItem());
-    else {
+    else 
+    {
         magnet->hideField();
         DeregisterRenderItem(magnet->getRenderItem());
+        s->removeActor(*magnet->getActor());
     }
-
 }
 
 void MagnetismGenerator::toggleAreaVisibility() {
