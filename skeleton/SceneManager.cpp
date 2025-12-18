@@ -67,7 +67,14 @@ void SceneManager::keyPressed(unsigned char key, const physx::PxTransform& camer
 {
 	PX_UNUSED(camera);
 
-	vScenes[currentScene]->keyPressed(key, camera);
+	if (key >= '0' && key <= '9')
+	{
+		changeScene(key - '0');
+	}
+	else
+	{
+		vScenes[currentScene]->keyPressed(key, camera);
+	}
 }
 
 void SceneManager::specialKeyPressed(int key, const physx::PxTransform& camera)
