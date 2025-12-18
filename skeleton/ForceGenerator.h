@@ -121,7 +121,7 @@ public:
 	void setPos(Vector3 newPos);
 
 	void toggleMagnetVisibility();
-
+	void toggleAreaVisibility() override;
 private:
 	float b = 0; // carga del campo magnetico
 
