@@ -163,13 +163,11 @@ void Scene0::init()
 	sGenerator = new SplashGenerator(this, "Splash");
 	sys->registerGenerator(sGenerator);
 
-	int radius = 80;
-
-	magnetism1 = new MagnetismGenerator({ 92,38,0 }, radius, this, -0.5, gPhysics, gScene);
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.2, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
-	magnetism2 = new MagnetismGenerator({ 95,140,0 }, radius, this, 1, gPhysics, gScene);
+	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 1, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
@@ -293,19 +291,18 @@ void Scene0::newToy(Vector3 pos)
 	sysRb->registerGenerator(chargedGenerator);
 	chargedGenerator->addEntity(toy);
 
-	// pie
-	/*
-	Particle* pie = new Particle(this, pos, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
-	addEntity(pie);
-	springGenerator->addSpringEnitity(toy);
-	springGenerator->addSpringEnitity(pie);
+	RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { pos.x,pos.y + 15,pos.z },
+		{ 0,0,0 }, 2, { 2,2,2 }, { 0, 0.90f, 0.90f ,1 }, 0.5, 0.8,
+		-1, SPHERE, -1, { 0, 0, 0 }, { 1, 1, 1 }, BODYPARTS);
+	pie->setColor({ 1,0,0,1 });
+	chargedGenerator->addEntity(pie);
 
 	// muelles
-	SpringForceGenerator* spring1 = new SpringForceGenerator(500, 5, pie);
-	sys->registerForceGenerator(spring1);
-	SpringForceGenerator* spring2 = new SpringForceGenerator(500, 5, toy);
-	sys->registerForceGenerator(spring2);
-	*/
+	SpringForceGenerator* spring1 = new SpringForceGenerator(100, 0.1, pie);
+	sysRb->registerForceGenerator(spring1);
+
+	SpringForceGenerator* spring2 = new SpringForceGenerator(100, 0.1, toy);
+	sysRb->registerForceGenerator(spring2);
 }
 
 void Scene0::readFile(std::string file)
@@ -357,13 +354,11 @@ void Scene1::init()
 	sysRb->registerForceGenerator(viento);
 	sys->registerForceGenerator(viento);
 
-	int radius = 70;
-
-	magnetism1 = new MagnetismGenerator({ 92,38,0 }, radius, this, -0.2, gPhysics, gScene);
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.4, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
-	magnetism2 = new MagnetismGenerator({ 95,140,0 }, radius, this, 0.2, gPhysics, gScene);
+	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 0.2, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
@@ -504,19 +499,18 @@ void Scene1::newToy(Vector3 pos)
 	sysRb->registerGenerator(chargedGenerator);
 	chargedGenerator->addEntity(toy);
 
-	// pie
-	/*
-	Particle* pie = new Particle(this, pos, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
-	addEntity(pie);
-	springGenerator->addSpringEnitity(toy);
-	springGenerator->addSpringEnitity(pie);
+	RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { pos.x,pos.y + 15,pos.z },
+		{ 0,0,0 }, 3, { 3,3,3 }, { 0, 0.90f, 0.90f ,1 }, 0.5, 0.8,
+		-1, SPHERE, -1, { 0, 0, 0 }, { 1, 1, 1 }, BODYPARTS);
+	pie->setColor({ 1,0,0,1 });
+	chargedGenerator->addEntity(pie);
 
 	// muelles
-	SpringForceGenerator* spring1 = new SpringForceGenerator(500, 5, pie);
-	sys->registerForceGenerator(spring1);
-	SpringForceGenerator* spring2 = new SpringForceGenerator(500, 5, toy);
-	sys->registerForceGenerator(spring2);
-	*/
+	SpringForceGenerator* spring1 = new SpringForceGenerator(100, 0.1, pie);
+	sysRb->registerForceGenerator(spring1);
+
+	SpringForceGenerator* spring2 = new SpringForceGenerator(100, 0.1, toy);
+	sysRb->registerForceGenerator(spring2);
 }
 
 void Scene1::readFile(std::string file)
@@ -727,19 +721,18 @@ void Scene2::newToy(Vector3 pos)
 	sysRb->registerGenerator(chargedGenerator);
 	chargedGenerator->addEntity(toy);
 
-	// pie
-	/*
-	Particle* pie = new Particle(this, pos, { 0,0,0 }, 2, { 0,0,1,1 }, 1.5, 0.99, -1);
-	addEntity(pie);
-	springGenerator->addSpringEnitity(toy);
-	springGenerator->addSpringEnitity(pie);
+	RigidBodyDynamic* pie = new RigidBodyDynamic(this, gPhysics, gScene, nullptr, false, { pos.x,pos.y + 15,pos.z },
+		{ 0,0,0 }, 3, { 3,3,3 }, { 0, 0.90f, 0.90f ,1 }, 0.5, 0.8,
+		-1, SPHERE, -1, { 0, 0, 0 }, { 1, 1, 1 }, BODYPARTS);
+	pie->setColor({ 1,0,0,1 });
+	chargedGenerator->addEntity(pie);
 
 	// muelles
-	SpringForceGenerator* spring1 = new SpringForceGenerator(500, 5, pie);
-	sys->registerForceGenerator(spring1);
-	SpringForceGenerator* spring2 = new SpringForceGenerator(500, 5, toy);
-	sys->registerForceGenerator(spring2);
-	*/
+	SpringForceGenerator* spring1 = new SpringForceGenerator(100, 0.1, pie);
+	sysRb->registerForceGenerator(spring1);
+
+	SpringForceGenerator* spring2 = new SpringForceGenerator(100, 0.1, toy);
+	sysRb->registerForceGenerator(spring2);
 }
 
 void Scene2::readFile(std::string file)
