@@ -425,9 +425,6 @@ void Scene1::unload()
 	magnetism1->toggleMagnetVisibility();
 	magnetism2->toggleMagnetVisibility();
 
-	water->setAreaVisibility(false);
-	water->toggleAreaVisibility();
-
 	chargedGenerator->unloadGenerator();
 
 	for (auto i : map)
@@ -439,6 +436,10 @@ void Scene1::unload()
 	map.clear();
 
 	DeregisterRenderItem(pipe->getRenderItem());
+
+	water->setAreaVisibility(false);
+	water->toggleAreaVisibility();
+	water->hideWater();
 
 	viento->setAreaVisibility(false);
 	viento->toggleAreaVisibility();

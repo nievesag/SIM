@@ -191,6 +191,8 @@ void renderLoop()
 
 void RegisterRenderItem(const RenderItem* _item)
 {
+	auto it = find(gRenderItems.begin(), gRenderItems.end(), _item);
+	if (it != gRenderItems.end()) return; // si lo encuentra
 	gRenderItems.push_back(_item);
 }
 

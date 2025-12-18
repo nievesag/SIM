@@ -159,6 +159,7 @@ public:
 		if (areaVisible) RegisterRenderItem(fluid);
 		else DeregisterRenderItem(fluid);
 	}
+	void hideWater() { DeregisterRenderItem(fluid); }
 
 protected:
 	float height;
