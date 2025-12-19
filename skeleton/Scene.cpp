@@ -120,7 +120,6 @@ void Scene::readFile(std::string file)
 
 		for (int j = 0; j < width; j++)
 		{
-			std::cout << j << " " << i << std::endl;
 
 			// MURO
 			if (fila[j] == 'x')
