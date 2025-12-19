@@ -208,6 +208,8 @@ void MistGenerator::generateParticle()
 			// creamos la nueva particula
 			Particle* p = new Particle(*it->second);
 
+			Vector4 color = { 100, 100, 100, 0.5f };
+			p->setColor(color);
 			p->setPosition(newOrg);
 			p->setVelocity(newVel);
 
