@@ -385,11 +385,14 @@ void Scene1::init()
 	sysRb->registerForceGenerator(viento);
 	sys->registerForceGenerator(viento);
 
-	magnetism1 = new MagnetismGenerator({ 92,38,0 }, 53, this, -0.4, gPhysics, gScene);
+	int radius = 80;
+	double charge = 0.2;
+
+	magnetism1 = new MagnetismGenerator({ 92,38,0 }, radius, this, -(charge * 2), gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism1);
 	magnets.push_back(magnetism1);
 
-	magnetism2 = new MagnetismGenerator({ 95,140,0 }, 70, this, 0.2, gPhysics, gScene);
+	magnetism2 = new MagnetismGenerator({ 95,140,0 }, radius, this, charge, gPhysics, gScene);
 	sysRb->registerForceGenerator(magnetism2);
 	magnets.push_back(magnetism2);
 
