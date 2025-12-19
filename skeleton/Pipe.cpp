@@ -33,7 +33,6 @@ void Pipe::step(double t)
 		}
 		else
 		{
-			std::cout << "bala" << std::endl;
 			scene->newToy({ pose->p.x, pose->p.y - (pipeLenght ) , pose->p.z });
 			state = 1;
 			pose->p -= vel * t;
