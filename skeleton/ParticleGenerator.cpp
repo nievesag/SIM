@@ -40,7 +40,7 @@ ParticleGenerator::ParticleGenerator(Scene* s, std::string mod)
 		{ 0.5,0.6,0.7,0.3 },	// color
 		0.01,								// masa
 		0.99,								// damping
-		1.5);							// tiempo de vida max
+		0.9);							// tiempo de vida max
 	particles.emplace(std::make_pair(std::string("Niebla"), modeloMist));
 	DeregisterRenderItem(modeloMist->getRenderItem());
 
