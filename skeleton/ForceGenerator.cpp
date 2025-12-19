@@ -78,7 +78,7 @@ MagnetismGenerator::MagnetismGenerator(Vector3 pos, float areaR, Scene* scn, flo
 
     Vector4 color = { 1,1,1,1 };
     if (b < 0) color = { 1,0,0,1 }; // norte
-    else if (b > 1) color = { 0,0,1,1 }; // sur
+    else if (b > 0) color = { 0,0,1,1 }; // sur
 
     magnet = new Magnet(scn, 10, pos, color, gPhysics, pxScn, areaR);
 }

@@ -238,13 +238,13 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 		if (selectedMagnet != nullptr)
 		{
 			if (selectedMagnet->getB() < 0) color = { 1,0,0,1 }; // norte
-			else if (selectedMagnet->getB() > 1) color = { 0,0,1,1 }; // sur
+			else if (selectedMagnet->getB() > 0) color = { 0,0,1,1 }; // sur
 			selectedMagnet->getMagnet()->setColor(color);
 		}
 
 		selectedMagnet = magnets[0];
-		if (selectedMagnet->getB() < 0) color = { 0.6,0,0,1 }; // norte
-		else if (selectedMagnet->getB() > 1) color = { 0,0,0.6,1 }; // sur
+		if (selectedMagnet->getB() < 0) color = { 1,0.5,0.5,1 }; // norte
+		else if (selectedMagnet->getB() > 0) color = { 0.6,0.6,1,1 }; // sur
 		selectedMagnet->getMagnet()->setColor(color);
 
 		std::cout << "iman " << 0 << " seleccionado" << std::endl;
@@ -256,13 +256,13 @@ void Scene0::keyPressed(unsigned char key, const physx::PxTransform& camera)
 		if (selectedMagnet != nullptr)
 		{
 			if (selectedMagnet->getB() < 0) color = { 1,0,0,1 }; // norte
-			else if (selectedMagnet->getB() > 1) color = { 0,0,1,1 }; // sur
+			else if (selectedMagnet->getB() > 0) color = { 0,0,1,1 }; // sur
 			selectedMagnet->getMagnet()->setColor(color);
 		}
 
 		selectedMagnet = magnets[1];
-		if (selectedMagnet->getB() < 0) color = { 0.6,0,0,1 }; // norte
-		else if (selectedMagnet->getB() > 1) color = { 0,0,0.6,1 }; // sur
+		if (selectedMagnet->getB() < 0) color = { 1,0.5,0.5,1 }; // norte
+		else if (selectedMagnet->getB() > 0) color = { 0.6,0.6,1,1 }; // sur
 		selectedMagnet->getMagnet()->setColor(color);
 
 		std::cout << "iman " << 1 << " seleccionado" << std::endl;
@@ -469,32 +469,31 @@ void Scene1::keyPressed(unsigned char key, const physx::PxTransform& camera)
 		if (selectedMagnet != nullptr)
 		{
 			if (selectedMagnet->getB() < 0) color = { 1,0,0,1 }; // norte
-			else if (selectedMagnet->getB() > 1) color = { 0,0,1,1 }; // sur
+			else if (selectedMagnet->getB() > 0) color = { 0,0,1,1 }; // sur
 			selectedMagnet->getMagnet()->setColor(color);
 		}
 
 		selectedMagnet = magnets[0];
-		if (selectedMagnet->getB() < 0) color = { 0.6,0,0,1 }; // norte
-		else if (selectedMagnet->getB() > 1) color = { 0,0,0.6,1 }; // sur
+		if (selectedMagnet->getB() < 0) color = { 1,0.5,0.5,1 }; // norte
+		else if (selectedMagnet->getB() > 0) color = { 0.6,0.6,1,1 }; // sur
 		selectedMagnet->getMagnet()->setColor(color);
 
 		std::cout << "iman " << 0 << " seleccionado" << std::endl;
 	}
 	if (modifiers & GLUT_ACTIVE_CTRL && key == 18) // pulsar control && r
 	{
-
 		Vector4 color;
 
 		if (selectedMagnet != nullptr)
 		{
 			if (selectedMagnet->getB() < 0) color = { 1,0,0,1 }; // norte
-			else if (selectedMagnet->getB() > 1) color = { 0,0,1,1 }; // sur
+			else if (selectedMagnet->getB() > 0) color = { 0,0,1,1 }; // sur
 			selectedMagnet->getMagnet()->setColor(color);
 		}
 
 		selectedMagnet = magnets[1];
-		if (selectedMagnet->getB() < 0) color = { 0.6,0,0,1 }; // norte
-		else if (selectedMagnet->getB() > 1) color = { 0,0,0.6,1 }; // sur
+		if (selectedMagnet->getB() < 0) color = { 1,0.5,0.5,1 }; // norte
+		else if (selectedMagnet->getB() > 0) color = { 0.6,0.6,1,1 }; // sur
 		selectedMagnet->getMagnet()->setColor(color);
 
 		std::cout << "iman " << 1 << " seleccionado" << std::endl;
@@ -702,12 +701,38 @@ void Scene2::keyPressed(unsigned char key, const physx::PxTransform& camera)
 
 	if (modifiers & GLUT_ACTIVE_CTRL && key == 17) // pulsar control && q
 	{
+		Vector4 color;
+
+		if (selectedMagnet != nullptr)
+		{
+			if (selectedMagnet->getB() < 0) color = { 1,0,0,1 }; // norte
+			else if (selectedMagnet->getB() > 0) color = { 0,0,1,1 }; // sur
+			selectedMagnet->getMagnet()->setColor(color);
+		}
+
 		selectedMagnet = magnets[0];
+		if (selectedMagnet->getB() < 0) color = { 1,0.5,0.5,1 }; // norte
+		else if (selectedMagnet->getB() > 0) color = { 0.6,0.6,1,1 }; // sur
+		selectedMagnet->getMagnet()->setColor(color);
+
 		std::cout << "iman " << 0 << " seleccionado" << std::endl;
 	}
 	if (modifiers & GLUT_ACTIVE_CTRL && key == 18) // pulsar control && r
 	{
+		Vector4 color;
+
+		if (selectedMagnet != nullptr)
+		{
+			if (selectedMagnet->getB() < 0) color = { 1,0,0,1 }; // norte
+			else if (selectedMagnet->getB() > 0) color = { 0,0,1,1 }; // sur
+			selectedMagnet->getMagnet()->setColor(color);
+		}
+
 		selectedMagnet = magnets[1];
+		if (selectedMagnet->getB() < 0) color = { 1,0.5,0.5,1 }; // norte
+		else if (selectedMagnet->getB() > 0) color = { 0.6,0.6,1,1 }; // sur
+		selectedMagnet->getMagnet()->setColor(color);
+
 		std::cout << "iman " << 1 << " seleccionado" << std::endl;
 	}
 
