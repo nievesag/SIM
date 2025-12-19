@@ -89,12 +89,12 @@ void stepPhysics(bool interactive, double t)
 
 		if (sceneManager->getEndGame())
 		{
-			std::string controles_1 = "";
-			std::string controles_2 = "";
-			std::string controles_3 = "";
-			std::string controles_4 = "";
-			std::string controles_5 = "";
-			std::string controles_6 = "Apunta y dispara con la I para celebrar tu victoria";
+			controles_1 = "";
+			controles_2 = "";
+			controles_3 = "";
+			controles_4 = "";
+			controles_5 = "";
+			controles_6 = "Apunta y dispara con la I para celebrar tu victoria";
 		}
 	}
 }
